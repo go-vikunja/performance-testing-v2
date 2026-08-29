@@ -25,3 +25,10 @@ filter cannot match / whose owner cannot access the task's project.
 `POST /tasks/{id}/labels` → `SELECT * FROM labels LEFT JOIN label_tasks ... WHERE labels.id=$1 AND
 task_id IN (SELECT id FROM tasks WHERE project_id IN (<recursive accessible-projects CTE>))`: 17.7 ms mean,
 top statement by total time during seeding. Expands the caller's whole project tree per call.
+
+## 3. v2 token refresh cannot work with the cookie v2 login sets
+
+`POST /api/v2/login` sets `vikunja_refresh_token` with `Path=/api/v1/user/token/refresh`
+(`getRefreshTokenCookiePath`, `pkg/modules/auth/auth.go`). Browsers and cookie jars therefore never send it to
+`POST /api/v2/user/token/refresh`, which answers 401 every time. Seen as 270 refresh failures in the baseline run.
+Locust uses the v1 refresh path as a workaround.
