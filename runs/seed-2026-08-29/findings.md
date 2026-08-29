@@ -1,4 +1,4 @@
-# Findings
+# Findings: seeding 100 users / 48k tasks (2026-08-29, before the baseline run)
 
 ## 1. Task writes cost O(saved-filter kanban views on the instance)
 
