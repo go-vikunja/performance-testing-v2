@@ -37,10 +37,23 @@ class VikunjaUser(FastHttpUser):
         self.token = None
         self.ws = None
         self.login()
+        # access tokens live 10 min (service.jwtttlshort); the frontend refreshes on the same cadence
+        self.refresher = gevent.spawn(self._refresh_loop)
 
     def on_stop(self):
+        self.refresher.kill(block=False)
         if self.ws:
             self.ws.close()
+
+    def _refresh_loop(self):
+        while True:
+            gevent.sleep(300)
+            r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
+            if r.status_code == 200:
+                self.token = r.json()["token"]
+                self.client.auth_header = f"Bearer {self.token}"
+            else:
+                self.login()
 
     # --- helpers --------------------------------------------------------------
     def login(self):
@@ -83,19 +96,6 @@ class Worker(VikunjaUser):
         super().on_start()
         self.open_app()
         self.connect_ws()
-        self.refresher = gevent.spawn(self._refresh_loop)
-
-    def on_stop(self):
-        self.refresher.kill(block=False)
-        super().on_stop()
-
-    def _refresh_loop(self):
-        while True:
-            gevent.sleep(600)
-            r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
-            if r.status_code == 200:
-                self.token = r.json()["token"]
-                self.client.auth_header = f"Bearer {self.token}"
 
     @task(15)
     def home(self):
