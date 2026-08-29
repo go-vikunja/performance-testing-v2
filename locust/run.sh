@@ -22,6 +22,9 @@ case "${1:-}" in
     ;;
   headless)
     shift; name=$1; shift
+    # a previous run may still hold :8089
+    for c in $(docker ps -q --filter ancestor=$IMG); do docker kill "$c" >/dev/null; done
+    pkill -f "locust -f locustfile.py" 2>/dev/null || true
     mkdir -p "results/$name"
     date +%s > "results/$name/start"
     # keep the web UI up so locust-exporter can scrape it during the run
