@@ -29,10 +29,24 @@ case "${1:-}" in
     mkdir -p "results/$name"
     date +%s > "results/$name/start"
     # keep the web UI up so locust-exporter can scrape it during the run
-    $RUN $IMG -f locustfile.py --host "$HOST" --autostart --autoquit 5 --web-host 127.0.0.1 \
+    $RUN $IMG -f locustfile.py --host "$HOST" --autostart --autoquit 5 --web-host 127.0.0.1 --only-summary \
       --csv "results/$name/locust" --csv-full-history --html "results/$name/locust-report.html" "$@" \
-      || echo "locust exit code $? (non-zero when any request failed)"
+      > "results/$name/locust.log" 2>&1 &
+    pid=$!
+    t0=$(date +%s)
+    while kill -0 $pid 2>/dev/null; do
+      sleep 30
+      kill -0 $pid 2>/dev/null || break
+      curl -s -m 5 http://127.0.0.1:8089/stats/requests | python3 -c '
+import json, sys, time
+d = json.load(sys.stdin)
+print(f"t={int(time.time()) - int(sys.argv[1]):>4}s state={d.get(\"state\")} users={d.get(\"user_count\")} rps={d.get(\"total_rps\", 0):.1f} "
+      f"fail={d.get(\"fail_ratio\", 0) * 100:.2f}% p50={d.get(\"current_response_time_percentile_50\")} p95={d.get(\"current_response_time_percentile_95\")}ms")
+' "$t0" 2>/dev/null || true
+    done
+    wait $pid || echo "locust exit code $? (non-zero when any request failed)"
     date +%s > "results/$name/end"
+    grep -E "Aggregated" "results/$name/locust.log" | tail -2
     ;;
   *) sed -n 2,5p "$0"; exit 1;;
 esac

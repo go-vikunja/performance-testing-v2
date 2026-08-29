@@ -22,7 +22,7 @@ echo "==> resetting postgres statistics"
 $SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -qc "select pg_stat_statements_reset(); select pg_stat_reset();" >/dev/null'
 
 echo "==> running $name: $users users, spawn $rate/s, $duration, classes: $classes"
-$SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && env $envs ./run.sh headless '$name' -u $users -r $rate -t $duration $classes" | tail -40
+$SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && env $envs ./run.sh headless '$name' -u $users -r $rate -t $duration $classes"
 
 echo "==> collecting locust results"
 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r "root@$LOADGEN_IP:/opt/perf/locust/results/$name/." "$out/"
