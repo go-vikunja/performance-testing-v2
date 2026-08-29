@@ -18,6 +18,9 @@ out="../runs/$name/$run_id"; mkdir -p "$out/grafana"
 echo "==> syncing locust/ to loadgen"
 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/. "root@$LOADGEN_IP:/opt/perf/locust/"
 $SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
+echo "==> resetting postgres statistics"
+$SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -qc "select pg_stat_statements_reset(); select pg_stat_reset();" >/dev/null'
+
 echo "==> running $name: $users users, spawn $rate/s, $duration, classes: $classes"
 $SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && env $envs ./run.sh headless '$name' -u $users -r $rate -t $duration $classes" | tail -40
 
@@ -54,6 +57,15 @@ $SSH "root@$DB_IP" 'docker exec -i perf-postgres-1 psql -U vikunja' > "$out/pg-s
 select relname, seq_scan, seq_tup_read, idx_scan, n_tup_ins, n_tup_upd, n_tup_del
 from pg_stat_user_tables order by seq_tup_read desc limit 20;
 SQL
+$SSH "root@$DB_IP" 'docker exec -i perf-postgres-1 psql -U vikunja' > "$out/pg-totals.txt" <<'SQL'
+select sum(calls) as statements, round(sum(total_exec_time)) as total_exec_ms,
+       round((sum(total_exec_time) / sum(calls))::numeric, 3) as avg_ms_per_statement
+from pg_stat_statements
+where dbid = (select oid from pg_database where datname = current_database());
+select relname, indexrelname, idx_scan from pg_stat_user_indexes
+where relname in (select relname from pg_stat_user_tables order by seq_tup_read desc limit 10)
+order by relname, idx_scan desc;
+SQL
 
 python3 - "$out" <<'PY'
 import csv, sys, os
@@ -68,7 +80,14 @@ meta = open(os.path.join(out, "meta.txt")).read()
 with open(os.path.join(out, "findings.md"), "w") as f:
     f.write(f"# Findings: {os.path.basename(os.path.dirname(out))} / {os.path.basename(out)}\n\n```\n{meta}```\n\n")
     f.write(f"## Locust summary\n\n- requests: {agg.get('Request Count')}  failures: {agg.get('Failure Count')}  rps: {agg.get('Requests/s')}\n")
-    f.write(f"- response time ms: p50 {agg.get('50%')}  p95 {agg.get('95%')}  p99 {agg.get('99%')}  max {agg.get('Max Response Time')}\n\n")
+    f.write(f"- response time ms: p50 {agg.get('50%')}  p95 {agg.get('95%')}  p99 {agg.get('99%')}  max {agg.get('Max Response Time')}\n")
+    try:
+        stm, ms = [int(float(x)) for x in open(os.path.join(out, "pg-totals.txt")).read().split("\n")[2].split("|")[:2]]
+        n = int(agg.get("Request Count") or 1)
+        f.write(f"- postgres: {stm} statements = {stm / n:.1f} per request, {ms / n:.2f} ms DB exec time per request\n")
+    except Exception as e:  # noqa: BLE001
+        f.write(f"- postgres totals unavailable: {e}\n")
+    f.write("\n")
     f.write("### Slowest endpoints (avg ms)\n\n| endpoint | reqs | avg | p50 | p95 |\n|---|---|---|---|---|\n")
     for r in slow:
         f.write(f"| {r['Type']} {r['Name']} | {r['Request Count']} | {float(r['Average Response Time']):.0f} | {r['50%']} | {r['95%']} |\n")
