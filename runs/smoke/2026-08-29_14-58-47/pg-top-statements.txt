@@ -1,0 +1,241 @@
+-[ RECORD 1 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 732
+calls            | 417
+mean_ms          | 1.76
+rows             | 243370
+shared_blks_hit  | 73606
+shared_blks_read | 0
+query            | WITH RECURSIVE project_hierarchy AS ( -- Base case: Start with the specified projects SELECT id, parent_project_id, $1 AS level, id AS original_project_id FROM projects WHERE id IN ($2 /*, ... */) UNION ALL -- Recursive case: Traverse up the hierarchy SELECT p.id, p.parent_project_id, ph.level + $3, ph.original_project_id FROM projects p INNER JOIN project_hierarchy ph ON p.id = ph.parent_project_
+-[ RECORD 2 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 457
+calls            | 429
+mean_ms          | 1.07
+rows             | 245821
+shared_blks_hit  | 23262
+shared_blks_read | 0
+query            | SELECT "id", "title", "description", "identifier", "hex_color", "owner_id", "parent_project_id", "is_archived", "background_file_id", "background_blur_hash", "position", "created", "updated" FROM "public"."projects" WHERE "id" IN ($1 /*, ... */)
+-[ RECORD 3 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 378
+calls            | 43
+mean_ms          | 8.79
+rows             | 1591
+shared_blks_hit  | 114552
+shared_blks_read | 0
+query            | SELECT current_database() datname, schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, n_tup_upd, n_tup_del, n_tup_hot_upd, n_live_tup, n_dead_tup, n_mod_since_analyze, COALESCE(last_vacuum, $1) as last_vacuum, COALESCE(last_autovacuum, $2) as last_autovacuum, COALESCE(last_analyze, $3) as last_analyze, COALESCE(last_autoanalyze, $4) as last_autoanalyze, vacuum_count, 
+-[ RECORD 4 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 285
+calls            | 43
+mean_ms          | 6.63
+rows             | 2103
+shared_blks_hit  | 43
+shared_blks_read | 0
+query            | SELECT queryid::text, left(regexp_replace(query, $1, $2, $3), $4) AS query, calls, total_exec_time, mean_exec_time, rows, shared_blks_hit, shared_blks_read, shared_blk_read_time AS blk_read_time, shared_blk_write_time AS blk_write_time FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = current_database()) ORDER BY total_exec_time DESC LIMIT $5
+-[ RECORD 5 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 283
+calls            | 4
+mean_ms          | 70.66
+rows             | 20664
+shared_blks_hit  | 77357
+shared_blks_read | 0
+query            | WITH RECURSIVE project_hierarchy AS ( -- Base case: Start with the projects associated with the tasks SELECT p.id, p.parent_project_id, $1 AS level, t.id AS task_id FROM tasks t JOIN projects p ON t.project_id = p.id WHERE t.id IN ($2 /*, ... */) AND t.deleted_at IS NULL UNION ALL -- Recursive case: Get parent projects SELECT p.id, p.parent_project_id, ph.level + $3, ph.task_id FROM projects p INN
+-[ RECORD 6 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 277
+calls            | 172
+mean_ms          | 1.61
+rows             | 172
+shared_blks_hit  | 344
+shared_blks_read | 0
+query            | SELECT pg_database_size($1)
+-[ RECORD 7 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 268
+calls            | 4
+mean_ms          | 66.89
+rows             | 20664
+shared_blks_hit  | 6036
+shared_blks_read | 0
+query            | SELECT * FROM "public"."tasks" LEFT JOIN "public"."projects" ON projects.id = tasks.project_id WHERE (due_date is not null AND due_date < $1 AND projects.is_archived = $3) AND (done = $4) AND ("public"."tasks"."deleted_at"=$2 OR "public"."tasks"."deleted_at" IS NULL)
+-[ RECORD 8 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 136
+calls            | 4
+mean_ms          | 34.11
+rows             | 20664
+shared_blks_hit  | 17072
+shared_blks_read | 0
+query            | SELECT "id", "title", "description", "done", "done_at", "due_date", "project_id", "repeat_after", "repeat_mode", "priority", "start_date", "end_date", "hex_color", "percent_done", "index", "uid", "cover_image_attachment_id", "created", "updated", "deleted_at", "created_by_id" FROM "public"."tasks" WHERE "id" IN ($1 /*, ... */) AND ("deleted_at"=$2 OR "deleted_at" IS NULL)
+-[ RECORD 9 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 85
+calls            | 6
+mean_ms          | 14.09
+rows             | 6
+shared_blks_hit  | 6477
+shared_blks_read | 0
+query            | SELECT count(*) FROM "public"."tasks" WHERE (deleted_at IS NULL)
+-[ RECORD 10 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 80
+calls            | 43
+mean_ms          | 1.85
+rows             | 12384
+shared_blks_hit  | 0
+shared_blks_read | 0
+query            | SELECT name, setting, COALESCE(unit, $1), COALESCE(short_desc, $2), vartype FROM pg_settings WHERE vartype IN ($3 /*, ... */) AND name NOT IN ($4 /*, ... */)
+-[ RECORD 11 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 79
+calls            | 4
+mean_ms          | 19.71
+rows             | 20664
+shared_blks_hit  | 17132
+shared_blks_read | 0
+query            | SELECT DISTINCT tasks.id AS task_id, users.id, users.name, users.username, users.email, users.email_reminders_enabled, users.overdue_tasks_reminders_enabled, users.overdue_tasks_reminders_time, users.language, users.timezone, users.created, users.updated FROM "public"."tasks" INNER JOIN "public"."users" ON tasks.created_by_id = users.id WHERE tasks.id IN ($1 /*, ... */) AND users.status=$2 AND tas
+-[ RECORD 12 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 68
+calls            | 206
+mean_ms          | 0.33
+rows             | 206
+shared_blks_hit  | 14028
+shared_blks_read | 0
+query            | WITH RECURSIVE project_hierarchy AS ( -- Base case: Start with the specified projects SELECT id, parent_project_id, $7 AS level, id AS original_project_id FROM projects WHERE id IN ($8) UNION ALL -- Recursive case: Traverse up the hierarchy SELECT p.id, p.parent_project_id, ph.level + $9, ph.original_project_id FROM projects p INNER JOIN project_hierarchy ph ON p.id = ph.parent_project_id), -- Cal
+-[ RECORD 13 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 65
+calls            | 53
+mean_ms          | 1.22
+rows             | 53
+shared_blks_hit  | 13240
+shared_blks_read | 0
+query            | WITH RECURSIVE all_projects as (SELECT l.id, l.title, l.description, l.identifier, l.hex_color, l.owner_id, l.parent_project_id, l.is_archived, l.background_file_id, l.background_blur_hash, l.position, l.created, l.updated FROM projects l LEFT JOIN team_projects tl ON tl.project_id = l.id LEFT JOIN team_members tm2 ON tm2.team_id = tl.team_id LEFT JOIN users_projects ul ON ul.project_id = l.id WHE
+-[ RECORD 14 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 61
+calls            | 42
+mean_ms          | 1.45
+rows             | 416
+shared_blks_hit  | 10464
+shared_blks_read | 0
+query            | WITH RECURSIVE all_projects as (SELECT l.id, l.title, l.description, l.identifier, l.hex_color, l.owner_id, l.parent_project_id, l.is_archived, l.background_file_id, l.background_blur_hash, l.position, l.created, l.updated FROM projects l LEFT JOIN team_projects tl ON tl.project_id = l.id LEFT JOIN team_members tm2 ON tm2.team_id = tl.team_id LEFT JOIN users_projects ul ON ul.project_id = l.id WHE
+-[ RECORD 15 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 59
+calls            | 7
+mean_ms          | 8.37
+rows             | 84
+shared_blks_hit  | 78855
+shared_blks_read | 0
+query            | SELECT labels.* FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_by_id IN (SELECT b
+-[ RECORD 16 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 57
+calls            | 4
+mean_ms          | 14.31
+rows             | 48
+shared_blks_hit  | 45273
+shared_blks_read | 0
+query            | SELECT labels.* FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_by_id IN (SELECT b
+-[ RECORD 17 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 44
+calls            | 7
+mean_ms          | 6.26
+rows             | 7
+shared_blks_hit  | 78855
+shared_blks_read | 0
+query            | SELECT count(DISTINCT labels.id) FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_b
+-[ RECORD 18 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 43
+calls            | 17
+mean_ms          | 2.51
+rows             | 170
+shared_blks_hit  | 4217
+shared_blks_read | 0
+query            | WITH RECURSIVE all_projects as (SELECT l.id, l.title, l.description, l.identifier, l.hex_color, l.owner_id, l.parent_project_id, l.is_archived, l.background_file_id, l.background_blur_hash, l.position, l.created, l.updated FROM projects l LEFT JOIN team_projects tl ON tl.project_id = l.id LEFT JOIN team_members tm2 ON tm2.team_id = tl.team_id LEFT JOIN users_projects ul ON ul.project_id = l.id WHE
+-[ RECORD 19 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 40
+calls            | 43
+mean_ms          | 0.93
+rows             | 127
+shared_blks_hit  | 43
+shared_blks_read | 0
+query            | SELECT CASE WHEN query ~* $1 THEN $2 WHEN query ~* $3 THEN $4 ELSE $5 END AS kind, sum(calls) AS calls, sum(total_exec_time) AS total_exec_time, sum(rows) AS rows FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = current_database()) GROUP BY 1
+-[ RECORD 20 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 36
+calls            | 43
+mean_ms          | 0.83
+rows             | 1591
+shared_blks_hit  | 8729
+shared_blks_read | 0
+query            | SELECT current_database() datname, schemaname, relname, heap_blks_read, heap_blks_hit, idx_blks_read, idx_blks_hit, toast_blks_read, toast_blks_hit, tidx_blks_read, tidx_blks_hit FROM pg_statio_user_tables
+-[ RECORD 21 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 35
+calls            | 4
+mean_ms          | 8.81
+rows             | 4
+shared_blks_hit  | 45273
+shared_blks_read | 0
+query            | SELECT count(DISTINCT labels.id) FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_b
+-[ RECORD 22 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 31
+calls            | 4
+mean_ms          | 7.69
+rows             | 20664
+shared_blks_hit  | 17072
+shared_blks_read | 0
+query            | SELECT "id", "project_id" FROM "public"."tasks" WHERE "id" IN ($1 /*, ... */)
+-[ RECORD 23 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 31
+calls            | 17
+mean_ms          | 1.81
+rows             | 17
+shared_blks_hit  | 4193
+shared_blks_read | 0
+query            | WITH RECURSIVE all_projects as (SELECT l.id, l.title, l.description, l.identifier, l.hex_color, l.owner_id, l.parent_project_id, l.is_archived, l.background_file_id, l.background_blur_hash, l.position, l.created, l.updated FROM projects l LEFT JOIN team_projects tl ON tl.project_id = l.id LEFT JOIN team_members tm2 ON tm2.team_id = tl.team_id LEFT JOIN users_projects ul ON ul.project_id = l.id WHE
+-[ RECORD 24 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 18
+calls            | 43
+mean_ms          | 0.43
+rows             | 1032
+shared_blks_hit  | 129
+shared_blks_read | 0
+query            | SELECT pg_database.datname, tmp.state, tmp2.usename, tmp2.application_name, tmp2.backend_type, tmp2.wait_event_type, tmp2.wait_event, COALESCE(count,$1) as count, COALESCE(max_tx_duration,$2) as max_tx_duration FROM ( VALUES ($3), ($4), ($5), ($6), ($7), ($8) ) AS tmp(state) CROSS JOIN pg_database LEFT JOIN ( SELECT datname, state, usename, application_name, backend_type, wait_event_type, wait_eve
+-[ RECORD 25 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 18
+calls            | 700
+mean_ms          | 0.03
+rows             | 0
+shared_blks_hit  | 4504
+shared_blks_read | 0
+query            | SELECT "id", "title", "description", "done", "done_at", "due_date", "project_id", "repeat_after", "repeat_mode", "priority", "start_date", "end_date", "hex_color", "percent_done", "index", "uid", "cover_image_attachment_id", "created", "updated", "deleted_at", "created_by_id" FROM "public"."tasks" WHERE tasks."done"=$1 AND EXISTS (SELECT $5 FROM task_assignees INNER JOIN users ON users.id = user_i
+-[ RECORD 26 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 17
+calls            | 43
+mean_ms          | 0.40
+rows             | 1548
+shared_blks_hit  | 172
+shared_blks_read | 0
+query            | SELECT pg_database.datname as datname, tmp.mode as mode, COALESCE(count, $1) as count FROM ( VALUES ($2), ($3), ($4), ($5), ($6), ($7), ($8), ($9), ($10) ) AS tmp(mode) CROSS JOIN pg_database LEFT JOIN ( SELECT database, lower(mode) AS mode, count(*) AS count FROM pg_locks WHERE database IS NOT NULL GROUP BY database, lower(mode) ) AS tmp2 ON tmp.mode = tmp2.mode and pg_database.oid = tmp2.databas
+-[ RECORD 27 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 15
+calls            | 1
+mean_ms          | 15.26
+rows             | 6
+shared_blks_hit  | 11278
+shared_blks_read | 0
+query            | SELECT labels.* FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_by_id IN (SELECT b
+-[ RECORD 28 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 15
+calls            | 1
+mean_ms          | 15.25
+rows             | 12
+shared_blks_hit  | 11331
+shared_blks_read | 0
+query            | SELECT labels.* FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE ((label_tasks.task_id IN (SELECT id FROM tasks WHERE project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) AND label_tasks.label_id IS NOT NULL) OR labels.created_by_id=$2 OR labels.created_by_id IN (SELECT id FROM users WHERE bot_owner_id=$3) OR labels.created_by_id IN (SELECT b
+-[ RECORD 29 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 15
+calls            | 11
+mean_ms          | 1.39
+rows             | 105
+shared_blks_hit  | 2785
+shared_blks_read | 0
+query            | WITH RECURSIVE all_projects as (SELECT l.id, l.title, l.description, l.identifier, l.hex_color, l.owner_id, l.parent_project_id, l.is_archived, l.background_file_id, l.background_blur_hash, l.position, l.created, l.updated FROM projects l LEFT JOIN team_projects tl ON tl.project_id = l.id LEFT JOIN team_members tm2 ON tm2.team_id = tl.team_id LEFT JOIN users_projects ul ON ul.project_id = l.id WHE
+-[ RECORD 30 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 15
+calls            | 89
+mean_ms          | 0.16
+rows             | 892
+shared_blks_hit  | 2287
+shared_blks_read | 0
+query            | SELECT labels.*, label_tasks.task_id FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE label_tasks.task_id IN ($1 /*, ... */) AND label_tasks.label_id IS NOT NULL GROUP BY labels.id,label_tasks.task_id ORDER BY labels.id ASC
+
