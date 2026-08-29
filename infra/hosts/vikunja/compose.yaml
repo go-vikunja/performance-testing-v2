@@ -1,0 +1,49 @@
+services:
+  vikunja:
+    image: ${VIKUNJA_IMAGE}
+    restart: unless-stopped
+    ports: ["${VIKUNJA_PIP}:3456:3456"]
+    environment:
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_HOST: ${DB_PIP}
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_PASSWORD: ${DB_PASSWORD}
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 100
+      VIKUNJA_SERVICE_PUBLICURL: http://${VIKUNJA_PIP}:3456/
+      VIKUNJA_SERVICE_JWTSECRET: ${JWT_SECRET}
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
+      VIKUNJA_METRICS_ENABLED: "true"
+      # all load comes from one IP; pre-auth limiter is per-IP and always on
+      VIKUNJA_RATELIMIT_NOAUTHLIMIT: 10000000
+      VIKUNJA_RATELIMIT_TOKENREFRESHLIMIT: 10000000
+      VIKUNJA_LOG_HTTP: "off"
+      VIKUNJA_LOG_LEVEL: WARNING
+      VIKUNJA_MAILER_ENABLED: "false"
+    volumes:
+      - files:/app/vikunja/files
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3456/health"]
+      interval: 5s
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    command: ["--path.rootfs=/host", "--web.listen-address=${VIKUNJA_PIP}:9100"]
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: unless-stopped
+    privileged: true
+    ports: ["${VIKUNJA_PIP}:8080:8080"]
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+volumes:
+  files:

@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    restart: unless-stopped
+    ports: ["${DB_PIP}:5432:5432"]
+    environment:
+      POSTGRES_USER: vikunja
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: vikunja
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    command: -c config_file=/etc/postgresql/postgresql.conf
+    shm_size: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vikunja"]
+      interval: 5s
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    restart: unless-stopped
+    depends_on: { postgres: { condition: service_healthy } }
+    ports: ["${DB_PIP}:9187:9187"]
+    environment:
+      DATA_SOURCE_URI: postgres:5432/vikunja?sslmode=disable
+      DATA_SOURCE_USER: vikunja
+      DATA_SOURCE_PASS: ${DB_PASSWORD}
+      PG_EXPORTER_EXTEND_QUERY_PATH: /queries.yaml
+    volumes:
+      - ./exporter-queries.yaml:/queries.yaml:ro
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    command: ["--path.rootfs=/host", "--web.listen-address=${DB_PIP}:9100"]
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: unless-stopped
+    privileged: true
+    ports: ["${DB_PIP}:8080:8080"]
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+volumes:
+  pgdata:

@@ -1,0 +1,6 @@
+#cloud-config
+package_update: true
+packages: [curl, ca-certificates, python3]
+runcmd:
+  - curl -fsSL https://get.docker.com | sh
+  - systemctl enable --now docker

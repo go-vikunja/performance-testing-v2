@@ -1,0 +1,17 @@
+# Locust itself is started by locust/run.sh; only exporters run permanently.
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    command: ["--path.rootfs=/host", "--web.listen-address=${LOADGEN_PIP}:9100"]
+
+  locust-exporter:
+    image: containersol/locust_exporter:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      LOCUST_EXPORTER_URI: http://127.0.0.1:8089
+      LOCUST_EXPORTER_WEB_LISTEN_ADDRESS: ${LOADGEN_PIP}:9646
