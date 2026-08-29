@@ -33,7 +33,8 @@ class VikunjaUser(FastHttpUser):
 
     def on_start(self):
         self.account = STATE["users"][next(_account) % len(STATE["users"])]
-        self.projects = self.account["projects"]
+        # skip projects without tasks (e.g. the default Inbox)
+        self.projects = [p for p in self.account["projects"] if p["tasks"]]
         self.token = None
         self.ws = None
         self.login()
