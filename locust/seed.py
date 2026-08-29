@@ -11,7 +11,7 @@ import argparse
 import json
 import random
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
@@ -143,13 +143,21 @@ def seed_teams(users):
 
 
 t0 = time.time()
-print(f"registering {args.users} users")
+print(f"registering {args.users} users", flush=True)
 with ThreadPoolExecutor(args.concurrency) as ex:
     users = list(ex.map(ensure_user, range(1, args.users + 1)))
-print("seeding projects/tasks")
+print(f"seeding {len(users)} users x {args.projects + 1} projects x {args.tasks} tasks", flush=True)
+done_users, done_tasks, t1 = [], 0, time.time()
 with ThreadPoolExecutor(args.concurrency) as ex:
-    users = list(ex.map(seed_user, users))
-print("teams")
+    for fut in as_completed([ex.submit(seed_user, u) for u in users]):
+        u = fut.result()
+        done_users.append(u)
+        done_tasks += sum(len(p["tasks"]) for p in u["projects"])
+        n, el = len(done_users), time.time() - t1
+        print(f"  {n}/{len(users)} users, {done_tasks} tasks, {done_tasks / el:.0f} tasks/s, "
+              f"eta {el / n * (len(users) - n):.0f}s", flush=True)
+users = sorted(done_users, key=lambda u: u["id"])
+print("teams", flush=True)
 seed_teams(users)
 json.dump({"host": args.host, "users": users}, open(STATE_FILE, "w"))
 total_tasks = sum(len(p["tasks"]) for u in users for p in u["projects"])

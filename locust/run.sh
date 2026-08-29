@@ -14,7 +14,7 @@ for v in ${!WEIGHT_@}; do RUN+=" -e $v"; done
 case "${1:-}" in
   seed)
     shift
-    $RUN --entrypoint python $IMG seed.py --host "$HOST" "$@"
+    $RUN -e PYTHONUNBUFFERED=1 --entrypoint python $IMG seed.py --host "$HOST" "$@"
     ;;
   ui)
     shift
