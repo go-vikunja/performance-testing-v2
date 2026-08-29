@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
+#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils git git-lfs
 # Runs one headless locust test, then archives locust csv/html + rendered Grafana panels.
 #   ./run-test.sh NAME [-u USERS] [-r SPAWN_RATE] [-t DURATION] [-c "Worker Glancer IntegrationBot"] [-e "WEIGHT_BOT=2 ..."]
 # Results: runs/NAME/YYYY-MM-DD_HH-MM-SS/  (locust-report.html, locust_*.csv, grafana/*.png, meta.txt)
@@ -97,5 +97,9 @@ with open(os.path.join(out, "findings.md"), "w") as f:
     if not fails and not excs: f.write("none\n")
     f.write("\n## Postgres\n\nSee `pg-top-statements.txt`, `pg-seq-scans.txt`, `grafana/`.\n\n## Observations\n\n- \n")
 PY
+
+echo "==> committing run"
+git -C .. add "runs/$name/$run_id"
+git -C .. commit -qm "run: $name $run_id ($users users, $duration, $classes)" -- "runs/$name/$run_id"
 
 echo "==> done: $out"; cat "$out/meta.txt"

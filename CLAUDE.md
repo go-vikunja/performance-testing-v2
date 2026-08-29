@@ -21,7 +21,7 @@ cd infra
 ./teardown.sh [--purge]                     # --purge also drops infra/.env
 ```
 
-`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` (committed; png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `pg-totals.txt` (statements per request), `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
+`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` and are committed automatically by `run-test.sh` (png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `pg-totals.txt` (statements per request), `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
 
 On the loadgen VM (`ssh root@$LOADGEN_IP`, `cd /opt/perf/locust`): `./run.sh seed|ui|headless`. Interactive UI: `ssh -L 8089:localhost:8089`, then `./run.sh ui Worker Glancer`.
 
