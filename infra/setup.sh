@@ -78,7 +78,11 @@ for v in DB_IP VIKUNJA_IP MONITORING_IP LOADGEN_IP DB_PIP VIKUNJA_PIP MONITORING
 SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
 wait_ready() { # ip
   log "waiting for cloud-init on $1"
-  until $SSH "root@$1" 'cloud-init status --wait >/dev/null 2>&1; test -x /usr/bin/docker' 2>/dev/null; do sleep 5; done
+  for i in $(seq 1 60); do
+    $SSH "root@$1" 'cloud-init status --wait >/dev/null 2>&1; test -x /usr/bin/docker' 2>/dev/null && return
+    sleep 5
+  done
+  echo "host $1 never became ready" >&2; exit 1
 }
 deploy() { # role ip
   local role=$1 ip=$2 tmp; tmp=$(mktemp -d)
@@ -101,7 +105,15 @@ deploy loadgen "$LOADGEN_IP" &
 wait
 
 log "waiting for vikunja to answer"
-until $SSH "root@$VIKUNJA_IP" "curl -sf http://$VIKUNJA_PIP:3456/api/v2/info >/dev/null"; do sleep 3; done
+for i in $(seq 1 40); do
+  $SSH "root@$VIKUNJA_IP" "curl -sf http://$VIKUNJA_PIP:3456/api/v2/info >/dev/null" && break
+  if [ "$i" = 40 ]; then
+    echo "vikunja did not come up; last logs:" >&2
+    $SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose ps && docker compose logs --tail 30 vikunja' >&2
+    exit 1
+  fi
+  sleep 3
+done
 
 cat <<OUT
 
