@@ -84,8 +84,7 @@ Ordered by expected impact.
    instance with many users.
 6. **Login storm**: bcrypt cost is fine, but a login burst monopolises all cores because hashing runs inline in
    the request goroutines. A small semaphore (e.g. `runtime.NumCPU()` concurrent bcrypt) keeps the rest of the
-   API responsive during storms. Refresh tokens already avoid re-login; fix the v2 refresh cookie path bug
-   (findings #3) so v2 clients actually benefit.
+   API responsive during storms. Refresh tokens already avoid re-login (v2 refresh cookie fixed in go-vikunja/vikunja#3651).
 7. The 3× HTTP 500 on `POST /projects/{id}/tasks` under overload should be looked at in the Vikunja log
    (probably a timeout/`pq: canceling statement` surfacing as 500).
 

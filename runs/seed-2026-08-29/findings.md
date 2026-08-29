@@ -31,4 +31,4 @@ top statement by total time during seeding. Expands the caller's whole project t
 `POST /api/v2/login` sets `vikunja_refresh_token` with `Path=/api/v1/user/token/refresh`
 (`getRefreshTokenCookiePath`, `pkg/modules/auth/auth.go`). Browsers and cookie jars therefore never send it to
 `POST /api/v2/user/token/refresh`, which answers 401 every time. Seen as 270 refresh failures in the baseline run.
-Locust uses the v1 refresh path as a workaround.
+Fixed in https://github.com/go-vikunja/vikunja/pull/3651 (merged 2026-08-29): one cookie per API version path.

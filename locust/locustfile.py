@@ -49,8 +49,8 @@ class VikunjaUser(FastHttpUser):
     def _refresh_loop(self):
         while True:
             gevent.sleep(300)
-            # v1 path on purpose: the refresh cookie is scoped to /api/v1/user/token/refresh (findings #3)
-            r = self.client.post("/api/v1/user/token/refresh", name="/user/token/refresh")
+            # needs vikunja >= 2026-08-29 unstable (go-vikunja/vikunja#3651); older images 401 here and we re-login
+            r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
             if r.status_code == 200:
                 self.token = r.json()["token"]
                 self.client.auth_header = f"Bearer {self.token}"
