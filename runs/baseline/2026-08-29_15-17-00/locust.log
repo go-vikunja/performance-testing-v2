@@ -1,0 +1,232 @@
+[2026-08-29 13:17:04,624] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-08-29 13:17:04,625] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-08-29 13:17:04,640] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-08-29 13:17:04,645] perf-loadgen/INFO/locust.runners: Ramping to 3000 users at a rate of 25.00 per second
+[2026-08-29 13:19:05,846] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 1286, "IntegrationBot": 429, "Worker": 1285} (3000 total users)
+[2026-08-29 13:19:07,561] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-08-29T13:19:07Z <Greenlet at 0x7fec8d41c7c0: run_user(<locustfile.Worker object at 0x7fec8d40d550>)> failed with TypeError
+
+[2026-08-29 13:19:13,651] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-08-29T13:19:13Z <Greenlet at 0x7fec8c9c0040: run_user(<locustfile.Worker object at 0x7fec8c9b8dd0>)> failed with TypeError
+
+[2026-08-29 13:19:17,726] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-08-29T13:19:17Z <Greenlet at 0x7fec8c7d68e0: run_user(<locustfile.Worker object at 0x7fec8c49d310>)> failed with TypeError
+
+[2026-08-29 13:19:34,674] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-08-29 13:27:04,419] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/inj.py'
+[2026-08-29 13:44:37,011] perf-loadgen/INFO/locust.main: Got SIGTERM signal
+[2026-08-29 13:44:37,012] perf-loadgen/INFO/locust.main: Shutting down (exit code 1)
+[2026-08-29 13:44:37,012] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                             43209     0(0.00%) |   1016       2   54868    190 |   26.30        0.00
+GET      /info                                                                           4638     0(0.00%) |    325       0    4484     42 |    2.82        0.00
+GET      /labels                                                                         4633     0(0.00%) |   3285      15   46875   1900 |    2.82        0.00
+POST     /login                                                                          6361     3(0.05%) |   7710     146   60042   3800 |    3.87        0.00
+GET      /projects                                                                       4636     0(0.00%) |   3382      13   44991   1600 |    2.82        0.00
+GET      /projects [bot]                                                                12363     0(0.00%) |    566      34   43104    200 |    7.52        0.00
+POST     /projects [create]                                                               360     0(0.00%) |   1430      72   37579    380 |    0.22        0.00
+GET      /projects/{id}                                                                 11230     0(0.00%) |    800      29   40019    170 |    6.83        0.00
+GET      /projects/{id}/tasks [bot]                                                     31215     1(0.00%) |    542      38   60005    190 |   19.00        0.00
+POST     /projects/{id}/tasks [create]                                                   1641     3(0.18%) |   1159      57   37029    250 |    1.00        0.00
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                              3214     0(0.00%) |   1228      42   49251    480 |    1.96        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                        459     0(0.00%) |   1145      55   49295    220 |    0.28        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                        657     0(0.00%) |    889      67   21061    200 |    0.40        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       12081     0(0.00%) |   1365      27   52261    430 |    7.35        0.00
+GET      /tasks [bot]                                                                    4023     0(0.00%) |    610      57   45924    240 |    2.45        0.00
+GET      /tasks [home]                                                                   9458     1(0.01%) |   2229      16   60002    630 |    5.76        0.00
+GET      /tasks/{id}                                                                     3960     0(0.00%) |   1002      53   43203    260 |    2.41        0.00
+GET      /tasks/{id} [bot]                                                              88331     1(0.00%) |    547      31   60001    190 |   53.76        0.00
+PATCH    /tasks/{id} [patch]                                                             1893     0(0.00%) |   1317      59   47294    260 |    1.15        0.00
+GET      /tasks/{id}/comments                                                            3952     0(0.00%) |   1246      19   38900    380 |    2.41        0.00
+POST     /tasks/{id}/comments [create]                                                    310     0(0.00%) |    565      29   18718    150 |    0.19        0.00
+POST     /tasks/{id}/labels [add]                                                         671     0(0.00%) |    834      28   29268    230 |    0.41        0.00
+PUT      /tasks/{id}/position                                                             973     0(0.00%) |   1053      23   38716    180 |    0.59        0.00
+PUT      /tasks/{id}/read                                                                3949     0(0.00%) |   1059       3   37951    190 |    2.40        0.00
+GET      /user                                                                           4638     0(0.00%) |   2928       1   42363    780 |    2.82        0.00
+POST     /user/token/refresh                                                             3001     0(0.00%) |    396       9    3741    160 |    1.83        0.00
+WS       connect+auth+subscribe                                                          4616     0(0.00%) |    647       2    5553    130 |    2.81        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                    266472     9(0.00%) |   1085       0   60042    220 |  162.18        0.01
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                    190    930   1500   1700   2100   3400   6500  11000  27000  41000  55000  43209
+GET      /info                                                                                  42     92    130    280   1400   1700   2500   2900   3600   4500   4500   4638
+GET      /labels                                                                              1900   2500   3700   4600   8400  12000  19000  24000  38000  47000  47000   4633
+POST     /login                                                                               3800   7900  12000  14000  22000  27000  36000  41000  56000  60000  60000   6361
+GET      /projects                                                                            1600   2500   3800   4900   9200  14000  20000  26000  42000  45000  45000   4636
+GET      /projects [bot]                                                                       200    280    350    420   1100   2100   3700   6700  22000  38000  43000  12363
+POST     /projects [create]                                                                    380    560    710   1200   3400   6500  13000  19000  38000  38000  38000    360
+GET      /projects/{id}                                                                        170    230    320    490   1700   3300   7700  13000  28000  36000  40000  11230
+GET      /projects/{id}/tasks [bot]                                                            190    260    330    400   1200   2000   3500   6400  22000  34000  60000  31215
+POST     /projects/{id}/tasks [create]                                                         250    420    810   1300   2400   4900  10000  17000  33000  37000  37000   1641
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                    480   1200   1600   1900   2600   3700   6700  10000  28000  49000  49000   3214
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                             220    310    440    590   2000   7700  12000  15000  49000  49000  49000    459
+GET      /projects/{id}/views/{view}/tasks [gantt]                                             200    290    410    550   1900   3700   8500  13000  21000  21000  21000    657
+GET      /projects/{id}/views/{view}/tasks [list]                                              430   1200   1700   1900   2900   4500   9200  14000  33000  51000  52000  12081
+GET      /tasks [bot]                                                                          240    350    430    500   1100   2000   4200   6800  24000  46000  46000   4023
+GET      /tasks [home]                                                                         630   1700   2200   3000   5600   9700  16000  21000  37000  60000  60000   9458
+GET      /tasks/{id}                                                                           260    370    510    720   2100   4100   9600  15000  32000  43000  43000   3960
+GET      /tasks/{id} [bot]                                                                     190    260    330    400   1100   2000   3600   6800  22000  46000  60000  88331
+PATCH    /tasks/{id} [patch]                                                                   260    420    600    840   2400   6500  16000  21000  35000  47000  47000   1893
+GET      /tasks/{id}/comments                                                                  380   1200   1500   1700   2800   4000   8700  14000  28000  39000  39000   3952
+POST     /tasks/{id}/comments [create]                                                         150    180    210    280   1100   2300   5600   9600  19000  19000  19000    310
+POST     /tasks/{id}/labels [add]                                                              230    320    420    600   1500   3000   9800  14000  29000  29000  29000    671
+PUT      /tasks/{id}/position                                                                  180    360    860   1200   1900   3900  11000  16000  39000  39000  39000    973
+PUT      /tasks/{id}/read                                                                      190    840   1500   1700   2100   3700   7900  12000  29000  38000  38000   3949
+GET      /user                                                                                 780   2200   3500   4600   8400  13000  20000  23000  41000  42000  42000   4638
+POST     /user/token/refresh                                                                   160    190    230    270   1200   2400   3000   3200   3600   3700   3700   3001
+WS       connect+auth+subscribe                                                                130    260   1000   1300   1800   3100   3800   4500   5500   5600   5600   4616
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                            220    370    760   1300   2200   4300  10000  16000  35000  52000  60000 266472
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+3                  POST /projects/{id}/tasks [create]: LocustBadStatusCode(code=500)                                   
+3                  POST /login: RetriesExceeded('http://10.0.1.2:3456/api/v2/login', 0, original=timed out)            
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/25488', 0, original=timed out)
+1                  GET /tasks [home]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks', 0, original=timed out)      
+1                  GET /projects/{id}/tasks [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/472/tasks', 0, original=timed out)
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

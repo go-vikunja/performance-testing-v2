@@ -1,0 +1,6 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/25488', 0, original=timed out)",1,2026-08-29T13:19:10Z,2026-08-29T13:19:10Z
+GET,/tasks [home],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks', 0, original=timed out)",1,2026-08-29T13:19:11Z,2026-08-29T13:19:11Z
+POST,/projects/{id}/tasks [create],LocustBadStatusCode(code=500),3,2026-08-29T13:18:26Z,2026-08-29T13:25:51Z
+GET,/projects/{id}/tasks [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/472/tasks', 0, original=timed out)",1,2026-08-29T13:19:12Z,2026-08-29T13:19:12Z
+POST,/login,"RetriesExceeded('http://10.0.1.2:3456/api/v2/login', 0, original=timed out)",3,2026-08-29T13:19:07Z,2026-08-29T13:19:17Z
