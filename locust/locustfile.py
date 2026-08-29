@@ -167,8 +167,10 @@ class Worker(VikunjaUser):
     @task(2)
     def add_label(self):
         p = self.project()
-        self.client.post(API + f"/tasks/{self.task_of(p)}/labels", json={"label_id": random.choice(self.account["labels"])},
-                         name="/tasks/{id}/labels [add]")
+        with self.client.post(API + f"/tasks/{self.task_of(p)}/labels", json={"label_id": random.choice(self.account["labels"])},
+                              name="/tasks/{id}/labels [add]", catch_response=True) as r:
+            if r.status_code == 400:  # label already on this task
+                r.success()
 
     @task(1)
     def comment(self):

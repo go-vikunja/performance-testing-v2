@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Load tests for Vikunja's `/api/v2` on Hetzner Cloud. Four VMs (db, vikunja, monitoring, loadgen), everything in docker, Postgres instrumented with `pg_stat_statements` so Grafana shows DB vs. Vikunja time and read/write split. See `README.md` for the scenario rationale (derived from Vikunja Cloud access logs) and how to read the dashboard. `findings/README.md` collects performance bugs found in Vikunja itself.
+Load tests for Vikunja's `/api/v2` on Hetzner Cloud. Four VMs (db, vikunja, monitoring, loadgen), everything in docker, Postgres instrumented with `pg_stat_statements` so Grafana shows DB vs. Vikunja time and read/write split. See `README.md` for the scenario rationale (derived from Vikunja Cloud access logs) and how to read the dashboard. Each run folder under `runs/<name>/<timestamp>/` has a `findings.md`; `runs/seed-2026-08-29/findings.md` holds the bugs found while seeding.
 
 No unit tests, no linter. The only "test" is a real run against the infra.
 
@@ -21,7 +21,7 @@ cd infra
 ./teardown.sh [--purge]                     # --purge also drops infra/.env
 ```
 
-`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `results/NAME/` (gitignored): locust html/csv, `grafana/*.png` per panel, `meta.txt` with Grafana deep link and Vikunja version.
+`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` (committed; png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
 
 On the loadgen VM (`ssh root@$LOADGEN_IP`, `cd /opt/perf/locust`): `./run.sh seed|ui|headless`. Interactive UI: `ssh -L 8089:localhost:8089`, then `./run.sh ui Worker Glancer`.
 

@@ -22,7 +22,7 @@ pg_stat_statements_top:
 
 pg_stat_statements_kind:
   query: |
-    SELECT CASE WHEN query ~* '^\s*select' THEN 'read'
+    SELECT CASE WHEN query ~* '^\s*(select|with)' THEN 'read'
                 WHEN query ~* '^\s*(insert|update|delete)' THEN 'write'
                 ELSE 'other' END AS kind,
            sum(calls) AS calls, sum(total_exec_time) AS total_exec_time, sum(rows) AS rows
