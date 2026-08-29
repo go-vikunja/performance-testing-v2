@@ -34,17 +34,17 @@ def row(title):
 
 R = "[30s]"
 row("Load (locust)")
-panel("Users / RPS", [("locust_users", "users"), ('locust_requests_current_rps{name="Aggregated"}', "rps"),
-                      ('locust_requests_current_fail_per_sec{name="Aggregated"}', "fail/s")])
-panel("Response time (aggregated)", [('locust_requests_median_response_time{name="Aggregated"}', "p50"),
-      ('locust_requests_current_response_time_percentile_95{name="Aggregated"}', "p95"),
-      ('locust_requests_avg_response_time{name="Aggregated"}', "avg")], unit="ms")
+panel("Users / RPS", [("locust_users", "users"), ('sum(locust_requests_current_rps)', "rps"),
+                      ('sum(locust_requests_current_fail_per_sec)', "fail/s")])
+panel("Response time (aggregated)", [('locust_requests_current_response_time_percentile_50', "p50"),
+      ('locust_requests_current_response_time_percentile_95', "p95"),
+      ('sum(locust_requests_avg_response_time * locust_requests_current_rps) / sum(locust_requests_current_rps)', "avg (rps-weighted)")], unit="ms")
 panel("Where does a request's time go?", [
-      ('locust_requests_avg_response_time{name="Aggregated"}', "avg locust response time"),
-      ('sum(rate(pg_stat_statements_kind_total_exec_time' + R + ')) / locust_requests_current_rps{name="Aggregated"}', "DB exec time per request")],
+      ('sum(locust_requests_avg_response_time * locust_requests_current_rps) / sum(locust_requests_current_rps)', "avg locust response time"),
+      ('sum(rate(pg_stat_statements_kind_total_exec_time' + R + ')) / sum(locust_requests_current_rps)', "DB exec time per request")],
       unit="ms", desc="If DB time per request tracks response time, Postgres dominates. Gap = time in Vikunja (Go, permission checks, JSON) + network.")
-panel("Avg response time by endpoint", [('topk(12, locust_requests_avg_response_time{name!="Aggregated"})', "{{method}} {{name}}")], unit="ms", w=12)
-panel("RPS by endpoint", [('topk(12, rate(locust_requests_num_requests{name!="Aggregated"}' + R + '))', "{{method}} {{name}}")], w=12, stack=True)
+panel("Avg response time by endpoint", [('topk(12, locust_requests_avg_response_time)', "{{method}} {{name}}")], unit="ms", w=12)
+panel("RPS by endpoint", [('topk(12, rate(locust_requests_num_requests' + R + '))', "{{method}} {{name}}")], w=12, stack=True)
 
 row("Hosts")
 panel("CPU busy", [('1 - avg by(host)(rate(node_cpu_seconds_total{mode="idle"}' + R + '))', "{{host}}")], unit="percentunit", max_=1)

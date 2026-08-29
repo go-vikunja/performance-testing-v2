@@ -71,7 +71,7 @@
     },
     {
      "refId": "B",
-     "expr": "locust_requests_current_rps{name=\"Aggregated\"}",
+     "expr": "sum(locust_requests_current_rps)",
      "legendFormat": "rps",
      "datasource": {
       "type": "prometheus",
@@ -80,7 +80,7 @@
     },
     {
      "refId": "C",
-     "expr": "locust_requests_current_fail_per_sec{name=\"Aggregated\"}",
+     "expr": "sum(locust_requests_current_fail_per_sec)",
      "legendFormat": "fail/s",
      "datasource": {
       "type": "prometheus",
@@ -129,7 +129,7 @@
    "targets": [
     {
      "refId": "A",
-     "expr": "locust_requests_median_response_time{name=\"Aggregated\"}",
+     "expr": "locust_requests_current_response_time_percentile_50",
      "legendFormat": "p50",
      "datasource": {
       "type": "prometheus",
@@ -138,7 +138,7 @@
     },
     {
      "refId": "B",
-     "expr": "locust_requests_current_response_time_percentile_95{name=\"Aggregated\"}",
+     "expr": "locust_requests_current_response_time_percentile_95",
      "legendFormat": "p95",
      "datasource": {
       "type": "prometheus",
@@ -147,8 +147,8 @@
     },
     {
      "refId": "C",
-     "expr": "locust_requests_avg_response_time{name=\"Aggregated\"}",
-     "legendFormat": "avg",
+     "expr": "sum(locust_requests_avg_response_time * locust_requests_current_rps) / sum(locust_requests_current_rps)",
+     "legendFormat": "avg (rps-weighted)",
      "datasource": {
       "type": "prometheus",
       "uid": "prometheus"
@@ -196,7 +196,7 @@
    "targets": [
     {
      "refId": "A",
-     "expr": "locust_requests_avg_response_time{name=\"Aggregated\"}",
+     "expr": "sum(locust_requests_avg_response_time * locust_requests_current_rps) / sum(locust_requests_current_rps)",
      "legendFormat": "avg locust response time",
      "datasource": {
       "type": "prometheus",
@@ -205,7 +205,7 @@
     },
     {
      "refId": "B",
-     "expr": "sum(rate(pg_stat_statements_kind_total_exec_time[30s])) / locust_requests_current_rps{name=\"Aggregated\"}",
+     "expr": "sum(rate(pg_stat_statements_kind_total_exec_time[30s])) / sum(locust_requests_current_rps)",
      "legendFormat": "DB exec time per request",
      "datasource": {
       "type": "prometheus",
@@ -254,7 +254,7 @@
    "targets": [
     {
      "refId": "A",
-     "expr": "topk(12, locust_requests_avg_response_time{name!=\"Aggregated\"})",
+     "expr": "topk(12, locust_requests_avg_response_time)",
      "legendFormat": "{{method}} {{name}}",
      "datasource": {
       "type": "prometheus",
@@ -303,7 +303,7 @@
    "targets": [
     {
      "refId": "A",
-     "expr": "topk(12, rate(locust_requests_num_requests{name!=\"Aggregated\"}[30s]))",
+     "expr": "topk(12, rate(locust_requests_num_requests[30s]))",
      "legendFormat": "{{method}} {{name}}",
      "datasource": {
       "type": "prometheus",

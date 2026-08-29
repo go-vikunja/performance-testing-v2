@@ -9,6 +9,7 @@ source .env
 HOST="http://${VIKUNJA_PIP}:3456"
 IMG=perf-locust
 RUN="docker run --rm --network host -v $PWD:/mnt/locust -w /mnt/locust -e SEED_STATE=/mnt/locust/seed-state.json"
+for v in ${!WEIGHT_@}; do RUN+=" -e $v"; done
 
 case "${1:-}" in
   seed)

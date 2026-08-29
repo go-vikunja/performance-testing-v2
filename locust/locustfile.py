@@ -47,7 +47,7 @@ class VikunjaUser(FastHttpUser):
         r = self.client.post(API + "/login", json={"username": self.account["username"], "password": PASSWORD},
                              name="/login")
         self.token = r.json()["token"]
-        self.client.headers["Authorization"] = f"Bearer {self.token}"
+        self.client.auth_header = f"Bearer {self.token}"
 
     def get(self, path, name, **kw):
         return self.client.get(API + path, name=name, **kw)
@@ -95,7 +95,7 @@ class Worker(VikunjaUser):
             r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
             if r.status_code == 200:
                 self.token = r.json()["token"]
-                self.client.headers["Authorization"] = f"Bearer {self.token}"
+                self.client.auth_header = f"Bearer {self.token}"
 
     @task(15)
     def home(self):
