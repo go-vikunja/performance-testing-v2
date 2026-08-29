@@ -40,9 +40,10 @@ case "${1:-}" in
       curl -s -m 5 http://127.0.0.1:8089/stats/requests | python3 -c '
 import json, sys, time
 d = json.load(sys.stdin)
-print(f"t={int(time.time()) - int(sys.argv[1]):>4}s state={d.get(\"state\")} users={d.get(\"user_count\")} rps={d.get(\"total_rps\", 0):.1f} "
-      f"fail={d.get(\"fail_ratio\", 0) * 100:.2f}% p50={d.get(\"current_response_time_percentile_50\")} p95={d.get(\"current_response_time_percentile_95\")}ms")
-' "$t0" 2>/dev/null || true
+print("t=%4ds state=%s users=%s rps=%.1f fail=%.2f%% p50=%s p95=%sms" % (
+    int(time.time()) - int(sys.argv[1]), d.get("state"), d.get("user_count"), d.get("total_rps", 0),
+    d.get("fail_ratio", 0) * 100, d.get("current_response_time_percentile_50"), d.get("current_response_time_percentile_95")))
+' "$t0" || true
     done
     wait $pid || echo "locust exit code $? (non-zero when any request failed)"
     date +%s > "results/$name/end"
