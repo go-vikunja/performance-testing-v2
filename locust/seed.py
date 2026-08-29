@@ -10,7 +10,6 @@ that gets write access to the first user's first project (collaboration scenario
 import argparse
 import json
 import random
-import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 
@@ -26,7 +25,7 @@ ap.add_argument("--projects", type=int, default=5, help="top-level projects per 
 ap.add_argument("--tasks", type=int, default=80, help="tasks per project")
 ap.add_argument("--labels", type=int, default=6)
 ap.add_argument("--team-size", type=int, default=5)
-ap.add_argument("--concurrency", type=int, default=8)
+ap.add_argument("--concurrency", type=int, default=16)
 ap.add_argument("--prefix", default="perf")
 args = ap.parse_args()
 
@@ -34,17 +33,32 @@ S = requests.Session()
 S.headers["Content-Type"] = "application/json"
 
 
-def call(method, path, token=None, ok=(200, 201), **kw):
-    h = {"Authorization": f"Bearer {token}"} if token else {}
+TOKENS = {}
+
+
+def login(username):
+    r = S.post(args.host + API + "/login", json={"username": username, "password": PASSWORD, "long_token": True}, timeout=60)
+    if r.status_code != 200:
+        raise RuntimeError(f"login {username}: {r.status_code} {r.text[:200]}")
+    TOKENS[username] = r.json()["token"]
+    return TOKENS[username]
+
+
+def call(method, path, user=None, ok=(200, 201), **kw):
+    """user = username; tokens are short-lived, so re-login on 401."""
     for attempt in range(5):
+        h = {"Authorization": f"Bearer {TOKENS.get(user) or login(user)}"} if user else {}
         r = S.request(method, args.host + API + path, headers=h, timeout=60, **kw)
         if r.status_code in ok:
             return r.json() if r.content else None
+        if r.status_code == 401 and user:
+            login(user)
+            continue
         if r.status_code in (429, 500, 502, 503):
             time.sleep(1 + attempt)
             continue
-        sys.exit(f"{method} {path} -> {r.status_code}: {r.text[:300]}")
-    sys.exit(f"{method} {path} kept failing")
+        raise RuntimeError(f"{method} {path} -> {r.status_code}: {r.text[:300]}")
+    raise RuntimeError(f"{method} {path} kept failing")
 
 
 def ensure_user(i):
@@ -52,10 +66,9 @@ def ensure_user(i):
     r = S.post(args.host + API + "/register", json={"username": username, "password": PASSWORD,
                                                      "email": f"{username}@example.invalid"})
     if r.status_code not in (200, 201, 400, 409):  # 400/409: exists
-        sys.exit(f"register {username}: {r.status_code} {r.text[:200]}")
-    tok = call("POST", "/login", json={"username": username, "password": PASSWORD, "long_token": True})["token"]
-    me = call("GET", "/user", tok)
-    return {"username": username, "id": me["id"], "token": tok}
+        raise RuntimeError(f"register {username}: {r.status_code} {r.text[:200]}")
+    me = call("GET", "/user", username)
+    return {"username": username, "id": me["id"]}
 
 
 def views_of(project):
@@ -63,7 +76,7 @@ def views_of(project):
 
 
 def seed_user(u):
-    tok = u["token"]
+    tok = u["username"]
     labels = [call("POST", "/labels", tok, json={"title": f"label-{u['username']}-{i}",
                                                  "hex_color": "%06x" % random.randint(0, 0xFFFFFF)})["id"]
               for i in range(args.labels)]
@@ -109,7 +122,6 @@ def seed_user(u):
     u["labels"] = labels
     u["projects"] = out_projects
     u["shared_projects"] = []
-    del u["token"]
     return u
 
 
@@ -119,7 +131,7 @@ def seed_teams(users):
         if len(group) < 2:
             continue
         owner = group[0]
-        tok = call("POST", "/login", json={"username": owner["username"], "password": PASSWORD})["token"]
+        tok = owner["username"]
         team = call("POST", "/teams", tok, json={"name": f"team-{owner['username']}"})
         for m in group[1:]:
             call("POST", f"/teams/{team['id']}/members", tok, json={"username": m["username"]})
