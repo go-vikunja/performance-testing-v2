@@ -1,0 +1,5 @@
+run=2026-08-29_15-03-40 name=baseline users=1500 spawn_rate=25 duration=10m classes="Worker Glancer IntegrationBot" env=""
+vikunja_image=vikunja/vikunja:unstable postgres_image=postgres:18 types=ccx23/ccx23
+from=1788008594000 to=1788009285000
+grafana_url=http://178.104.196.14:3000/d/perf-overview/perf-overview?from=1788008594000&to=1788009285000
+vikunja_version=v2.5.0-249-gc0ebf473

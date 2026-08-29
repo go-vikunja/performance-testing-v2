@@ -1,0 +1,24 @@
+     relname      | seq_scan | seq_tup_read | idx_scan | n_tup_ins | n_tup_upd | n_tup_del 
+------------------+----------+--------------+----------+-----------+-----------+-----------
+ projects         |   176641 |    166973756 |   662630 |       210 |      4931 |         0
+ labels           |    44612 |     26767200 |   618540 |         0 |         0 |         0
+ team_members     |   167763 |     16776300 |       11 |         0 |         0 |         0
+ buckets          |     2023 |      6343767 |     3652 |       630 |       630 |         0
+ team_projects    |    48100 |       962000 |   119901 |         0 |         0 |         0
+ subscriptions    |       13 |       641079 |   165783 |       992 |         0 |         0
+ users            |     3356 |       160665 |   742021 |         0 |         0 |         0
+ saved_filters    |       13 |         1300 |    14803 |         0 |         0 |         0
+ teams            |       35 |          700 |        0 |         0 |         0 |         0
+ files            |       22 |            0 |        0 |         0 |         0 |         0
+ project_views    |        0 |            0 |    72533 |       840 |      1050 |         0
+ task_relations   |   142720 |            0 |        0 |         0 |         0 |         0
+ totp             |     3331 |            0 |        0 |         0 |         0 |         0
+ task_attachments |   113229 |            0 |        0 |         0 |         0 |         0
+ task_buckets     |        0 |            0 |    47220 |       992 |       346 |         0
+ favorites        |        0 |            0 |   155729 |         0 |         0 |         0
+ label_tasks      |        0 |            0 |   657077 |       372 |         0 |         0
+ reactions        |        0 |            0 |     2860 |         0 |         0 |         0
+ migration        |        0 |            0 |          |         0 |         0 |         0
+ user_tokens      |        0 |            0 |        0 |         0 |         0 |         0
+(20 rows)
+
