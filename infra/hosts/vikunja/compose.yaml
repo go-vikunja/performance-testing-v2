@@ -11,7 +11,7 @@ services:
       VIKUNJA_DATABASE_DATABASE: vikunja
       VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 100
       VIKUNJA_SERVICE_PUBLICURL: http://${VIKUNJA_PIP}:3456/
-      VIKUNJA_SERVICE_JWTSECRET: ${JWT_SECRET}
+      VIKUNJA_SERVICE_SECRET: ${JWT_SECRET}
       VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
       VIKUNJA_METRICS_ENABLED: "true"
       # all load comes from one IP; pre-auth limiter is per-IP and always on
@@ -20,8 +20,9 @@ services:
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"
+    user: "1000:1000"
     volumes:
-      - files:/app/vikunja/files
+      - ./files:/app/vikunja/files
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3456/health"]
       interval: 5s
@@ -44,6 +45,3 @@ services:
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-
-volumes:
-  files:
