@@ -92,5 +92,5 @@ Request shapes (filters, sort, expand, per_page) are copied from what the fronte
 
 `run-test.sh` archives `locust-report.html` (locust's own charts), the csv history, the full dashboard render
 and one png per panel into `runs/<name>/<timestamp>/`, plus `meta.txt` with a Grafana deep link for the time range,
-`pg-top-statements.txt` / `pg-seq-scans.txt` from `pg_stat_statements`, and a `findings.md` pre-filled with the locust
+`pg-top-statements.txt` / `pg-seq-scans.txt` / `pg-totals.txt` from `pg_stat_statements` (reset at run start), and a `findings.md` pre-filled with the locust
 summary, slowest endpoints and failures — add observations there and commit the run folder.

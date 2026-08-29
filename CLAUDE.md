@@ -21,7 +21,7 @@ cd infra
 ./teardown.sh [--purge]                     # --purge also drops infra/.env
 ```
 
-`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` (committed; png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
+`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` (committed; png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `pg-totals.txt` (statements per request), `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
 
 On the loadgen VM (`ssh root@$LOADGEN_IP`, `cd /opt/perf/locust`): `./run.sh seed|ui|headless`. Interactive UI: `ssh -L 8089:localhost:8089`, then `./run.sh ui Worker Glancer`.
 
@@ -39,7 +39,7 @@ Grafana dashboard: edit `infra/hosts/monitoring/grafana/gen_dashboard.py`, re-ru
 ## Gotchas
 
 - Seeding 100 users × 48k tasks is slow because of a Vikunja bug (findings #1); Postgres pins its cores. Not a seed script problem.
-- `pg_stat_statements` is only reset by `reset.sh`; a `run-test.sh` without a preceding reset shows cumulative stats.
+- `pg_stat_statements` is only reset by `reset.sh`; `run-test.sh` also resets it at run start.
 - Headless runs keep locust's web UI up (`--autostart`) so `locust-exporter` can scrape it; `run.sh` kills leftover containers and waits for `:8089` before starting.
 - Locust users skip projects with no tasks (the default Inbox); seed enough tasks or user classes will have nothing to hit.
 
