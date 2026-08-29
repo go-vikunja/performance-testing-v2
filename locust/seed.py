@@ -27,6 +27,7 @@ ap.add_argument("--labels", type=int, default=6)
 ap.add_argument("--team-size", type=int, default=5)
 ap.add_argument("--concurrency", type=int, default=16)
 ap.add_argument("--prefix", default="perf")
+ap.add_argument("--from-existing", action="store_true", help="only rebuild seed-state.json from an already seeded instance")
 args = ap.parse_args()
 
 S = requests.Session()
@@ -142,10 +143,45 @@ def seed_teams(users):
         owner["team_members"] = [m["id"] for m in group[1:]]
 
 
+def paged(path, user, **params):
+    page, out = 1, []
+    while True:
+        r = call("GET", path, user, params={**params, "page": page, "per_page": 500})
+        out.extend(r["items"] or [])
+        if page >= (r.get("total_pages") or 1):
+            return out
+        page += 1
+
+
+def read_user(u):
+    """Rebuild the state for one user from the API (after a seed whose state file was lost)."""
+    tok = u["username"]
+    u["labels"] = [l["id"] for l in paged("/labels", tok)]
+    u["projects"], u["shared_projects"] = [], []
+    for proj in paged("/projects", tok):
+        if proj["id"] < 0:
+            continue
+        views = views_of(proj)
+        buckets = [b["id"] for b in call("GET", f"/projects/{proj['id']}/views/{views['kanban']}/buckets", tok)["items"]] if "kanban" in views else []
+        tasks = [t["id"] for t in paged(f"/projects/{proj['id']}/tasks", tok)]
+        entry = {"id": proj["id"], "views": views, "buckets": buckets, "tasks": tasks}
+        if proj["owner"]["id"] == u["id"]:
+            u["projects"].append(entry)
+        else:
+            u["shared_projects"].append({**entry, "owner_id": proj["owner"]["id"]})
+    return u
+
+
 t0 = time.time()
 print(f"registering {args.users} users", flush=True)
 with ThreadPoolExecutor(args.concurrency) as ex:
     users = list(ex.map(ensure_user, range(1, args.users + 1)))
+if args.from_existing:
+    with ThreadPoolExecutor(args.concurrency) as ex:
+        users = list(ex.map(read_user, users))
+    json.dump({"host": args.host, "users": users}, open(STATE_FILE, "w"))
+    print(f"rebuilt state for {len(users)} users -> {STATE_FILE}")
+    raise SystemExit(0)
 print(f"seeding {len(users)} users x {args.projects + 1} projects x {args.tasks} tasks", flush=True)
 done_users, done_tasks, t1 = [], 0, time.time()
 with ThreadPoolExecutor(args.concurrency) as ex:
