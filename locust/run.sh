@@ -30,7 +30,8 @@ case "${1:-}" in
     date +%s > "results/$name/start"
     # keep the web UI up so locust-exporter can scrape it during the run
     $RUN $IMG -f locustfile.py --host "$HOST" --autostart --autoquit 5 --web-host 127.0.0.1 \
-      --csv "results/$name/locust" --csv-full-history --html "results/$name/locust-report.html" "$@"
+      --csv "results/$name/locust" --csv-full-history --html "results/$name/locust-report.html" "$@" \
+      || echo "locust exit code $? (non-zero when any request failed)"
     date +%s > "results/$name/end"
     ;;
   *) sed -n 2,5p "$0"; exit 1;;

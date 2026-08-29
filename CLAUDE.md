@@ -42,3 +42,4 @@ Grafana dashboard: edit `infra/hosts/monitoring/grafana/gen_dashboard.py`, re-ru
 - `pg_stat_statements` is only reset by `reset.sh`; a `run-test.sh` without a preceding reset shows cumulative stats.
 - Headless runs keep locust's web UI up (`--autostart`) so `locust-exporter` can scrape it; `run.sh` kills leftover containers and waits for `:8089` before starting.
 - Locust users skip projects with no tasks (the default Inbox); seed enough tasks or user classes will have nothing to hit.
+
