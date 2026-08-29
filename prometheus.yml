@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: vikunja
+    metrics_path: /api/v1/metrics
+    static_configs: [{ targets: ["${VIKUNJA_PIP}:3456"] }]
+  - job_name: postgres
+    static_configs: [{ targets: ["${DB_PIP}:9187"] }]
+  - job_name: locust
+    static_configs: [{ targets: ["${LOADGEN_PIP}:9646"] }]
+  - job_name: node
+    static_configs:
+      - { targets: ["${DB_PIP}:9100"], labels: { host: db } }
+      - { targets: ["${VIKUNJA_PIP}:9100"], labels: { host: vikunja } }
+      - { targets: ["${LOADGEN_PIP}:9100"], labels: { host: loadgen } }
+      - { targets: ["${MONITORING_PIP}:9100"], labels: { host: monitoring } }
+  - job_name: cadvisor
+    static_configs:
+      - { targets: ["${DB_PIP}:8080"], labels: { host: db } }
+      - { targets: ["${VIKUNJA_PIP}:8080"], labels: { host: vikunja } }
