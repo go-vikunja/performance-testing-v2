@@ -14,6 +14,9 @@ while getopts "u:r:t:c:e:" o; do case $o in
   u) users=$OPTARG;; r) rate=$OPTARG;; t) duration=$OPTARG;; c) classes=$OPTARG;; e) envs=$OPTARG;; esac; done
 
 out="../results/$name"; mkdir -p "$out/grafana"
+echo "==> syncing locust/ to loadgen"
+scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/. "root@$LOADGEN_IP:/opt/perf/locust/"
+$SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
 echo "==> running $name: $users users, spawn $rate/s, $duration, classes: $classes"
 $SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && env $envs ./run.sh headless '$name' -u $users -r $rate -t $duration $classes" | tail -40
 

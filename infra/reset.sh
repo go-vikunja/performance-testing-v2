@@ -12,6 +12,9 @@ $SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose stop vikunja'
 $SSH "root@$DB_IP" 'cd /opt/perf && docker compose down -v && docker compose up -d'
 $SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose up -d vikunja'
 until $SSH "root@$VIKUNJA_IP" "curl -sf http://$VIKUNJA_PIP:3456/api/v2/info >/dev/null"; do sleep 2; done
+echo "==> syncing locust/ to loadgen"
+scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/. "root@$LOADGEN_IP:/opt/perf/locust/"
+$SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
 echo "==> seeding"
 $SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && ./run.sh seed $*"
 # pg_stat_statements accumulates since server start; start every run from zero
