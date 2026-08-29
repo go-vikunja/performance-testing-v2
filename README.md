@@ -14,7 +14,7 @@ infra/            hcloud provisioning + per-host docker compose files
   run-test.sh     one headless locust run + archive locust html/csv + grafana pngs
   hosts/<role>/   compose.yaml + configs copied to /opt/perf on each host
 locust/           seed script, locust user classes, run helper (runs on loadgen VM)
-results/          created by run-test.sh (gitignored)
+runs/             created by run-test.sh: runs/<name>/<timestamp>/ (gitignored)
 ```
 
 Servers (all Debian 13, everything in docker, private network `10.0.0.0/16`):
@@ -91,4 +91,4 @@ Request shapes (filters, sort, expand, per_page) are copied from what the fronte
 - Community dashboards (node exporter full, postgres, cadvisor) are provisioned alongside.
 
 `run-test.sh` archives `locust-report.html` (locust's own charts), the csv history, the full dashboard render
-and one png per panel into `results/<name>/`, plus `meta.txt` with a Grafana deep link for the time range.
+and one png per panel into `runs/<name>/<timestamp>/`, plus `meta.txt` with a Grafana deep link for the time range.

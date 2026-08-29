@@ -2,7 +2,7 @@
 #!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
 # Runs one headless locust test, then archives locust csv/html + rendered Grafana panels.
 #   ./run-test.sh NAME [-u USERS] [-r SPAWN_RATE] [-t DURATION] [-c "Worker Glancer IntegrationBot"] [-e "WEIGHT_BOT=2 ..."]
-# Results: results/NAME/  (locust-report.html, locust_*.csv, grafana/*.png)
+# Results: runs/NAME/YYYY-MM-DD_HH-MM-SS/  (locust-report.html, locust_*.csv, grafana/*.png, meta.txt)
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./config.sh; source "$ENV_FILE"
@@ -13,7 +13,8 @@ users=500; rate=10; duration=10m; classes="Worker Glancer IntegrationBot"; envs=
 while getopts "u:r:t:c:e:" o; do case $o in
   u) users=$OPTARG;; r) rate=$OPTARG;; t) duration=$OPTARG;; c) classes=$OPTARG;; e) envs=$OPTARG;; esac; done
 
-out="../results/$name"; mkdir -p "$out/grafana"
+run_id=$(date +%Y-%m-%d_%H-%M-%S)
+out="../runs/$name/$run_id"; mkdir -p "$out/grafana"
 echo "==> syncing locust/ to loadgen"
 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/. "root@$LOADGEN_IP:/opt/perf/locust/"
 $SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
@@ -35,7 +36,7 @@ for p in json.load(sys.stdin)["dashboard"]["panels"]:
     -o "$out/grafana/$(printf %02d "$id")-$title.png" || echo "render failed: $title"
 done
 cat > "$out/meta.txt" <<META
-name=$name users=$users spawn_rate=$rate duration=$duration classes="$classes" env="$envs"
+run=$run_id name=$name users=$users spawn_rate=$rate duration=$duration classes="$classes" env="$envs"
 vikunja_image=$VIKUNJA_IMAGE postgres_image=$POSTGRES_IMAGE types=$TYPE_VIKUNJA/$TYPE_DB
 from=$from to=$to
 grafana_url=$G/d/perf-overview/perf-overview?from=$from&to=$to
