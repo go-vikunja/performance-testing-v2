@@ -125,7 +125,7 @@ class Worker(VikunjaUser):
     def task_detail(self):
         p = self.project()
         t = self.task_of(p)
-        self.get(f"/tasks/{t}", "/tasks/{id}", params={"expand": ["comments", "attachments", "buckets"]})
+        self.get(f"/tasks/{t}", "/tasks/{id}", params={"expand": ["comments", "buckets", "reactions", "is_unread"]})
         self.get(f"/tasks/{t}/comments", "/tasks/{id}/comments")
         self.client.put(API + f"/tasks/{t}/read", name="/tasks/{id}/read")
 
