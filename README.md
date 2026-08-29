@@ -32,7 +32,7 @@ only. Vikunja and Postgres are reachable on the private network only.
 ## Usage
 
 ```bash
-hcloud context create vikunja-performance-testing   # once, needs API token
+hcloud context create vikunja-performance-testing   # once, needs API token (scripts are nix-shell shebangs: hcloud, ssh, envsubst come from nixpkgs)
 cd infra
 ./setup.sh                      # ~5 min. Prints grafana url/password, ssh hints
 ./reset.sh --users 100 --tasks 80        # seed (also: wipe + reseed between runs)

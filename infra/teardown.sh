@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
 # Deletes everything setup.sh created. Keeps .env (secrets) unless --purge.
 set -uo pipefail
 cd "$(dirname "$0")"

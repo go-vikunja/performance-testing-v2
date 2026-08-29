@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
 # Runs one headless locust test, then archives locust csv/html + rendered Grafana panels.
 #   ./run-test.sh NAME [-u USERS] [-r SPAWN_RATE] [-t DURATION] [-c "Worker Glancer IntegrationBot"] [-e "WEIGHT_BOT=2 ..."]
 # Results: results/NAME/  (locust-report.html, locust_*.csv, grafana/*.png)

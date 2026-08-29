@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
 # Wipes the database and reseeds, so every run starts from the same state.
 #   ./reset.sh [seed.py args]     e.g. ./reset.sh --users 100 --tasks 500
 set -euo pipefail

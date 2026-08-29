@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p bash hcloud openssh gettext openssl curl python3 coreutils
 # Provisions db, vikunja, monitoring and loadgen servers on Hetzner Cloud.
 # Idempotent: re-running reuses existing resources and re-applies compose files.
 set -euo pipefail
 cd "$(dirname "$0")"
 source ./config.sh
 
-for bin in hcloud ssh scp envsubst openssl; do command -v "$bin" >/dev/null || { echo "missing $bin"; exit 1; }; done
 [ -f "$SSH_PUBKEY" ] || { echo "SSH_PUBKEY $SSH_PUBKEY not found"; exit 1; }
 
 exists() { hcloud "$1" describe "$2" >/dev/null 2>&1; }
