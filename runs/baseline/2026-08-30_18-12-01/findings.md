@@ -39,4 +39,7 @@ See `pg-top-statements.txt`, `pg-seq-scans.txt`, `grafana/`.
 
 ## Observations
 
-- 
+- Steady state: 316 rps, p50 14 / p95 28 / p99 52 ms — same as yesterday; DB exec time per request 1.6 → 1.0 ms after the access-memo commits.
+- Ramp p50 1.6 s / p95 5 s (yesterday 3.3 / 13 s). Vikunja host peaks at 97 % during the ramp (bcrypt).
+- No failures; log only has the metrics-middleware ERROR spam.
+- See `runs/report-2026-08-30-capacity.md`.

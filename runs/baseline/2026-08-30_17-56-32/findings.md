@@ -39,4 +39,7 @@ See `pg-top-statements.txt`, `pg-seq-scans.txt`, `grafana/`.
 
 ## Observations
 
-- 
+- Steady state: 106 rps, p50 19 / p95 31 / p99 55 ms. DB 23 % CPU, Vikunja 27 %. Whole-run p99 (2.8 s) is the 20 s ramp at 25 logins/s.
+- 87 backends idle in transaction during the ramp although the DB was idle: every session `Begin()`s, so logins hold a pooled connection while bcrypt runs.
+- Vikunja log: 3.1k `user in context is not jwt token` ERROR lines from the metrics middleware on unauthenticated routes; nothing else.
+- See `runs/report-2026-08-30-capacity.md`.

@@ -79,4 +79,8 @@ See `pg-top-statements.txt`, `pg-seq-scans.txt`, `grafana/`.
 
 ## Observations
 
-- 
+- Steady state: ~550 rps, p50 140 / p95 1.5 s / p99 2.0 s (yesterday 200 / 1.9 s / 2.5 s at 510 rps). DB exec per request 5.6 → 2.4 ms, Postgres 3.0 → 2.4 cores, load1 49 → 32.
+- Ramp (0–140 s): rps stuck at ~125, p50 up to 9.8 s, 64–84 backends idle in transaction = the 100-connection pool full of logins waiting on bcrypt.
+- All 345 failures are loadgen-side: 249× `OSError 99` (ephemeral ports exhausted, TIME_WAIT peaked at 24k), ~80 client timeouts during the ramp, 17 locust exceptions. Zero HTTP 5xx; Vikunja log has no errors besides 22k `user in context is not jwt token` lines from the metrics middleware.
+- Top statement: grants CTE 48 % of DB time; its recursive step full-scans `IDX_projects_parent_project_id` because root projects store `parent_project_id = 0`. Home overview query 29 ms mean: planner uses the new `(done, due_date)` index and filters 3.7k rows for users with ~30 projects.
+- See `runs/report-2026-08-30-capacity.md`.
