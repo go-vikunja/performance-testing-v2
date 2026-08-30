@@ -47,7 +47,8 @@ vikunja_version=$($SSH "root@$VIKUNJA_IP" "curl -s http://$VIKUNJA_PIP:3456/api/
 META
 echo "==> collecting postgres top statements"
 $SSH "root@$DB_IP" 'docker exec -i perf-postgres-1 psql -U vikunja -x' > "$out/pg-top-statements.txt" <<'SQL'
-select round(total_exec_time) as total_ms, calls, round(mean_exec_time::numeric, 2) as mean_ms, rows,
+select round(total_exec_time) as total_ms, calls, round(mean_exec_time::numeric, 2) as mean_ms,
+       round(total_plan_time) as plan_ms, round(mean_plan_time::numeric, 2) as mean_plan_ms, rows,
        shared_blks_hit, shared_blks_read, left(regexp_replace(query, '\s+', ' ', 'g'), 400) as query
 from pg_stat_statements
 where dbid = (select oid from pg_database where datname = current_database())
@@ -58,8 +59,9 @@ select relname, seq_scan, seq_tup_read, idx_scan, n_tup_ins, n_tup_upd, n_tup_de
 from pg_stat_user_tables order by seq_tup_read desc limit 20;
 SQL
 $SSH "root@$DB_IP" 'docker exec -i perf-postgres-1 psql -U vikunja' > "$out/pg-totals.txt" <<'SQL'
-select sum(calls) as statements, round(sum(total_exec_time)) as total_exec_ms,
-       round((sum(total_exec_time) / sum(calls))::numeric, 3) as avg_ms_per_statement
+select sum(calls) as statements, round(sum(total_exec_time)) as total_exec_ms, round(sum(total_plan_time)) as total_plan_ms,
+       round((sum(total_exec_time) / sum(calls))::numeric, 3) as avg_ms_per_statement,
+       round((sum(total_plan_time) / sum(calls))::numeric, 3) as avg_plan_ms_per_statement
 from pg_stat_statements
 where dbid = (select oid from pg_database where datname = current_database());
 select relname, indexrelname, idx_scan from pg_stat_user_indexes
@@ -82,9 +84,9 @@ with open(os.path.join(out, "findings.md"), "w") as f:
     f.write(f"## Locust summary\n\n- requests: {agg.get('Request Count')}  failures: {agg.get('Failure Count')}  rps: {agg.get('Requests/s')}\n")
     f.write(f"- response time ms: p50 {agg.get('50%')}  p95 {agg.get('95%')}  p99 {agg.get('99%')}  max {agg.get('Max Response Time')}\n")
     try:
-        stm, ms = [int(float(x)) for x in open(os.path.join(out, "pg-totals.txt")).read().split("\n")[2].split("|")[:2]]
+        stm, ms, plan = [int(float(x)) for x in open(os.path.join(out, "pg-totals.txt")).read().split("\n")[2].split("|")[:3]]
         n = int(agg.get("Request Count") or 1)
-        f.write(f"- postgres: {stm} statements = {stm / n:.1f} per request, {ms / n:.2f} ms DB exec time per request\n")
+        f.write(f"- postgres: {stm} statements = {stm / n:.1f} per request, {ms / n:.2f} ms DB exec + {plan / n:.2f} ms planning per request\n")
     except Exception as e:  # noqa: BLE001
         f.write(f"- postgres totals unavailable: {e}\n")
     f.write("\n")

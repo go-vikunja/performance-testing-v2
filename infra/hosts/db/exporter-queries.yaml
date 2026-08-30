@@ -2,7 +2,7 @@
 pg_stat_statements_top:
   query: |
     SELECT queryid::text, left(regexp_replace(query, '\s+', ' ', 'g'), 120) AS query,
-           calls, total_exec_time, mean_exec_time, rows,
+           calls, total_exec_time, mean_exec_time, total_plan_time, mean_plan_time, rows,
            shared_blks_hit, shared_blks_read, shared_blk_read_time AS blk_read_time, shared_blk_write_time AS blk_write_time
     FROM pg_stat_statements
     WHERE dbid = (SELECT oid FROM pg_database WHERE datname = current_database())
@@ -14,6 +14,8 @@ pg_stat_statements_top:
     - calls: { usage: COUNTER, description: "Executions" }
     - total_exec_time: { usage: COUNTER, description: "Total ms spent" }
     - mean_exec_time: { usage: GAUGE, description: "Mean ms" }
+    - total_plan_time: { usage: COUNTER, description: "Total planning ms" }
+    - mean_plan_time: { usage: GAUGE, description: "Mean planning ms" }
     - rows: { usage: COUNTER }
     - shared_blks_hit: { usage: COUNTER }
     - shared_blks_read: { usage: COUNTER }
@@ -25,7 +27,7 @@ pg_stat_statements_kind:
     SELECT CASE WHEN query ~* '^\s*(select|with)' THEN 'read'
                 WHEN query ~* '^\s*(insert|update|delete)' THEN 'write'
                 ELSE 'other' END AS kind,
-           sum(calls) AS calls, sum(total_exec_time) AS total_exec_time, sum(rows) AS rows
+           sum(calls) AS calls, sum(total_exec_time) AS total_exec_time, sum(total_plan_time) AS total_plan_time, sum(rows) AS rows
     FROM pg_stat_statements
     WHERE dbid = (SELECT oid FROM pg_database WHERE datname = current_database())
     GROUP BY 1
@@ -34,6 +36,7 @@ pg_stat_statements_kind:
     - kind: { usage: LABEL }
     - calls: { usage: COUNTER, description: "Statements by kind" }
     - total_exec_time: { usage: COUNTER, description: "ms by kind" }
+    - total_plan_time: { usage: COUNTER, description: "planning ms by kind" }
     - rows: { usage: COUNTER }
 
 pg_activity:
