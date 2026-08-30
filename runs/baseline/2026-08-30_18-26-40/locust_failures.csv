@@ -1,0 +1,41 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/avatar/{username},"RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf24', 0, original=timed out)",1,2026-08-30T16:28:43Z,2026-08-30T16:28:43Z
+GET,/projects/{id}/tasks [bot],"OSError(99, 'Cannot assign requested address')",39,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/projects/{id}/views/{view}/buckets/tasks [kanban],"OSError(99, 'Cannot assign requested address')",2,2026-08-30T16:34:19Z,2026-08-30T16:35:20Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/1747', 0, original=timed out)",1,2026-08-30T16:28:56Z,2026-08-30T16:28:56Z
+GET,/avatar/{username},"RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf91', 0, original=timed out)",1,2026-08-30T16:29:03Z,2026-08-30T16:29:03Z
+POST,/user/token/refresh,"OSError(99, 'Cannot assign requested address')",15,2026-08-30T16:33:52Z,2026-08-30T16:34:15Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/321', 0, original=timed out)",1,2026-08-30T16:29:10Z,2026-08-30T16:29:10Z
+GET,/tasks/{id} [bot],"OSError(99, 'Cannot assign requested address')",127,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/projects/{id}/views/{view}/tasks [list],"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/698/views/3189/tasks', 0, original=timed out)",1,2026-08-30T16:29:08Z,2026-08-30T16:29:08Z
+GET,/projects/{id}/tasks [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/332/tasks', 0, original=timed out)",1,2026-08-30T16:28:48Z,2026-08-30T16:28:48Z
+PUT,/tasks/{id}/read,"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:33:54Z,2026-08-30T16:33:54Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/24378', 0, original=timed out)",1,2026-08-30T16:28:59Z,2026-08-30T16:28:59Z
+GET,/tasks [home],"OSError(99, 'Cannot assign requested address')",6,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/user,"RetriesExceeded('http://10.0.1.2:3456/api/v2/user', 0, original=timed out)",3,2026-08-30T16:28:47Z,2026-08-30T16:29:08Z
+PATCH,/tasks/{id} [patch],"OSError(99, 'Cannot assign requested address')",5,2026-08-30T16:33:52Z,2026-08-30T16:34:19Z
+GET,/labels,"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:34:19Z,2026-08-30T16:34:19Z
+PATCH,/tasks/{id} [patch],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/34527', 0, original=timed out)",1,2026-08-30T16:29:11Z,2026-08-30T16:29:11Z
+GET,/avatar/{username},"RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf39', 0, original=timed out)",1,2026-08-30T16:28:39Z,2026-08-30T16:28:39Z
+GET,/projects/{id}/tasks [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/362/tasks', 0, original=timed out)",1,2026-08-30T16:28:58Z,2026-08-30T16:28:58Z
+GET,/projects [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects', 0, original=timed out)",2,2026-08-30T16:28:52Z,2026-08-30T16:29:04Z
+GET,/avatar/{username},"RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf80', 0, original=timed out)",1,2026-08-30T16:28:56Z,2026-08-30T16:28:56Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/395', 0, original=timed out)",1,2026-08-30T16:28:48Z,2026-08-30T16:28:48Z
+POST,/login,"OSError(99, 'Cannot assign requested address')",2,2026-08-30T16:34:08Z,2026-08-30T16:34:19Z
+GET,/projects/{id}/views/{view}/tasks [list],"OSError(99, 'Cannot assign requested address')",6,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/projects/{id}/views/{view}/tasks [gantt],"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:34:08Z,2026-08-30T16:34:08Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/25786', 0, original=timed out)",1,2026-08-30T16:29:15Z,2026-08-30T16:29:15Z
+GET,/tasks [home],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks', 0, original=timed out)",5,2026-08-30T16:28:28Z,2026-08-30T16:29:07Z
+GET,/projects/{id},"OSError(99, 'Cannot assign requested address')",12,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/tasks/{id},"OSError(99, 'Cannot assign requested address')",5,2026-08-30T16:33:54Z,2026-08-30T16:35:20Z
+PUT,/tasks/{id}/position,"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:33:52Z,2026-08-30T16:33:52Z
+GET,/tasks/{id}/comments,"OSError(99, 'Cannot assign requested address')",3,2026-08-30T16:34:14Z,2026-08-30T16:35:20Z
+GET,/labels,"RetriesExceeded('http://10.0.1.2:3456/api/v2/labels', 0, original=timed out)",3,2026-08-30T16:28:39Z,2026-08-30T16:28:58Z
+POST,/login,"RetriesExceeded('http://10.0.1.2:3456/api/v2/login', 0, original=timed out)",59,2026-08-30T16:28:13Z,2026-08-30T16:29:17Z
+GET,/avatar/{username},"RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf26', 0, original=timed out)",1,2026-08-30T16:29:10Z,2026-08-30T16:29:10Z
+GET,/tasks [bot],"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:35:20Z,2026-08-30T16:35:20Z
+GET,/avatar/{username},"OSError(99, 'Cannot assign requested address')",11,2026-08-30T16:33:52Z,2026-08-30T16:35:20Z
+GET,/projects,"RetriesExceeded('http://10.0.1.2:3456/api/v2/projects', 0, original=timed out)",4,2026-08-30T16:28:34Z,2026-08-30T16:29:11Z
+GET,/tasks/{id} [bot],"RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/18128', 0, original=timed out)",1,2026-08-30T16:28:41Z,2026-08-30T16:28:41Z
+GET,/projects [bot],"OSError(99, 'Cannot assign requested address')",15,2026-08-30T16:33:54Z,2026-08-30T16:35:20Z
+GET,/info,"OSError(99, 'Cannot assign requested address')",1,2026-08-30T16:33:54Z,2026-08-30T16:33:54Z

@@ -1,0 +1,24 @@
+       relname        | seq_scan | seq_tup_read | idx_scan | n_tup_ins | n_tup_upd | n_tup_del 
+----------------------+----------+--------------+----------+-----------+-----------+-----------
+ labels               |    32630 |     19578000 |   490812 |         0 |         0 |         0
+ buckets              |     3122 |     11575011 |     5801 |       873 |       873 |         0
+ label_tasks          |      181 |      2330031 |  3681350 |       622 |         0 |         0
+ task_unread_statuses |    16418 |      1883352 |    12586 |        92 |         0 |         0
+ projects             |      937 |      1021548 |  3431214 |       291 |      7712 |         0
+ users                |    10836 |       755797 |   642201 |         0 |         0 |         0
+ subscriptions        |       14 |       703646 |   237021 |      1575 |         0 |         0
+ tasks                |        5 |       254795 |  1531071 |      1575 |      2846 |         0
+ team_members         |       14 |         1400 |   203117 |         0 |         0 |         0
+ saved_filters        |       14 |         1400 |    22367 |         0 |         0 |         0
+ teams                |       38 |          760 |        0 |         0 |         0 |         0
+ project_views        |        0 |            0 |   110079 |      1164 |      1455 |         0
+ task_relations       |   208177 |            0 |        0 |         0 |         0 |         0
+ task_buckets         |        0 |            0 |    76325 |      1575 |       596 |         0
+ team_projects        |        0 |            0 |   208814 |         0 |         0 |         0
+ sessions             |        0 |            0 |     8865 |      6279 |      5910 |         0
+ webhooks             |        0 |            0 |     5215 |         0 |         0 |         0
+ migration_status     |        0 |            0 |        0 |         0 |         0 |         0
+ migration            |        0 |            0 |          |         0 |         0 |         0
+ task_reminders       |        0 |            0 |   166385 |         0 |         0 |         0
+(20 rows)
+
