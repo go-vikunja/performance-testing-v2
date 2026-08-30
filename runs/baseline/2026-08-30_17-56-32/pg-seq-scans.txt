@@ -1,0 +1,24 @@
+       relname        | seq_scan | seq_tup_read | idx_scan | n_tup_ins | n_tup_upd | n_tup_del 
+----------------------+----------+--------------+----------+-----------+-----------+-----------
+ labels               |     7906 |      4743600 |   122189 |         0 |         0 |         0
+ buckets              |      686 |      1730049 |     1817 |       216 |       216 |         0
+ projects             |     1341 |      1001656 |   649310 |        72 |      1764 |         0
+ subscriptions        |       13 |       626799 |    59732 |       358 |         0 |         0
+ users                |     1996 |       141460 |   203713 |         0 |         0 |         0
+ team_members         |       13 |         1300 |    50853 |         0 |         0 |         0
+ saved_filters        |       13 |         1300 |     5226 |         0 |         0 |         0
+ sessions             |        1 |          874 |     1506 |      1125 |      1004 |         0
+ teams                |       37 |          740 |        0 |         0 |         0 |         0
+ task_attachments     |    40566 |            0 |        0 |         0 |         0 |         0
+ task_assignees       |        0 |            0 |    42294 |         0 |         0 |         0
+ notifications        |        0 |            0 |        0 |         0 |         0 |         0
+ project_views        |        0 |            0 |    22317 |       288 |       360 |         0
+ task_relations       |    50915 |            0 |        0 |         0 |         0 |         0
+ task_buckets         |        0 |            0 |    16258 |       358 |       114 |         0
+ task_unread_statuses |        0 |            0 |     6243 |        20 |         0 |         0
+ team_projects        |        0 |            0 |    52181 |         0 |         0 |         0
+ webhooks             |        0 |            0 |     1200 |         0 |         0 |         0
+ migration_status     |        0 |            0 |        0 |         0 |         0 |         0
+ label_tasks          |        0 |            0 |   729068 |       125 |         0 |         0
+(20 rows)
+

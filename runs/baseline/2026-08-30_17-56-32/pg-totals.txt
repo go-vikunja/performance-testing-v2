@@ -1,0 +1,47 @@
+ statements | total_exec_ms | avg_ms_per_statement 
+------------+---------------+----------------------
+     835240 |         88837 |                0.106
+(1 row)
+
+     relname     |               indexrelname                | idx_scan 
+-----------------+-------------------------------------------+----------
+ buckets         | UQE_buckets_id                            |     1817
+ buckets         | buckets_pkey                              |        0
+ labels          | UQE_labels_id                             |   122189
+ labels          | labels_pkey                               |        0
+ projects        | UQE_projects_id                           |   502703
+ projects        | IDX_projects_parent_project_id            |    95822
+ projects        | IDX_projects_owner_id                     |    50785
+ projects        | projects_pkey                             |        0
+ saved_filters   | IDX_saved_filters_owner_id                |     5226
+ saved_filters   | UQE_saved_filters_id                      |        0
+ saved_filters   | saved_filters_pkey                        |        0
+ sessions        | UQE_sessions_token_hash                   |     1004
+ sessions        | UQE_sessions_id                           |      502
+ sessions        | IDX_sessions_user_id                      |        0
+ sessions        | sessions_pkey                             |        0
+ subscriptions   | IDX_subscriptions_entity_type             |    33013
+ subscriptions   | IDX_subscriptions_entity_id               |    26526
+ subscriptions   | IDX_subscriptions_user_id                 |      193
+ subscriptions   | UQE_subscriptions_id                      |        0
+ subscriptions   | UQE_subscriptions_entity_user             |        0
+ subscriptions   | subscriptions_pkey                        |        0
+ team_members    | IDX_team_members_user_id                  |    50785
+ team_members    | IDX_team_members_team_id                  |       68
+ team_members    | team_members_pkey                         |        0
+ team_members    | UQE_team_members_id                       |        0
+ teams           | teams_pkey                                |        0
+ teams           | UQE_teams_id                              |        0
+ teams           | IDX_teams_created_by_id                   |        0
+ unsplash_photos | UQE_unsplash_photos_id                    |        0
+ unsplash_photos | unsplash_photos_pkey                      |        0
+ users           | UQE_users_id                              |   190353
+ users           | UQE_users_username                        |    11581
+ users           | IDX_users_bot_owner_id                    |     1756
+ users           | IDX_users_default_project_id              |       23
+ users           | IDX_users_overdue_tasks_reminders_enabled |        0
+ users           | users_pkey                                |        0
+ users           | IDX_users_discoverable_by_email           |        0
+ users           | IDX_users_discoverable_by_name            |        0
+(38 rows)
+
