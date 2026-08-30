@@ -1,0 +1,24 @@
+       relname        | seq_scan | seq_tup_read | idx_scan | n_tup_ins | n_tup_upd | n_tup_del 
+----------------------+----------+--------------+----------+-----------+-----------+-----------
+ labels               |    21930 |     13158000 |   334777 |         0 |         0 |         0
+ buckets              |     1936 |      5771271 |     3743 |       690 |       690 |         0
+ projects             |     1339 |      1230246 |  2006642 |       230 |      5049 |         0
+ subscriptions        |       13 |       636954 |   164746 |      1026 |         0 |         0
+ users                |     5763 |       404289 |   445849 |         0 |         0 |         0
+ task_unread_statuses |     1175 |        90424 |    16311 |        64 |         0 |         0
+ team_members         |       14 |         1400 |   138319 |         0 |         0 |         0
+ saved_filters        |       13 |         1300 |    14635 |         0 |         0 |         0
+ teams                |       37 |          740 |        0 |         0 |         0 |         0
+ task_attachments     |   111451 |            0 |        0 |         0 |         0 |         0
+ task_assignees       |        0 |            0 |   116308 |         0 |         0 |         0
+ notifications        |        0 |            0 |        0 |         0 |         0 |         0
+ project_views        |        0 |            0 |    63522 |       920 |      1150 |         0
+ task_relations       |   139928 |            0 |        0 |         0 |         0 |         0
+ task_buckets         |        0 |            0 |    46340 |      1026 |       375 |         0
+ team_projects        |        0 |            0 |   141939 |         0 |         0 |         0
+ sessions             |        0 |            0 |     4512 |      3281 |      3008 |         0
+ webhooks             |        0 |            0 |     3314 |         0 |         0 |         0
+ migration_status     |        0 |            0 |        0 |         0 |         0 |         0
+ label_tasks          |        0 |            0 |  2110992 |       362 |         0 |         0
+(20 rows)
+
