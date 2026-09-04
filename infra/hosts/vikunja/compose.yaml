@@ -20,6 +20,9 @@ services:
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"
+      # 5xx only, upstream DSN; environment tag keeps perf runs apart from real installs
+      VIKUNJA_SENTRY_ENABLED: "true"
+      SENTRY_ENVIRONMENT: perf-testing
     user: "1000:1000"
     volumes:
       - ./files:/app/vikunja/files
