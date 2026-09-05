@@ -34,7 +34,7 @@ vikunja_version=$($SSH "root@$VIKUNJA_IP" "curl -s http://$VIKUNJA_PIP:3456/api/
 META
 echo "==> collecting postgres top statements"
 $SSH "root@$DB_IP" 'docker exec -i perf-postgres-1 psql -U vikunja -x' > "$out/pg-top-statements.txt" <<'SQL'
-select round(total_exec_time) as total_ms, calls, round(mean_exec_time::numeric, 2) as mean_ms,
+select round(total_exec_time) as total_ms, calls, plans, round(mean_exec_time::numeric, 2) as mean_ms,
        round(total_plan_time) as plan_ms, round(mean_plan_time::numeric, 2) as mean_plan_ms, rows,
        shared_blks_hit, shared_blks_read, left(regexp_replace(query, '\s+', ' ', 'g'), 400) as query
 from pg_stat_statements
