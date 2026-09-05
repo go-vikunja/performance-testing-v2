@@ -30,12 +30,12 @@ from=$(( $(cat "$out/start") * 1000 - 30000 )); to=$(( $(cat "$out/end") * 1000 
 
 echo "==> rendering grafana"
 G="http://$MONITORING_IP:3000"; auth="admin:$GRAFANA_PASSWORD"
-curl -sf -u "$auth" "$G/render/d/perf-overview/perf-overview?from=$from&to=$to&kiosk&width=1600&height=3400&timeout=120" -o "$out/grafana/perf-overview.png"
+curl -sf -m 150 -u "$auth" "$G/render/d/perf-overview/perf-overview?from=$from&to=$to&kiosk&width=1600&height=3400&timeout=120" -o "$out/grafana/perf-overview.png"
 curl -sf -u "$auth" "$G/api/dashboards/uid/perf-overview" | python3 -c '
 import json,sys
 for p in json.load(sys.stdin)["dashboard"]["panels"]:
     if p["type"]!="row": print(p["id"], p["title"].replace("/","-").replace(" ","_"))' | while read -r id title; do
-  curl -sf -u "$auth" "$G/render/d-solo/perf-overview/perf-overview?panelId=$id&from=$from&to=$to&width=1200&height=500&timeout=60" \
+  curl -sf -m 90 -u "$auth" "$G/render/d-solo/perf-overview/perf-overview?panelId=$id&from=$from&to=$to&width=1200&height=500&timeout=60" \
     -o "$out/grafana/$(printf %02d "$id")-$title.png" || echo "render failed: $title"
 done
 cat > "$out/meta.txt" <<META

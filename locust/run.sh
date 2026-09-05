@@ -34,9 +34,20 @@ case "${1:-}" in
       > "results/$name/locust.log" 2>&1 &
     pid=$!
     t0=$(date +%s)
+    stopped_at=0
     while kill -0 $pid 2>/dev/null; do
       sleep 30
       kill -0 $pid 2>/dev/null || break
+      # locust sometimes never exits after the run (greenlets stuck in stop-timeout / csv writer); give it 90 s
+      state=$(curl -s -m 5 http://127.0.0.1:8089/stats/requests | python3 -c 'import json,sys; print(json.load(sys.stdin).get("state",""))' 2>/dev/null || echo "")
+      if [ "$state" = stopped ] || [ "$state" = stopping ]; then
+        [ $stopped_at = 0 ] && stopped_at=$(date +%s)
+        if [ $(( $(date +%s) - stopped_at )) -gt 90 ]; then
+          echo "locust did not exit ${state} state within 90 s, killing"
+          for c in $(docker ps -q --filter ancestor=$IMG); do docker kill "$c" >/dev/null; done
+          break
+        fi
+      fi
       curl -s -m 5 http://127.0.0.1:8089/stats/requests | python3 -c '
 import json, sys, time
 d = json.load(sys.stdin)
