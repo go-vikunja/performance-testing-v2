@@ -24,6 +24,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | ═══ | | new locust: bots with API tokens, glancers refresh | | | | | | | | | | |
 | `baseline-v3/2026-09-05_23-41-00` | v2.6.0-119 | pool 32, bcrypt 4, jit off | 605 | 73 / 180 / 260 | 27 / 100 | 4 | 18.5 | 0.93 | 2.39 | 82 | 14.4 | 82 |
 | `gogc400/2026-09-06_00-02-58` | v2.6.0-121 | + GOGC 400, GOMEMLIMIT 4GiB | 611 | 62 / 170 / 240 | 27 / 90 | 1 | 18.5 | 0.93 | 2.36 | 82 | 13.9 | 80 |
+| `token-cache/2026-09-06_00-17-31` | pr-3774 (= main@pgx + cache) | + pgx driver (#3721) + verified-token cache (#3774) | 634 | **13 / 25 / 110** | 17 / 53 | 1 | 18.7 | 0.67 | **0.82** | **48** | 3.1 | **53** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -32,7 +33,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | code 1: stop holding a transaction per request | open (`db.NewSession()` still `Begin()`s) |
 | code 2a: `parent_project_id` NULL for roots | done (`fc78cd3ea`) |
 | code 3: `(project_id, done, due_date)` index | done (`98235c670`) |
-| code 4: pgx driver | merged 2026-09-05 (go-vikunja/vikunja#3721, `a5beb8d8`), unstable build pending |
+| code 4: pgx driver | merged 2026-09-05 (go-vikunja/vikunja#3721, `a5beb8d8`); measured via the pr-3774 image, unstable build stuck in GitHub's runner queue |
 | code 7: bcrypt semaphore / login storm | dropped: the 25 logins/s ramp is a test artefact (see below) |
 | hosting 1: lower pool | applied (32), kept |
 | hosting 3: `jit = off` | applied, kept (within noise, p99 89 → 75) |
@@ -140,3 +141,27 @@ compare the stored hash to catch id reuse. Draft PR: go-vikunja/vikunja#3774.
 2.3 GCs/s at GOGC 100 under the v3 load. With 400: Vikunja container 3.18 → 3.10 cores, p50 73 → 62 ms, RSS 368 →
 765 MB. A few percent of CPU for 400 MB of RAM; kept as deployment config, not a lever. Image drifted to
 `v2.6.0-121-g700bcd79` (2 commits, no backend perf change).
+
+### 7. pgx + verified-token cache — `runs/token-cache/2026-09-06_00-17-31`
+
+Image `ghcr.io/go-vikunja/vikunja:pr-3774` (revision `11120a71d`; the version string it reports is wrong, the
+preview build describes the base). The branch is based on main *after* the pgx merge, so this run has both
+changes; CI for main itself has been stuck in GitHub's `ubuntu-latest` queue since 21:29, no unstable build yet.
+Attribution by where the time went:
+
+| | gogc400 (lib/pq, PBKDF2 per request) | token-cache (pgx + cache) | lever |
+|---|---|---|---|
+| DB plan ms per request | 2.36 | 0.82 | pgx (DB-side only) |
+| DB exec ms per request | 0.93 | 0.67 | pgx (less contention) |
+| DB host CPU / load1 | 82 % / 13.9 | 48 % / 3.1 | pgx |
+| Vikunja container cores | 3.10 | 1.87 | token cache (PBKDF2 gone), some pgx |
+| bot `GET /tasks/{id}` p50 / p95 ms | 80 / 210 | 14 / 40 | both |
+| `GET /tasks [home]` p50 / p95 ms | 61 / 110 | 18 / 54 | pgx |
+| steady p50 / p95 / p99 ms | 62 / 170 / 240 | 13 / 25 / 110 | both |
+
+Both boxes are now at ~50 % at 3000 users, where before this session they were at 60–80 % with a much easier
+load (JWT bots). Planning is not gone though: 490 ms/s of planning for 400 ms/s of execution. The grants CTE
+plans at **0.90 ms per call for 0.36 ms of execution** (280k calls), and even PK lookups show 0.23 ms plan per
+call. With prepared statements that means Postgres is still building custom plans on every execution
+(`plan_cache_mode = auto` never switches to the generic plan when the generic estimate looks worse). Next:
+`plan_cache_mode = force_generic_plan`.
