@@ -16,12 +16,12 @@ All `infra/*.sh` scripts are `nix-shell` shebangs (hcloud, ssh, envsubst, python
 hcloud context create vikunja-performance-testing   # once
 cd infra
 ./setup.sh                                  # provision + deploy, ~5 min
-./reset.sh --users 100 --tasks 80           # wipe DB volume, restart vikunja, reseed, reset pg stats. Args go to seed.py
+./reset.sh --users 100 --tasks 80           # wipe DB volume, restart vikunja, reseed, snapshot as template db vikunja_snap, reset pg stats. Args go to seed.py
 ./run-test.sh NAME -u 500 -r 10 -t 10m -c "Worker Glancer IntegrationBot" -e "WEIGHT_BOT=2"
 ./teardown.sh [--purge]                     # --purge also drops infra/.env
 ```
 
-`run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` and are committed automatically by `run-test.sh` (png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `pg-totals.txt` (statements per request), `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
+`run-test.sh` first restores the seeded database from the `vikunja_snap` template (`drop database ... with (force)` + `create database ... template`, seconds; ids stay the same so `seed-state.json` stays valid), so every run starts from the same state. `run-test.sh` and `reset.sh` both `scp` `locust/` to the loadgen VM and rebuild the `perf-locust` image before running, so local edits to `locust/` are picked up automatically; no separate deploy step. Results land in `runs/NAME/<timestamp>/` and are committed automatically by `run-test.sh` (png/html via git-lfs): locust html/csv, `grafana/*.png` per panel, `pg-top-statements.txt`, `pg-seq-scans.txt`, `pg-totals.txt` (statements per request), `meta.txt` with Grafana deep link and Vikunja version, and a pre-filled `findings.md` to add observations to.
 
 On the loadgen VM (`ssh root@$LOADGEN_IP`, `cd /opt/perf/locust`): `./run.sh seed|ui|headless`. Interactive UI: `ssh -L 8089:localhost:8089`, then `./run.sh ui Worker Glancer`.
 

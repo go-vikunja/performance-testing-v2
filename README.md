@@ -10,8 +10,9 @@ infra/            hcloud provisioning + per-host docker compose files
   config.sh       server types, location, images (edit or override via env)
   setup.sh        create network, firewalls, 4 servers; deploy compose stacks
   teardown.sh     delete everything (--purge also drops infra/.env secrets)
-  reset.sh        wipe DB volume, restart vikunja, reseed, reset pg stats
-  run-test.sh     one headless locust run + archive locust html/csv + grafana pngs
+  reset.sh        wipe DB volume, restart vikunja, reseed, snapshot the seeded db as template vikunja_snap
+  redeploy.sh     re-apply one host's compose/config (config edits, VIKUNJA_IMAGE swap) without setup.sh
+  run-test.sh     restore db from vikunja_snap, one headless locust run + archive locust html/csv + grafana pngs
   hosts/<role>/   compose.yaml + configs copied to /opt/perf on each host
 locust/           seed script, locust user classes, run helper (runs on loadgen VM)
 runs/             one folder per run: runs/<name>/<timestamp>/ with locust csv/html, grafana pngs, pg stats, findings.md
