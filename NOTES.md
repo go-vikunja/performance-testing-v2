@@ -132,4 +132,4 @@ Per bot request the API-token path costs, on top of the handler itself:
 65 % of Vikunja Cloud's requests are bot requests with API tokens, so in production this is probably the single
 largest CPU consumer and the previous reports never saw it. Fix: memoize verified tokens in-process
 (digest of the raw token → token id, short TTL), reload the row by primary key so deletion and expiry still apply,
-compare the stored hash to catch id reuse. Draft PR follows.
+compare the stored hash to catch id reuse. Draft PR: go-vikunja/vikunja#3774.
