@@ -23,6 +23,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `pg-nojit/2026-09-05_23-24-47` | v2.6.0-119 | + jit off, no parallel workers | 630 | 17 / 40 / 75 | 20 / 59 | 1 | 13.0 | 0.69 | 1.71 | 71 | 6.1 | 51 |
 | ═══ | | new locust: bots with API tokens, glancers refresh | | | | | | | | | | |
 | `baseline-v3/2026-09-05_23-41-00` | v2.6.0-119 | pool 32, bcrypt 4, jit off | 605 | 73 / 180 / 260 | 27 / 100 | 4 | 18.5 | 0.93 | 2.39 | 82 | 14.4 | 82 |
+| `gogc400/2026-09-06_00-02-58` | v2.6.0-121 | + GOGC 400, GOMEMLIMIT 4GiB | 611 | 62 / 170 / 240 | 27 / 90 | 1 | 18.5 | 0.93 | 2.36 | 82 | 13.9 | 80 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -133,3 +134,9 @@ Per bot request the API-token path costs, on top of the handler itself:
 largest CPU consumer and the previous reports never saw it. Fix: memoize verified tokens in-process
 (digest of the raw token → token id, short TTL), reload the row by primary key so deletion and expiry still apply,
 compare the stored hash to catch id reuse. Draft PR: go-vikunja/vikunja#3774.
+
+### 6. `GOGC=400`, `GOMEMLIMIT=4GiB` — `runs/gogc400/2026-09-06_00-02-58` (kept, minor)
+
+2.3 GCs/s at GOGC 100 under the v3 load. With 400: Vikunja container 3.18 → 3.10 cores, p50 73 → 62 ms, RSS 368 →
+765 MB. A few percent of CPU for 400 MB of RAM; kept as deployment config, not a lever. Image drifted to
+`v2.6.0-121-g700bcd79` (2 commits, no backend perf change).
