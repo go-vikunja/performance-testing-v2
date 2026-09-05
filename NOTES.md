@@ -162,11 +162,9 @@ Attribution by where the time went:
 | steady p50 / p95 / p99 ms | 62 / 170 / 240 | 13 / 25 / 110 | both |
 
 Both boxes are now at ~50 % at 3000 users, where before this session they were at 60–80 % with a much easier
-load (JWT bots). Planning is not gone though: 490 ms/s of planning for 400 ms/s of execution. The grants CTE
-plans at **0.90 ms per call for 0.36 ms of execution** (280k calls), and even PK lookups show 0.23 ms plan per
-call. With prepared statements that means Postgres is still building custom plans on every execution
-(`plan_cache_mode = auto` never switches to the generic plan when the generic estimate looks worse). Next:
-`plan_cache_mode = force_generic_plan`.
+load (JWT bots). Planning is not gone though: 490 ms/s of planning for 400 ms/s of execution. (Correction, see finding
+below: `mean_plan_time` in `pg_stat_statements` is per *plan*, not per call; the per-call reading in the first
+version of this note was wrong. What is true is the total: planning still cost more than execution.)
 
 ### Finding: the pool recycles every connection every 10 seconds
 
@@ -195,7 +193,26 @@ right lever, and generic plans for the `project_id IN (...)` family are a risk o
 
 `VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000`. p99 110 → 26 ms (the reconnect every 10 s was the tail),
 planning 0.82 → 0.50 ms/req, DB load1 3.1 → 2.0. PR for the default: go-vikunja/vikunja#3775.
-Planning is still not near zero though: 0.22 ms per PK lookup, 0.53 ms per grants CTE, on nearly every call. So
-statements are still being re-prepared. Remaining suspect: pgx's per-connection statement cache holds 512 entries
-and Vikunja generates many distinct SQL texts (`IN ($1, …, $N)` with per-user N, per-view variants), so the LRU
-churns. Probing with `log_statement = all`.
+Planning still 0.50 ms/req, i.e. 300 ms/s. Probed where it comes from, see next finding.
+
+### Finding: half of all planning is one query with literal ids — go-vikunja/vikunja#3776
+
+Method: `log_statement = all` for 15 s under a 300-user probe, then `pg_stat_statements` with the `plans` column
+(now archived by `collect-run.sh` too). Prepared statements *are* reused by pgx (12,941 named executes, 15
+unnamed, 320 distinct texts server-wide, so the 512-entry cache is not the problem). Over 75 s: 110,790 calls,
+11,109 plans, 5,128 ms planning vs 9,240 ms execution. Ranked by planning time:
+
+| calls | plans | plan ms | exec ms | statement |
+|---|---|---|---|---|
+| 1,985 | 1,985 | 2,558 | 166 | `WITH RECURSIVE project_hierarchy … WHERE t.id IN (<literal ids>)` — subscriptions for a task read |
+| 531 | 544 | 529 | 58 | same CTE, project variant |
+| 258 | 258 | 213 | 11 | same CTE, project variant, user-only |
+| 17 | 17 | 189 | 12 | `SELECT column_name, column_default …` — xorm schema introspection, 17× in 75 s = the `vikunja healthcheck` compose probe every 5 s opens a fresh engine |
+| 1,480 | 1,484 | 118 | 10 | `task_attachments WHERE task_id IN ($1…$N)` — parametrised, but the plancache prefers custom plans; cheap |
+
+`pkg/models/subscription.go` (`getSubscriptionsForEntitiesAndUser`) interpolates the entity ids and the user
+id into the SQL text (`entityIDString`, `sUserCond`). Every `GET /tasks/{id}` is a statement Postgres has never
+seen: no prepared statement reuse, planner on every call, 1.3 ms each for 0.08 ms of execution. Fix: bind them
+as parameters (PR #3776). Expected: roughly half of the remaining planning time, ~150 ms/s of DB CPU at 3000 users.
+The pr-3776 image is main + this fix *without* the token cache (#3774 is not merged), so its run is compared on
+DB-side numbers only.
