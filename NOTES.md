@@ -20,7 +20,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `baseline/2026-09-05_22-38-32` | v2.6.0-113 | pool 100, bcrypt 11 | 621 | 19 / 120 / 230 | 4,100 / 16,000 | 88 | 12.9 | 1.34 | 2.32 | 73 | 14.6 | 59 |
 | `pool32/2026-09-05_22-53-25` | v2.6.0-119 | pool 32 | 625 | 19 / 70 / 140 | 3,500 / 15,000 | 116 | 12.9 | 0.91 | 1.87 | 72 | 8.1 | 63 |
 | `baseline-b4/2026-09-05_23-10-39` | v2.6.0-119 | + bcrypt 4, snapshot restore | 625 | 17 / 42 / 89 | 20 / 62 | 0 | 13.0 | 0.70 | 1.79 | 72 | 5.9 | 51 |
-| `pg-nojit/…` | v2.6.0-119 | + jit off, no parallel workers | | | | | | | | | | |
+| `pg-nojit/2026-09-05_23-24-47` | v2.6.0-119 | + jit off, no parallel workers | 630 | 17 / 40 / 75 | 20 / 59 | 1 | 13.0 | 0.69 | 1.71 | 71 | 6.1 | 51 |
 | ═══ | | new locust: bots with API tokens, glancers refresh | | | | | | | | | | |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
@@ -33,7 +33,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | code 4: pgx driver | merged 2026-09-05 (go-vikunja/vikunja#3721, `a5beb8d8`), unstable build pending |
 | code 7: bcrypt semaphore / login storm | dropped: the 25 logins/s ramp is a test artefact (see below) |
 | hosting 1: lower pool | applied (32), kept |
-| hosting 3: `jit = off` | applied, run pending |
+| hosting 3: `jit = off` | applied, kept (within noise, p99 89 → 75) |
 | hosting 4: loadgen port range | applied before the first run |
 
 ## Log
@@ -96,3 +96,10 @@ now creates one token per account (all `tasks`/`projects`/`labels` permissions f
 sends it as bearer and never logs in. `Glancer` refreshes its JWT (10 % fresh login) instead of logging in per
 session, matching the access logs (refresh 10 % of interactive requests, login not in the top list).
 Requires a reseed; runs after the double line in the table use it.
+
+### 4. `jit = off`, `max_parallel_workers_per_gather = 0` — `runs/pg-nojit/2026-09-05_23-24-47` (kept)
+
+Within run-to-run noise: plan 1.79 → 1.71 ms/req, p99 89 → 75 ms, DB CPU 72 → 71 %. No statement here is expensive
+enough to trigger JIT or a parallel plan, so all the setting removes is the planner considering them. Kept because it
+cannot hurt an OLTP box; not a lever. Note: the conf change was committed together with the docs commit `e3b221f`
+by accident (`git commit -a`).
