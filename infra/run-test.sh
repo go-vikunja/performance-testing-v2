@@ -18,6 +18,16 @@ out="../runs/$name/$run_id"; mkdir -p "$out/grafana"
 echo "==> syncing locust/ to loadgen"
 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/. "root@$LOADGEN_IP:/opt/perf/locust/"
 $SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
+# Every run starts from the seeded state: drop the database and copy it back from the template reset.sh made.
+if $SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -d postgres -Atc "select 1 from pg_database where datname = '"'"'vikunja_snap'"'"'"' | grep -q 1; then
+  echo "==> restoring the seeded database from vikunja_snap"
+  $SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose stop vikunja'
+  $SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -d postgres -qc "drop database vikunja with (force)" -c "create database vikunja template vikunja_snap" >/dev/null'
+  $SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose up -d vikunja'
+  until $SSH "root@$VIKUNJA_IP" "curl -sf http://$VIKUNJA_PIP:3456/api/v2/info >/dev/null"; do sleep 2; done
+else
+  echo "==> no vikunja_snap database, running against the current state (run reset.sh to seed + snapshot)"
+fi
 echo "==> resetting postgres statistics"
 $SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -qc "select pg_stat_statements_reset(); select pg_stat_reset();" >/dev/null'
 

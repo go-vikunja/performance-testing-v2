@@ -17,5 +17,10 @@ scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust/
 $SSH "root@$LOADGEN_IP" 'cd /opt/perf/locust && docker build -q -t perf-locust . >/dev/null'
 echo "==> seeding"
 $SSH "root@$LOADGEN_IP" "cd /opt/perf/locust && ./run.sh seed $*"
+echo "==> snapshotting the seeded database (run-test.sh restores it before every run)"
+$SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose stop vikunja'
+$SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -d postgres -qc "drop database if exists vikunja_snap with (force)" -c "select pg_terminate_backend(pid) from pg_stat_activity where datname = '"'"'vikunja'"'"' and pid <> pg_backend_pid()" -c "create database vikunja_snap template vikunja" >/dev/null'
+$SSH "root@$VIKUNJA_IP" 'cd /opt/perf && docker compose up -d vikunja'
+until $SSH "root@$VIKUNJA_IP" "curl -sf http://$VIKUNJA_PIP:3456/api/v2/info >/dev/null"; do sleep 2; done
 # pg_stat_statements accumulates since server start; start every run from zero
 $SSH "root@$DB_IP" 'docker exec perf-postgres-1 psql -U vikunja -c "select pg_stat_statements_reset(); select pg_stat_reset();" >/dev/null'
