@@ -25,3 +25,10 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
 
 - Loadgen: `ip_local_port_range = 1024 65535`, `tcp_tw_reuse = 1` (`infra/hosts/loadgen/post-deploy.sh`).
   Applied live before any run. Removes the `OSError(99)` noise that was 249 of 345 failures last time; test-side only.
+- Infra bugs found on the way (all fixed + committed): Vikunja healthcheck used `wget` (not in image);
+  Prometheus had `http://:9646` for locust and no loadgen node-exporter because the first `setup.sh` rendered
+  `prometheus.yml` with an empty `LOADGEN_PIP` and later re-runs never recreated the container (`up -d` does not
+  restart on mounted-file changes; now `--force-recreate`). `.env` cleanup missed `*_PIP` lines. New `redeploy.sh`
+  to re-apply one host's config / swap the Vikunja image without `setup.sh`.
+  Consequence: the baseline run below has no locust series in Grafana and a ~2 min Prometheus gap at the end
+  (restart during the run). Locust csv + pg_stat_statements are complete.
