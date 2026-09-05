@@ -27,7 +27,7 @@ services:
     volumes:
       - ./files:/app/vikunja/files
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3456/health"]
+      test: ["CMD", "/app/vikunja/vikunja", "healthcheck"]
       interval: 5s
 
   node-exporter:
