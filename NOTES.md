@@ -22,6 +22,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `baseline-b4/2026-09-05_23-10-39` | v2.6.0-119 | + bcrypt 4, snapshot restore | 625 | 17 / 42 / 89 | 20 / 62 | 0 | 13.0 | 0.70 | 1.79 | 72 | 5.9 | 51 |
 | `pg-nojit/2026-09-05_23-24-47` | v2.6.0-119 | + jit off, no parallel workers | 630 | 17 / 40 / 75 | 20 / 59 | 1 | 13.0 | 0.69 | 1.71 | 71 | 6.1 | 51 |
 | ═══ | | new locust: bots with API tokens, glancers refresh | | | | | | | | | | |
+| `baseline-v3/2026-09-05_23-41-00` | v2.6.0-119 | pool 32, bcrypt 4, jit off | 605 | 73 / 180 / 260 | 27 / 100 | 4 | 18.5 | 0.93 | 2.39 | 82 | 14.4 | 82 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -103,3 +104,32 @@ Within run-to-run noise: plan 1.79 → 1.71 ms/req, p99 89 → 75 ms, DB CPU 72 
 enough to trigger JIT or a parallel plan, so all the setting removes is the planner considering them. Kept because it
 cannot hurt an OLTP box; not a lever. Note: the conf change was committed together with the docs commit `e3b221f`
 by accident (`git commit -a`).
+
+### 5. Baseline with the new locust — `runs/baseline-v3/2026-09-05_23-41-00`
+
+Same deployment as pg-nojit, only the load changed (bots send `tk_…` API tokens, glancers refresh). Everything got
+worse, and that is the finding:
+
+| | pg-nojit (bots with JWT) | baseline-v3 (bots with API token) |
+|---|---|---|
+| bot `GET /tasks/{id}` p50 / p95 ms | ~20 / ~45 | **92 / 240** |
+| steady p50 / p95 / p99 ms | 17 / 40 / 75 | 73 / 180 / 260 |
+| Vikunja host CPU / container cores | 51 % / 1.8 | **82 % / 3.2** |
+| DB host CPU / load1 | 71 % / 6 | 82 % / 14 |
+| statements per request | 13.0 | 18.5 |
+| `BEGIN` per request | ~2 | **2.7** |
+| `users` by id per request | 1.4 | 2.75 |
+
+Per bot request the API-token path costs, on top of the handler itself:
+
+- **PBKDF2-SHA256 × 10,000 over the raw token** (`models.HashToken`, `pkg/models/api_tokens.go:142`) on every
+  request: 3.2 ms single-core measured (Ryzen 4300G; the ccx23 EPYC is similar). At ~320 bot requests/s that is
+  1–1.5 cores of the 4, which is the 51 → 82 % jump. There is no cache of verified tokens.
+- Its own transaction (`auth.ValidateAPITokenString` → `db.NewSession()`): `BEGIN`, `select … from api_tokens where
+  token_last_eight = $1`, `select … from users where id = $1`, `COMMIT` = 4 statements before the handler starts.
+  The handler then loads the same user again. Bot requests went from ~10 to ~19 statements.
+
+65 % of Vikunja Cloud's requests are bot requests with API tokens, so in production this is probably the single
+largest CPU consumer and the previous reports never saw it. Fix: memoize verified tokens in-process
+(digest of the raw token → token id, short TTL), reload the row by primary key so deletion and expiry still apply,
+compare the stored hash to catch id reuse. Draft PR follows.
