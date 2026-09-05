@@ -42,20 +42,24 @@ class VikunjaUser(FastHttpUser):
         self.refresher = gevent.spawn(self._refresh_loop)
 
     def on_stop(self):
-        self.refresher.kill(block=False)
+        if self.refresher:
+            self.refresher.kill(block=False)
         if self.ws:
             self.ws.close()
 
     def _refresh_loop(self):
         while True:
             gevent.sleep(300)
-            # needs vikunja >= 2026-08-29 unstable (go-vikunja/vikunja#3651); older images 401 here and we re-login
-            r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
-            if r.status_code == 200:
-                self.token = r.json()["token"]
-                self.client.auth_header = f"Bearer {self.token}"
-            else:
-                self.login()
+            self.refresh()
+
+    def refresh(self):
+        # needs vikunja >= 2026-08-29 unstable (go-vikunja/vikunja#3651); older images 401 here and we re-login
+        r = self.client.post(API + "/user/token/refresh", name="/user/token/refresh")
+        if r.status_code == 200:
+            self.token = r.json()["token"]
+            self.client.auth_header = f"Bearer {self.token}"
+        else:
+            self.login()
 
     # --- helpers --------------------------------------------------------------
     def login(self):
@@ -205,7 +209,11 @@ class Glancer(VikunjaUser):
 
     @task
     def session(self):
-        self.login()
+        # returning users come back with a refresh cookie; a real login is the exception
+        if random.random() < 0.1:
+            self.login()
+        else:
+            self.refresh()
         self.open_app()
         ws = VikunjaWS(self.host, self.token)
         ws.connect()
@@ -221,6 +229,13 @@ class IntegrationBot(VikunjaUser):
     """Home Assistant / node scripts: no think time, hammer reads. 3 IPs made 1.5M of 3.5M cloud requests."""
     weight = weight("BOT", 1)
     wait_time = lambda self: random.uniform(0.2, 2)  # noqa: E731
+
+    def on_start(self):
+        self.account = STATE["users"][next(_account) % len(STATE["users"])]
+        self.projects = [p for p in self.account["projects"] if p["tasks"]]
+        self.token = self.ws = self.refresher = None
+        # API tokens are verified with PBKDF2 on every request; that cost is part of what bots do to a server
+        self.client.auth_header = f"Bearer {self.account['api_token']}"
 
     @task(65)
     def get_task(self):

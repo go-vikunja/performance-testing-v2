@@ -62,6 +62,17 @@ def call(method, path, user=None, ok=(200, 201), **kw):
     raise RuntimeError(f"{method} {path} kept failing")
 
 
+ROUTE_GROUPS = {}
+
+
+def api_permissions(username):
+    """Everything under tasks/projects/labels; the keys come from /routes so they track Vikunja."""
+    if not ROUTE_GROUPS:
+        routes = call("GET", "/routes", username)
+        ROUTE_GROUPS.update({g: sorted(routes[g]) for g in ("tasks", "projects", "labels") if isinstance(routes.get(g), dict)})
+    return ROUTE_GROUPS
+
+
 def ensure_user(i):
     username = f"{args.prefix}{i}"
     r = S.post(args.host + API + "/register", json={"username": username, "password": PASSWORD,
@@ -69,7 +80,10 @@ def ensure_user(i):
     if r.status_code not in (200, 201, 400, 409):  # 400/409: exists
         raise RuntimeError(f"register {username}: {r.status_code} {r.text[:200]}")
     me = call("GET", "/user", username)
-    return {"username": username, "id": me["id"]}
+    # IntegrationBot authenticates with this like real API clients do (tokens are shown once, so --from-existing makes a new one)
+    token = call("POST", "/tokens", username, json={"title": f"perf-bot-{int(time.time())}", "permissions": api_permissions(username),
+                                                     "expires_at": iso(now() + timedelta(days=365))})
+    return {"username": username, "id": me["id"], "api_token": token["token"]}
 
 
 def views_of(project):
