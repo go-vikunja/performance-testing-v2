@@ -81,3 +81,21 @@ one password). Runs before this point (baseline, pool32) have the cost-11 ramp a
 Same throughput, tail latency halved, DB queueing (load1) almost halved: 100 connections on 4 cores were
 context-switching against each other. Statement rate identical (8.1k/s vs 8.3k/s), so the CPU saved went into
 planning, which is still 2× execution. Keeping 32 for all further runs.
+
+### 3. Baseline with bcrypt 4 — `runs/baseline-b4/2026-09-05_23-10-39` (reference for everything below)
+
+Pool 32, bcrypt 4, fresh seed + snapshot restore. 360,014 requests, **0 failures**, all 3000 users alive.
+
+| | value |
+|---|---|
+| whole-run p50 / p95 / p99 / max ms | 18 / 52 / 100 / 1,026 |
+| steady rps / p50 / p95 / p99 ms | 625 / 17 / 42 / 89 |
+| ramp p50 / p95 ms | 20 / 62 |
+| statements per request | 13.0 |
+| DB exec + plan ms per request | 0.70 + 1.79 |
+| DB host CPU avg / max, load1 | 72 % / 81 %, 5.9 |
+| Vikunja host CPU avg / max | 51 % / 63 % |
+| Postgres / Vikunja container cores | 2.73 / 1.80 |
+
+Throughput is demand-limited (users think), so the knobs to watch are latency, DB CPU and ms per request.
+DB is still at 72 % with **72 % of its statement time in planning**.
