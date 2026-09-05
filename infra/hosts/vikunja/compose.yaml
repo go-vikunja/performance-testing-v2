@@ -9,7 +9,7 @@ services:
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_PASSWORD: ${DB_PASSWORD}
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 100
+      VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 32
       VIKUNJA_SERVICE_PUBLICURL: http://${VIKUNJA_PIP}:3456/
       VIKUNJA_SERVICE_SECRET: ${JWT_SECRET}
       VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
@@ -17,6 +17,8 @@ services:
       # all load comes from one IP; pre-auth limiter is per-IP and always on
       VIKUNJA_RATELIMIT_NOAUTHLIMIT: 10000000
       VIKUNJA_RATELIMIT_TOKENREFRESHLIMIT: 10000000
+      # the 25 logins/s ramp is a bcrypt benchmark otherwise; production keeps the default 11
+      VIKUNJA_SERVICE_BCRYPTROUNDS: 4
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"

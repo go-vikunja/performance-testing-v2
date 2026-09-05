@@ -55,3 +55,10 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
   `project_hierarchy` per task read 5 % with 1.32 ms *planning* per 0.15 ms exec.
 - New Vikunja bug: `pq: duplicate key value violates unique constraint "UQE_tasks_tasks_project_index"` on
   `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates. Fixed by go-vikunja/vikunja#3697.
+
+### Test-side decision: bcrypt cost 4 for all further runs
+
+The ramp (25 logins/s, 3000 users) is a bcrypt-cost-11 CPU benchmark, not something real traffic does. Per the
+user: not worth optimising in Vikunja. From the next run on the test deployment sets `VIKUNJA_SERVICE_BCRYPTROUNDS=4`
+and the seeded hashes are rewritten to cost 4 (`update users set password = <cost-4 hash>`; all seed accounts share
+one password). Runs before this point (baseline, pool32) have the cost-11 ramp and are not comparable on ramp numbers.
