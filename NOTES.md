@@ -165,3 +165,20 @@ plans at **0.90 ms per call for 0.36 ms of execution** (280k calls), and even PK
 call. With prepared statements that means Postgres is still building custom plans on every execution
 (`plan_cache_mode = auto` never switches to the generic plan when the generic estimate looks worse). Next:
 `plan_cache_mode = force_generic_plan`.
+
+### Finding: the pool recycles every connection every 10 seconds
+
+`database.maxconnectionlifetime` defaults to `10000` (`pkg/config/config.go:422`) and is parsed as milliseconds
+(`pkg/db/db.go:173`), so `SetConnMaxLifetime(10s)`. Verified live during a run: every one of the 32 backends in
+`pg_stat_activity` is between 0 and 9.3 s old. Consequences:
+
+- pgx's per-connection statement cache and Postgres's per-backend plan cache are thrown away every 10 s. That is why
+  planning did not disappear with pgx: 0.23 ms plan per PK lookup and 0.90 ms per grants CTE means nearly every
+  execution still gets Parse + plan (`plan_cache_mode = auto` does switch to generic plans after 5 executions,
+  checked with `pg_prepared_statements` — the statements just never survive long enough).
+- 32 fresh connections every 10 s = ~3 connects/s: auth, `SET search_path`, backend fork on the DB side.
+- Sessions that hold a connection longer than the lifetime are not affected (lifetime is checked on return to the
+  pool), so nothing breaks; it is purely wasted work.
+
+Fix on the deployment: `VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000` (1 h). Fix in Vikunja: change the default
+(the value is documented in seconds in older docs, which is probably where the 10000 came from).
