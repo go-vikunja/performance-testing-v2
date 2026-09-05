@@ -54,4 +54,4 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
   IN (...) ORDER BY due_date` 20 % in many variants at 14–25 ms mean (still the heavy query for team users),
   `project_hierarchy` per task read 5 % with 1.32 ms *planning* per 0.15 ms exec.
 - New Vikunja bug: `pq: duplicate key value violates unique constraint "UQE_tasks_tasks_project_index"` on
-  `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates.
+  `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates. Fixed by go-vikunja/vikunja#3697.
