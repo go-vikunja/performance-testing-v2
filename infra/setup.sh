@@ -13,6 +13,8 @@ log() { echo "==> $*"; }
 # `wait` without args always returns 0 and set -e ignores background jobs,
 # so track pids and fail if any of them failed.
 PIDS=()
+# background jobs ignore SIGINT, so ctrl-c has to be forwarded as SIGTERM to the whole process group
+trap 'trap - TERM; kill -TERM 0 2>/dev/null' INT TERM
 wait_all() {
   local failed=0
   for pid in "${PIDS[@]}"; do wait "$pid" || failed=1; done
