@@ -1,11 +1,27 @@
 # Performance tuning log (2026-09-05)
 
 Goal: find bottlenecks, improve measurably. Hosting/config knobs first, code second.
-Infra: ccx23 db + ccx23 vikunja (4 dedicated cores / 16 GB each), postgres:18, vikunja `v2.6.0-113-g7d1aee8d`.
+Infra: ccx23 db + ccx23 vikunja (4 dedicated cores / 16 GB each), postgres:18, vikunja unstable.
 Seed: `./reset.sh --users 100 --tasks 80` (100 users x 6 projects x 80 tasks).
-Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer IntegrationBot), same as the
-2026-08-30 report so numbers are comparable. 3000 users is where both boxes hit >60 % and the pool piles up;
-500/1500 were never bound by anything.
+Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer IntegrationBot), same shape as the
+2026-08-30 report. 3000 users is where both boxes are >50 % busy. Throughput is demand-limited (users think), so
+the columns to compare are latency, DB/Vikunja CPU and DB ms per request, not rps.
+
+## Results
+
+All runs 3000 users, spawn 25/s, 10 min. "steady" = second half of the full-load window; "ramp" = spawn phase.
+CPU and load1 are host averages over the steady window; DB ms per request = `pg_stat_statements` totals / requests.
+Runs before the double line have the cost-11 bcrypt ramp and the old locust (bots with JWT, glancers logging in per
+session); they are not comparable on ramp numbers or Vikunja CPU with the runs after it.
+
+| run | vikunja | change | rps steady | p50/p95/p99 steady ms | p50/p95 ramp ms | failures | stmts/req | DB exec ms/req | DB plan ms/req | DB CPU % | DB load1 | Vikunja CPU % |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 2026-08-30 report (3000) | v2.5.0-345 | — | ~550 | 140 / 1,500 / 2,000 | 6,000–9,800 / 27,000–45,000 | 345 | 12.6 | 2.4 | n/a | 62 | 21 | 58 |
+| `baseline/2026-09-05_22-38-32` | v2.6.0-113 | pool 100, bcrypt 11 | 621 | 19 / 120 / 230 | 4,100 / 16,000 | 88 | 12.9 | 1.34 | 2.32 | 73 | 14.6 | 59 |
+| `pool32/2026-09-05_22-53-25` | v2.6.0-119 | pool 32 | 625 | 19 / 70 / 140 | 3,500 / 15,000 | 116 | 12.9 | 0.91 | 1.87 | 72 | 8.1 | 63 |
+| `baseline-b4/2026-09-05_23-10-39` | v2.6.0-119 | + bcrypt 4, snapshot restore | 625 | 17 / 42 / 89 | 20 / 62 | 0 | 13.0 | 0.70 | 1.79 | 72 | 5.9 | 51 |
+| `pg-nojit/…` | v2.6.0-119 | + jit off, no parallel workers | | | | | | | | | | |
+| ═══ | | new locust: bots with API tokens, glancers refresh | | | | | | | | | | |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -14,37 +30,32 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
 | code 1: stop holding a transaction per request | open (`db.NewSession()` still `Begin()`s) |
 | code 2a: `parent_project_id` NULL for roots | done (`fc78cd3ea`) |
 | code 3: `(project_id, done, due_date)` index | done (`98235c670`) |
-| code 4: pgx driver | draft PR go-vikunja/vikunja#3721, image `ghcr.io/go-vikunja/vikunja:pr-3721` |
-| hosting 1: lower pool | not applied (still 100) |
-| hosting 3: `jit = off` | not applied |
-| hosting 4: loadgen port range | applied today before the baseline (see below) |
+| code 4: pgx driver | merged 2026-09-05 (go-vikunja/vikunja#3721, `a5beb8d8`), unstable build pending |
+| code 7: bcrypt semaphore / login storm | dropped: the 25 logins/s ramp is a test artefact (see below) |
+| hosting 1: lower pool | applied (32), kept |
+| hosting 3: `jit = off` | applied, run pending |
+| hosting 4: loadgen port range | applied before the first run |
 
 ## Log
 
 ### 0. Prep
 
 - Loadgen: `ip_local_port_range = 1024 65535`, `tcp_tw_reuse = 1` (`infra/hosts/loadgen/post-deploy.sh`).
-  Applied live before any run. Removes the `OSError(99)` noise that was 249 of 345 failures last time; test-side only.
+  Removes the `OSError(99)` noise that was 249 of 345 failures last time; test-side only.
 - Infra bugs found on the way (all fixed + committed): Vikunja healthcheck used `wget` (not in image);
   Prometheus had `http://:9646` for locust and no loadgen node-exporter because the first `setup.sh` rendered
   `prometheus.yml` with an empty `LOADGEN_PIP` and later re-runs never recreated the container (`up -d` does not
   restart on mounted-file changes; now `--force-recreate`). `.env` cleanup missed `*_PIP` lines. New `redeploy.sh`
-  to re-apply one host's config / swap the Vikunja image without `setup.sh`.
-  Consequence: the baseline run below has no locust series in Grafana and a ~2 min Prometheus gap at the end
-  (restart during the run). Locust csv + pg_stat_statements are complete.
+  to re-apply one host's config / swap the Vikunja image without `setup.sh`. Editing `run-test.sh` while a run was
+  in progress corrupted it (bash reads scripts incrementally): the archive step is now `collect-run.sh`, rerunnable.
+  `run.sh` kills locust if it has not exited 90 s after the run.
+- Every run now starts from the seeded state: `reset.sh` snapshots the seeded db as template `vikunja_snap`,
+  `run-test.sh` does `drop database vikunja with (force); create database vikunja template vikunja_snap` first.
+  Before this, runs drifted ~4 % per run (task/project creates).
+- The first baseline has no locust series in Grafana and a ~2 min Prometheus gap at the end (restart during the
+  run). Locust csv + pg_stat_statements are complete.
 
-### 1. Baseline — `runs/baseline/2026-09-05_22-38-32` (3000 users, 25/s, 10 min, vikunja v2.6.0-113-g7d1aee8d)
-
-| | this run | 2026-08-30 |
-|---|---|---|
-| requests / failures | 304,579 / 88 (0 port errors, 59 login timeouts, 1× 500) | 271,067 / 345 |
-| steady rps / p50 / p95 / p99 ms | 621 / 19 / 120 / 230 | ~550 / 140 / 1,500 / 2,000 |
-| ramp p50 / p95 ms | 4,100 / 16,000 | 6,000–9,800 / 27,000–45,000 |
-| statements per request | 12.9 | 12.6 |
-| DB exec + plan ms per request | 1.34 + **2.32** | 2.4 + n/a (planning not tracked) |
-| DB host CPU avg / max (steady) | 73 % / 82 % | 62 % / 73 % |
-| Vikunja host CPU avg | 59 % | 58 % |
-| pg backends idle-in-tx avg / max | 3.4 / 36 | 9.8 / 94 |
+### 1. Baseline — `runs/baseline/2026-09-05_22-38-32`
 
 - Steady state is fine now (the NULL-parent + composite index commits did their job). The remaining problem is the
   login ramp: p50 4 s, 60 s client timeouts, 14 users died. And the DB box is the wall at 73 % with
@@ -54,48 +65,34 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
   IN (...) ORDER BY due_date` 20 % in many variants at 14–25 ms mean (still the heavy query for team users),
   `project_hierarchy` per task read 5 % with 1.32 ms *planning* per 0.15 ms exec.
 - New Vikunja bug: `pq: duplicate key value violates unique constraint "UQE_tasks_tasks_project_index"` on
-  `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates. Fixed by go-vikunja/vikunja#3697.
-
-### Test-side decision: bcrypt cost 4 for all further runs
-
-The ramp (25 logins/s, 3000 users) is a bcrypt-cost-11 CPU benchmark, not something real traffic does. Per the
-user: not worth optimising in Vikunja. From the next run on the test deployment sets `VIKUNJA_SERVICE_BCRYPTROUNDS=4`
-and the seeded hashes are rewritten to cost 4 (`update users set password = <cost-4 hash>`; all seed accounts share
-one password). Runs before this point (baseline, pool32) have the cost-11 ramp and are not comparable on ramp numbers.
+  `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates.
+  Fixed by go-vikunja/vikunja#3697.
 
 ### 2. Pool 100 → 32 — `runs/pool32/2026-09-05_22-53-25` (kept)
 
 `VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 32`. Vikunja image drifted to `v2.6.0-119-g2c22cfb6` on redeploy
-(`--pull always`); the 6 commits in between are frontend/editor only, so still comparable.
+(`--pull always`); the 6 commits in between are frontend/editor only. Same throughput, tail latency halved,
+DB queueing (load1) almost halved: 100 connections on 4 cores were context-switching against each other.
+Statement rate identical, so the CPU saved went into planning, which is still 2× execution.
 
-| | baseline (pool 100) | pool 32 |
-|---|---|---|
-| steady rps / p50 / p95 / p99 ms | 621 / 19 / 120 / 230 | 625 / 19 / **70 / 140** |
-| ramp p50 / p95 ms | 4,100 / 16,000 | 3,500 / 15,000 |
-| failures | 88 | 116 (75 login timeouts) |
-| DB exec + plan ms per request | 1.34 + 2.32 | **0.91 + 1.87** |
-| avg ms per statement (exec / plan) | 0.104 / 0.180 | 0.070 / 0.145 |
-| DB host CPU avg / load1 avg | 73 % / 14.6 | 72 % / **8.1** |
-| pg backends active avg / idle-in-tx max | 1.5 / 36 | 1.6 / 27 |
+### Test-side decision: bcrypt cost 4 for all further runs
 
-Same throughput, tail latency halved, DB queueing (load1) almost halved: 100 connections on 4 cores were
-context-switching against each other. Statement rate identical (8.1k/s vs 8.3k/s), so the CPU saved went into
-planning, which is still 2× execution. Keeping 32 for all further runs.
+The ramp (25 logins/s, 3000 users) was a bcrypt-cost-11 CPU benchmark: ~2.5 of 4 cores hashing for the whole
+spawn phase, every other request queued behind it, connections idle-in-transaction while hashing. Per the user:
+not something to optimise in Vikunja. The test deployment sets `VIKUNJA_SERVICE_BCRYPTROUNDS=4` and the seed was
+redone (all hashes cost 4). Glancers also logged in on every session (5–6 logins/s in steady state, ~0.4 cores),
+which explains the 59 → 51 % Vikunja CPU drop between baseline and baseline-b4.
 
-### 3. Baseline with bcrypt 4 — `runs/baseline-b4/2026-09-05_23-10-39` (reference for everything below)
+### 3. Baseline with bcrypt 4 — `runs/baseline-b4/2026-09-05_23-10-39`
 
-Pool 32, bcrypt 4, fresh seed + snapshot restore. 360,014 requests, **0 failures**, all 3000 users alive.
+Pool 32, bcrypt 4, fresh seed + snapshot restore. 360,014 requests, 0 failures, all 3000 users alive, ramp
+indistinguishable from steady state. DB still at 72 % with **72 % of its statement time in planning**.
 
-| | value |
-|---|---|
-| whole-run p50 / p95 / p99 / max ms | 18 / 52 / 100 / 1,026 |
-| steady rps / p50 / p95 / p99 ms | 625 / 17 / 42 / 89 |
-| ramp p50 / p95 ms | 20 / 62 |
-| statements per request | 13.0 |
-| DB exec + plan ms per request | 0.70 + 1.79 |
-| DB host CPU avg / max, load1 | 72 % / 81 %, 5.9 |
-| Vikunja host CPU avg / max | 51 % / 63 % |
-| Postgres / Vikunja container cores | 2.73 / 1.80 |
+### Test-side change: bots use API tokens, glancers refresh
 
-Throughput is demand-limited (users think), so the knobs to watch are latency, DB CPU and ms per request.
-DB is still at 72 % with **72 % of its statement time in planning**.
+No class used API tokens; real bots do (65 % of production requests). Vikunja verifies an API token with
+PBKDF2-SHA256 × 10,000 on every request (`pkg/models/api_tokens.go:142`), a cost the test hid entirely. `seed.py`
+now creates one token per account (all `tasks`/`projects`/`labels` permissions from `/routes`), `IntegrationBot`
+sends it as bearer and never logs in. `Glancer` refreshes its JWT (10 % fresh login) instead of logging in per
+session, matching the access logs (refresh 10 % of interactive requests, login not in the top list).
+Requires a reseed; runs after the double line in the table use it.
