@@ -1,0 +1,73 @@
+[2026-09-05 22:45:55,956] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-05 22:45:55,956] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-05 22:45:55,970] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-05 22:45:55,973] perf-loadgen/INFO/locust.runners: Ramping to 3000 users at a rate of 25.00 per second
+[2026-09-05 22:47:55,951] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 1286, "IntegrationBot": 429, "Worker": 1285} (3000 total users)
+[2026-09-05 22:55:55,754] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-05 22:56:19,725] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-05 22:56:19,781] perf-loadgen/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                             53514     0(0.00%) |      3       1    1028      3 |   86.49        0.00
+GET      /info                                                                           4926     0(0.00%) |      8       0      53      4 |    7.96        0.00
+GET      /labels                                                                         4926     0(0.00%) |     11       3      71      9 |    7.96        0.00
+POST     /login                                                                          2941     0(0.00%) |     36       5     158     36 |    4.75        0.00
+GET      /projects                                                                       4926     0(0.00%) |     19       6     235     18 |    7.96        0.00
+GET      /projects [bot]                                                                18616     0(0.00%) |     14       8     229     13 |   30.09        0.00
+POST     /projects [create]                                                               416     0(0.00%) |     33      21      95     32 |    0.67        0.00
+GET      /projects/{id}                                                                 13752     0(0.00%) |      8       4     210      7 |   22.23        0.00
+GET      /projects/{id}/tasks [bot]                                                     47760     0(0.00%) |     14       8     260     13 |   77.19        0.00
+POST     /projects/{id}/tasks [create]                                                   1952     0(0.00%) |     19      12      92     17 |    3.15        0.00
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                              3895     0(0.00%) |     17       8     226     16 |    6.29        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                        581     0(0.00%) |     15       4      68     16 |    0.94        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                        848     0(0.00%) |     16       4     221     16 |    1.37        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       14662     0(0.00%) |     13       3     439     12 |   23.70        0.00
+GET      /tasks [bot]                                                                    6207     0(0.00%) |     18      11      88     17 |   10.03        0.00
+GET      /tasks [home]                                                                  11055     0(0.00%) |     19       9     218     17 |   17.87        0.00
+GET      /tasks/{id}                                                                     4865     0(0.00%) |     15       8     223     14 |    7.86        0.00
+GET      /tasks/{id} [bot]                                                             135113     0(0.00%) |     15       8    1036     14 |  218.36        0.00
+PATCH    /tasks/{id} [patch]                                                             2364     0(0.00%) |     20       7     233     18 |    3.82        0.00
+GET      /tasks/{id}/comments                                                            4865     0(0.00%) |      6       3     261      5 |    7.86        0.00
+POST     /tasks/{id}/comments [create]                                                    401     0(0.00%) |      7       3      29      6 |    0.65        0.00
+POST     /tasks/{id}/labels [add]                                                         777     0(0.00%) |     14       6      75     14 |    1.26        0.00
+PUT      /tasks/{id}/position                                                            1188     0(0.00%) |     10       6     176      9 |    1.92        0.00
+PUT      /tasks/{id}/read                                                                4865     0(0.00%) |      3       1     127      3 |    7.86        0.00
+GET      /user                                                                           4926     0(0.00%) |      8       1      41      5 |    7.96        0.00
+POST     /user/token/refresh                                                             5858     0(0.00%) |     10       3     189      7 |    9.47        0.00
+WS       connect+auth+subscribe                                                          4926     0(0.00%) |      9       1      42      5 |    7.96        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                    361125     0(0.00%) |     12       0    1036     13 |  583.64        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                      3      3      3      4      4      6      9     13     25     51   1000  53514
+GET      /info                                                                                   4     11     14     15     21     26     31     35     48     53     53   4926
+GET      /labels                                                                                 9     13     15     16     20     24     29     33     46     71     71   4926
+POST     /login                                                                                 36     41     43     46     51     57     66     97    160    160    160   2941
+GET      /projects                                                                              18     24     28     29     35     40     45     50     70    240    240   4926
+GET      /projects [bot]                                                                        13     14     15     16     18     21     30     40     76    150    230  18616
+POST     /projects [create]                                                                     32     34     36     38     41     48     58     65     96     96     96    416
+GET      /projects/{id}                                                                          7      8      9      9     11     15     22     28     49    110    210  13752
+GET      /projects/{id}/tasks [bot]                                                             13     14     15     16     18     21     29     40     79    210    260  47760
+POST     /projects/{id}/tasks [create]                                                          17     19     20     21     25     30     40     48     82     93     93   1952
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                     16     18     19     20     23     26     34     41     67    230    230   3895
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                              16     17     19     20     23     26     32     38     69     69     69    581
+GET      /projects/{id}/views/{view}/tasks [gantt]                                              16     17     18     19     21     24     32     41    220    220    220    848
+GET      /projects/{id}/views/{view}/tasks [list]                                               12     13     14     15     17     21     29     35     59    230    440  14662
+GET      /tasks [bot]                                                                           17     19     20     20     23     27     36     45     72     88     88   6207
+GET      /tasks [home]                                                                          17     20     23     24     29     34     42     48     68    200    220  11055
+GET      /tasks/{id}                                                                            14     16     17     17     21     25     34     40     96    220    220   4865
+GET      /tasks/{id} [bot]                                                                      14     15     16     17     19     22     32     43     81    220   1000 135113
+PATCH    /tasks/{id} [patch]                                                                    18     20     22     25     33     39     47     57     91    230    230   2364
+GET      /tasks/{id}/comments                                                                    5      6      6      7      8     10     16     19     36    260    260   4865
+POST     /tasks/{id}/comments [create]                                                           6      7      8      8     10     13     20     23     29     29     29    401
+POST     /tasks/{id}/labels [add]                                                               14     15     16     17     20     24     32     37     76     76     76    777
+PUT      /tasks/{id}/position                                                                    9     10     10     11     13     16     24     29     92    180    180   1188
+PUT      /tasks/{id}/read                                                                        3      3      3      4      4      6      9     12     28    130    130   4865
+GET      /user                                                                                   5     11     13     14     18     20     24     26     38     41     41   4926
+POST     /user/token/refresh                                                                     7     10     12     14     21     28     35     42    180    190    190   5858
+WS       connect+auth+subscribe                                                                  5     13     16     18     22     26     30     32     39     43     43   4926
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             13     14     15     16     19     24     34     43     76    210   1000 361125
+
