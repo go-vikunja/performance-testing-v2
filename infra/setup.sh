@@ -10,6 +10,15 @@ source ./config.sh
 
 exists() { hcloud "$1" describe "$2" >/dev/null 2>&1; }
 log() { echo "==> $*"; }
+# `wait` without args always returns 0 and set -e ignores background jobs,
+# so track pids and fail if any of them failed.
+PIDS=()
+wait_all() {
+  local failed=0
+  for pid in "${PIDS[@]}"; do wait "$pid" || failed=1; done
+  PIDS=()
+  [ "$failed" = 0 ] || { echo "a parallel step failed, aborting" >&2; exit 1; }
+}
 
 # --- secrets -------------------------------------------------------------
 if [ ! -f "$ENV_FILE" ]; then
@@ -56,18 +65,21 @@ create_server() { # name type role
   hcloud server create --name "$name" --type "$2" --image "$IMAGE" --location "$LOCATION" \
     --ssh-key "$KEY" --network "$NET" --label "$PREFIX=1" --label "role=$3" \
     --user-data-from-file cloud-init/base.yaml >/dev/null &
+  PIDS+=($!)
 }
 create_server db "$TYPE_DB" db
 create_server vikunja "$TYPE_VIKUNJA" vikunja
 create_server monitoring "$TYPE_MONITORING" monitoring
 create_server loadgen "$TYPE_LOADGEN" loadgen
-wait
+wait_all
 
 ip_of()  { hcloud server ip "$PREFIX-$1"; }
 pip_of() { hcloud server describe "$PREFIX-$1" -o json | python3 -c 'import json,sys;print(json.load(sys.stdin)["private_net"][0]["ip"])'; }
 for r in db vikunja monitoring loadgen; do
   up=$(echo "$r" | tr a-z A-Z)
-  eval "${up}_IP=$(ip_of $r) ${up}_PIP=$(pip_of $r)"
+  ip=$(ip_of "$r"); pip=$(pip_of "$r")
+  [ -n "$ip" ] && [ -n "$pip" ] || { echo "could not resolve IPs of $PREFIX-$r" >&2; exit 1; }
+  eval "${up}_IP=$ip ${up}_PIP=$pip"
 done
 export DB_IP VIKUNJA_IP MONITORING_IP LOADGEN_IP DB_PIP VIKUNJA_PIP MONITORING_PIP LOADGEN_PIP
 export DB_PASSWORD JWT_SECRET GRAFANA_PASSWORD VIKUNJA_IMAGE POSTGRES_IMAGE
@@ -100,9 +112,9 @@ deploy() { # role ip
 }
 deploy db "$DB_IP"
 deploy vikunja "$VIKUNJA_IP"
-deploy monitoring "$MONITORING_IP" &
-deploy loadgen "$LOADGEN_IP" &
-wait
+deploy monitoring "$MONITORING_IP" & PIDS+=($!)
+deploy loadgen "$LOADGEN_IP" & PIDS+=($!)
+wait_all
 
 log "waiting for vikunja to answer"
 for i in $(seq 1 40); do
