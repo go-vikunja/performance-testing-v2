@@ -26,8 +26,9 @@ print()
 for r in runs:
     agg = [x for x in csv.DictReader(open(r + "/locust_stats_history.csv")) if x["Name"] == "Aggregated"]
     target = max(int(x["User Count"]) for x in agg)
-    full = [x for x in agg if int(x["User Count"]) >= target]
-    ramp = [x for x in agg if int(x["User Count"]) < target]
+    # users that die during the ramp (login retries exhausted) keep the count just below the target
+    full = [x for x in agg if int(x["User Count"]) >= 0.97 * target]
+    ramp = [x for x in agg if int(x["User Count"]) < 0.97 * target]
     ss = full[len(full) // 2:]  # second half of full-load window
     t0 = int(agg[0]["Timestamp"])
     print(f"{r}: users {target}, ramp {len(ramp)} rows, full-load {len(full)} rows")
