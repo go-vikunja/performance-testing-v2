@@ -10,6 +10,8 @@ services:
       VIKUNJA_DATABASE_PASSWORD: ${DB_PASSWORD}
       VIKUNJA_DATABASE_DATABASE: vikunja
       VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 32
+      # default is 10000 ms: every connection is recycled after 10 s, taking pgx's statement cache and the plan cache with it
+      VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME: 3600000
       VIKUNJA_SERVICE_PUBLICURL: http://${VIKUNJA_PIP}:3456/
       VIKUNJA_SERVICE_SECRET: ${JWT_SECRET}
       VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
