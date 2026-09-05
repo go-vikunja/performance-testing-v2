@@ -69,8 +69,8 @@ User classes in `locust/locustfile.py` (weights via `WEIGHT_WORKER`, `WEIGHT_GLA
 | class            | models                                                                      |
 |------------------|-----------------------------------------------------------------------------|
 | `Worker`         | long session: list/kanban/gantt views, task detail, edits, moves, comments, labels; websocket open; token refresh every 10 min |
-| `Glancer`        | login, app load, home overview, short websocket, gone for minutes           |
-| `IntegrationBot` | polling API client, ~1 req/s per user                                       |
+| `Glancer`        | token refresh (10 % fresh login), app load, home overview, short websocket, gone for minutes |
+| `IntegrationBot` | polling API client with a seeded API token (`tk_…`, PBKDF2-verified per request), ~1 req/s per user |
 | `Collaborator`   | team member commenting/assigning in the owner's shared project; owner receives `notification.created` pushes (latency reported as `WS push notification.created`) |
 
 Scenarios:

@@ -30,7 +30,7 @@ Grafana dashboard: edit `infra/hosts/monitoring/grafana/gen_dashboard.py`, re-ru
 ## Architecture
 
 - `infra/hosts/<role>/` — compose.yaml + configs, copied to `/opt/perf` on each host by `setup.sh`; `post-deploy.sh` there runs on the host after copy (loadgen's writes `locust/.env` with `VIKUNJA_PIP`, `MONITORING_PIP`, `GRAFANA_PASSWORD`).
-- `locust/seed.py` — creates users/projects/tasks/labels/teams via the API and writes `seed-state.json` (accounts, projects, task ids). `--from-existing` rebuilds the state file from an already seeded instance without seeding. All seeded accounts share `PASSWORD` from `common.py`.
+- `locust/seed.py` — creates users/projects/tasks/labels/teams via the API and writes `seed-state.json` (accounts, projects, task ids). `--from-existing` rebuilds the state file from an already seeded instance without seeding. All seeded accounts share `PASSWORD` from `common.py`; each account also gets an API token (`api_token` in the state file) that `IntegrationBot` uses instead of a login.
 - `locust/locustfile.py` — `VikunjaUser` base (login, token refresh every 5 min because JWTs live 10 min, websocket via `ws_client.py`) and four concrete classes: `Worker`, `Glancer`, `IntegrationBot`, `Collaborator`. Class selection is by positional args to locust; weights via `WEIGHT_<NAME>` env vars, which `run.sh` forwards into the container.
 - `locust/common.py` — request shapes (filter/sort/expand/per_page) copied from what the real frontend sends. Change these only when the frontend changes; they are what makes the load realistic.
 - `locust/ws_client.py` — minimal Vikunja websocket client; reports connect and push latency as locust `WS` requests (e.g. `WS push notification.created`).
