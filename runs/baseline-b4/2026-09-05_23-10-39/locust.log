@@ -1,0 +1,88 @@
+[2026-09-05 21:10:46,686] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-05 21:10:46,687] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-05 21:10:46,698] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-05 21:10:46,701] perf-loadgen/INFO/locust.runners: Ramping to 3000 users at a rate of 25.00 per second
+[2026-09-05 21:12:46,728] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 1286, "IntegrationBot": 429, "Worker": 1285} (3000 total users)
+[2026-09-05 21:20:46,479] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-05 21:21:08,667] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-05 21:21:08,725] perf-loadgen/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                             53340     0(0.00%) |      4       1     286      4 |   86.60        0.00
+GET      /info                                                                           4862     0(0.00%) |      7       0      98      3 |    7.89        0.00
+GET      /labels                                                                         4862     0(0.00%) |     20       5     284     15 |    7.89        0.00
+POST     /login                                                                          6577     0(0.00%) |     34       6     288     32 |   10.68        0.00
+GET      /projects                                                                       4862     0(0.00%) |     33      10     418     29 |    7.89        0.00
+GET      /projects [bot]                                                                18384     0(0.00%) |     21      10     295     17 |   29.85        0.00
+POST     /projects [create]                                                               396     0(0.00%) |     68      36     358     57 |    0.64        0.00
+GET      /projects/{id}                                                                 13868     0(0.00%) |     14       6     381     11 |   22.51        0.00
+GET      /projects/{id}/tasks [bot]                                                     47728     0(0.00%) |     22      10     507     19 |   77.49        0.00
+POST     /projects/{id}/tasks [create]                                                   1954     0(0.00%) |     41      20     268     34 |    3.17        0.00
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                              4052     0(0.00%) |     37      18     224     31 |    6.58        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                        589     0(0.00%) |     30       6     198     27 |    0.96        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                        820     0(0.00%) |     26       6     152     21 |    1.33        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       14558     0(0.00%) |     30       6     512     25 |   23.64        0.00
+GET      /tasks [bot]                                                                    6169     0(0.00%) |     30      15     268     25 |   10.02        0.00
+GET      /tasks [home]                                                                  10730     0(0.00%) |     38      15     345     30 |   17.42        0.00
+GET      /tasks/{id}                                                                     4870     0(0.00%) |     33      16     299     27 |    7.91        0.00
+GET      /tasks/{id} [bot]                                                             134180     0(0.00%) |     23      10    1026     19 |  217.84        0.00
+PATCH    /tasks/{id} [patch]                                                             2334     0(0.00%) |     43      12     380     35 |    3.79        0.00
+GET      /tasks/{id}/comments                                                            4870     0(0.00%) |     12       5     379     10 |    7.91        0.00
+POST     /tasks/{id}/comments [create]                                                    384     0(0.00%) |     12       6     105     10 |    0.62        0.00
+POST     /tasks/{id}/labels [add]                                                         822     0(0.00%) |     28      11     182     23 |    1.33        0.00
+PUT      /tasks/{id}/position                                                            1186     0(0.00%) |     20      10     151     17 |    1.93        0.00
+PUT      /tasks/{id}/read                                                                4870     0(0.00%) |      4       1     302      3 |    7.91        0.00
+GET      /user                                                                           4862     0(0.00%) |     10       1     170      7 |    7.89        0.00
+POST     /user/token/refresh                                                             3023     0(0.00%) |     17       4     326     13 |    4.91        0.00
+WS       connect+auth+subscribe                                                          4862     0(0.00%) |      5       1      41      4 |    7.89        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                    360014     0(0.00%) |     20       0    1026     18 |  584.49        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                      4      4      5      5      7     10     21     33     95    160    290  53340
+GET      /info                                                                                   3      9     12     14     20     28     35     39     60     99     99   4862
+GET      /labels                                                                                15     22     27     30     41     52     68     87    160    280    280   4862
+POST     /login                                                                                 32     41     46     50     62     81    100    130    180    290    290   6577
+GET      /projects                                                                              29     37     43     47     59     71     88    100    170    420    420   4862
+GET      /projects [bot]                                                                        17     19     21     23     31     45     69     90    170    280    300  18384
+POST     /projects [create]                                                                     57     65     71     78    110    150    190    240    360    360    360    396
+GET      /projects/{id}                                                                         11     13     14     16     23     35     57     78    170    370    380  13868
+GET      /projects/{id}/tasks [bot]                                                             19     21     23     25     33     47     73     96    180    300    510  47728
+POST     /projects/{id}/tasks [create]                                                          34     38     43     46     65     90    130    160    210    270    270   1954
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                     31     35     39     42     57     78    110    120    200    220    220   4052
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                              27     31     35     38     50     67    110    130    200    200    200    589
+GET      /projects/{id}/views/{view}/tasks [gantt]                                              21     24     27     29     42     58     85    110    150    150    150    820
+GET      /projects/{id}/views/{view}/tasks [list]                                               25     28     31     34     46     63     91    110    200    500    510  14558
+GET      /tasks [bot]                                                                           25     28     31     34     44     63     92    120    200    270    270   6169
+GET      /tasks [home]                                                                          30     38     45     50     66     83    110    130    190    290    350  10730
+GET      /tasks/{id}                                                                            27     31     35     38     52     73    110    140    240    300    300   4870
+GET      /tasks/{id} [bot]                                                                      19     22     24     26     35     51     78    100    190    300   1000 134180
+PATCH    /tasks/{id} [patch]                                                                    35     41     49     56     72    100    140    180    280    380    380   2334
+GET      /tasks/{id}/comments                                                                   10     12     13     14     19     29     46     62    170    380    380   4870
+POST     /tasks/{id}/comments [create]                                                          10     12     13     14     18     24     40     45    110    110    110    384
+POST     /tasks/{id}/labels [add]                                                               23     26     29     33     46     62     98    120    180    180    180    822
+PUT      /tasks/{id}/position                                                                   17     19     22     23     30     46     62     82    150    150    150   1186
+PUT      /tasks/{id}/read                                                                        3      4      5      5      7     10     22     35     73    300    300   4870
+GET      /user                                                                                   7     11     14     15     20     27     41     56    130    170    170   4862
+POST     /user/token/refresh                                                                    13     16     18     20     26     35     48     84    320    330    330   3023
+WS       connect+auth+subscribe                                                                  4      5      7      8     13     17     21     24     38     41     41   4862
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             18     21     24     27     37     52     77    100    180    310   1000 360014
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
+2026-09-05T21:21:08Z <Greenlet at 0x7f59e70451c0: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f59e74a9400>>> failed with ValueError
+
+[2026-09-05 21:21:08,732] perf-loadgen/CRITICAL/locust.main: Unhandled exception in greenlet: <Greenlet at 0x7f59e70451c0: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f59e74a9400>>>
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ^^^^^^^
+ValueError: I/O operation on closed file.
