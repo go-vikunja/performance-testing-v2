@@ -28,6 +28,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `pg-generic-plan/2026-09-06_00-31-54` | pr-3774 | + plan_cache_mode force_generic_plan (reverted) | 628 | 13 / 23 / 100 | 16 / 50 | 0 | 18.8 | 0.66 | 0.60 | 45 | 3.8 | 53 |
 | `conn-lifetime/2026-09-06_00-45-48` | pr-3774 | + connection lifetime 10 s → 1 h | 629 | 13 / 20 / **26** | 16 / 41 | 0 | 18.8 | 0.62 | 0.50 | 44 | 2.0 | 52 |
 | `unstable-pgx/2026-09-06_01-08-54` | v2.6.0-141 (unstable, pgx, no token cache) | same config, main without #3774 | 626 | 21 / 55 / 84 | 19 / 55 | 1 | 18.7 | 0.72 | 0.53 | 46 | 2.5 | **79** |
+| `sub-params/2026-09-06_01-23-01` | pr-3776 (= unstable + #3776, no token cache) | + subscription ids as parameters | 627 | 20 / 49 / 73 | 18 / 50 | 1 | 18.7 | 0.84 | **0.15** | 42 | 2.6 | 78 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -223,3 +224,11 @@ DB-side numbers only.
 CI unblocked; `vikunja/vikunja:unstable` = `v2.6.0-141-g8ba3bbdf` (pgx merged). Same deployment config as
 conn-lifetime. This isolates the two code changes: pgx alone brings the DB from 82 % to 46 % (planning 2.36 → 0.53
 ms/req); the token cache (#3774) alone is Vikunja host 79 % → 52 % and p50 21 → 13 ms, p95 55 → 20 ms.
+
+### 11. Subscription ids as parameters (#3776) — `runs/sub-params/2026-09-06_01-23-01`
+
+Image `pr-3776` = unstable + #3776, no token cache, so compare with unstable-pgx. Planning 0.53 → 0.15 ms/req
+(324 → 77 ms/s), DB CPU 46 → 42 %, p99 84 → 73 ms. Execution went 0.72 → 0.84 ms/req: the CTE now runs a generic
+plan instead of one tailored to a literal id, which is a little slower per call. Net DB CPU still down. (The local
+wrapper was OOM-killed mid-run by the workstation; the remote run completed and was archived by hand, hence the
+run id equals the locust start time.)
