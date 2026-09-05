@@ -32,3 +32,26 @@ Benchmark: `./run-test.sh NAME -u 3000 -r 25 -t 10m` (classes Worker Glancer Int
   to re-apply one host's config / swap the Vikunja image without `setup.sh`.
   Consequence: the baseline run below has no locust series in Grafana and a ~2 min Prometheus gap at the end
   (restart during the run). Locust csv + pg_stat_statements are complete.
+
+### 1. Baseline — `runs/baseline/2026-09-05_22-38-32` (3000 users, 25/s, 10 min, vikunja v2.6.0-113-g7d1aee8d)
+
+| | this run | 2026-08-30 |
+|---|---|---|
+| requests / failures | 304,579 / 88 (0 port errors, 59 login timeouts, 1× 500) | 271,067 / 345 |
+| steady rps / p50 / p95 / p99 ms | 621 / 19 / 120 / 230 | ~550 / 140 / 1,500 / 2,000 |
+| ramp p50 / p95 ms | 4,100 / 16,000 | 6,000–9,800 / 27,000–45,000 |
+| statements per request | 12.9 | 12.6 |
+| DB exec + plan ms per request | 1.34 + **2.32** | 2.4 + n/a (planning not tracked) |
+| DB host CPU avg / max (steady) | 73 % / 82 % | 62 % / 73 % |
+| Vikunja host CPU avg | 59 % | 58 % |
+| pg backends idle-in-tx avg / max | 3.4 / 36 | 9.8 / 94 |
+
+- Steady state is fine now (the NULL-parent + composite index commits did their job). The remaining problem is the
+  login ramp: p50 4 s, 60 s client timeouts, 14 users died. And the DB box is the wall at 73 % with
+  **planning time 2× execution time** (1,370 vs 670 ms/s). Every statement is planned from scratch (lib/pq, unnamed
+  prepared statements) — this is exactly what PR #3721 (pgx) addresses.
+- Top statements: grants CTE 29 % (0.41 ms exec + 0.55 ms plan, 0.77×/request), home overview `tasks ... project_id
+  IN (...) ORDER BY due_date` 20 % in many variants at 14–25 ms mean (still the heavy query for team users),
+  `project_hierarchy` per task read 5 % with 1.32 ms *planning* per 0.15 ms exec.
+- New Vikunja bug: `pq: duplicate key value violates unique constraint "UQE_tasks_tasks_project_index"` on
+  `POST /projects/{id}/tasks` — two concurrent creates in one project compute the same `index`. 1× in 1,734 creates.
