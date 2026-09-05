@@ -27,6 +27,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `token-cache/2026-09-06_00-17-31` | pr-3774 (= main@pgx + cache) | + pgx driver (#3721) + verified-token cache (#3774) | 634 | **13 / 25 / 110** | 17 / 53 | 1 | 18.7 | 0.67 | **0.82** | **48** | 3.1 | **53** |
 | `pg-generic-plan/2026-09-06_00-31-54` | pr-3774 | + plan_cache_mode force_generic_plan (reverted) | 628 | 13 / 23 / 100 | 16 / 50 | 0 | 18.8 | 0.66 | 0.60 | 45 | 3.8 | 53 |
 | `conn-lifetime/2026-09-06_00-45-48` | pr-3774 | + connection lifetime 10 s → 1 h | 629 | 13 / 20 / **26** | 16 / 41 | 0 | 18.8 | 0.62 | 0.50 | 44 | 2.0 | 52 |
+| `unstable-pgx/2026-09-06_01-08-54` | v2.6.0-141 (unstable, pgx, no token cache) | same config, main without #3774 | 626 | 21 / 55 / 84 | 19 / 55 | 1 | 18.7 | 0.72 | 0.53 | 46 | 2.5 | **79** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -216,3 +217,9 @@ seen: no prepared statement reuse, planner on every call, 1.3 ms each for 0.08 m
 as parameters (PR #3776). Expected: roughly half of the remaining planning time, ~150 ms/s of DB CPU at 3000 users.
 The pr-3776 image is main + this fix *without* the token cache (#3774 is not merged), so its run is compared on
 DB-side numbers only.
+
+### 10. Unstable with pgx, without the token cache — `runs/unstable-pgx/2026-09-06_01-08-54`
+
+CI unblocked; `vikunja/vikunja:unstable` = `v2.6.0-141-g8ba3bbdf` (pgx merged). Same deployment config as
+conn-lifetime. This isolates the two code changes: pgx alone brings the DB from 82 % to 46 % (planning 2.36 → 0.53
+ms/req); the token cache (#3774) alone is Vikunja host 79 % → 52 % and p50 21 → 13 ms, p95 55 → 20 ms.
