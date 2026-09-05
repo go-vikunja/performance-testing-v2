@@ -194,7 +194,7 @@ right lever, and generic plans for the `project_id IN (...)` family are a risk o
 ### 9. Connection lifetime 10 s → 1 h — `runs/conn-lifetime/2026-09-06_00-45-48` (kept)
 
 `VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000`. p99 110 → 26 ms (the reconnect every 10 s was the tail),
-planning 0.82 → 0.50 ms/req, DB load1 3.1 → 2.0. PR for the default: go-vikunja/vikunja#TBD.
+planning 0.82 → 0.50 ms/req, DB load1 3.1 → 2.0. PR for the default: go-vikunja/vikunja#3775.
 Planning is still not near zero though: 0.22 ms per PK lookup, 0.53 ms per grants CTE, on nearly every call. So
 statements are still being re-prepared. Remaining suspect: pgx's per-connection statement cache holds 512 entries
 and Vikunja generates many distinct SQL texts (`IN ($1, …, $N)` with per-user N, per-view variants), so the LRU
