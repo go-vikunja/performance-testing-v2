@@ -62,3 +62,22 @@ The ramp (25 logins/s, 3000 users) is a bcrypt-cost-11 CPU benchmark, not someth
 user: not worth optimising in Vikunja. From the next run on the test deployment sets `VIKUNJA_SERVICE_BCRYPTROUNDS=4`
 and the seeded hashes are rewritten to cost 4 (`update users set password = <cost-4 hash>`; all seed accounts share
 one password). Runs before this point (baseline, pool32) have the cost-11 ramp and are not comparable on ramp numbers.
+
+### 2. Pool 100 → 32 — `runs/pool32/2026-09-05_22-53-25` (kept)
+
+`VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 32`. Vikunja image drifted to `v2.6.0-119-g2c22cfb6` on redeploy
+(`--pull always`); the 6 commits in between are frontend/editor only, so still comparable.
+
+| | baseline (pool 100) | pool 32 |
+|---|---|---|
+| steady rps / p50 / p95 / p99 ms | 621 / 19 / 120 / 230 | 625 / 19 / **70 / 140** |
+| ramp p50 / p95 ms | 4,100 / 16,000 | 3,500 / 15,000 |
+| failures | 88 | 116 (75 login timeouts) |
+| DB exec + plan ms per request | 1.34 + 2.32 | **0.91 + 1.87** |
+| avg ms per statement (exec / plan) | 0.104 / 0.180 | 0.070 / 0.145 |
+| DB host CPU avg / load1 avg | 73 % / 14.6 | 72 % / **8.1** |
+| pg backends active avg / idle-in-tx max | 1.5 / 36 | 1.6 / 27 |
+
+Same throughput, tail latency halved, DB queueing (load1) almost halved: 100 connections on 4 cores were
+context-switching against each other. Statement rate identical (8.1k/s vs 8.3k/s), so the CPU saved went into
+planning, which is still 2× execution. Keeping 32 for all further runs.
