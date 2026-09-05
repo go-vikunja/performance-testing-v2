@@ -1,0 +1,3070 @@
+[2026-09-05 20:53:26,459] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-05 20:53:26,460] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-05 20:53:26,474] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-05 20:53:26,478] perf-loadgen/INFO/locust.runners: Ramping to 3000 users at a rate of 25.00 per second
+[2026-09-05 20:55:06,172] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:07,858] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:07Z <Greenlet at 0x7fe9818f5800: run_user(<locustfile.Worker object at 0x7fe9818fa150>)> failed with TypeError
+
+[2026-09-05 20:55:09,858] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:11,888] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:11Z <Greenlet at 0x7fe9813e8b80: run_user(<locustfile.Worker object at 0x7fe9813e3a10>)> failed with TypeError
+
+[2026-09-05 20:55:12,891] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:12Z <Greenlet at 0x7fe98143cd60: run_user(<locustfile.Glancer object at 0x7fe9813f1e50>)> failed with TypeError
+
+[2026-09-05 20:55:12,962] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:14,947] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:14Z <Greenlet at 0x7fe980eb59e0: run_user(<locustfile.Worker object at 0x7fe980eba690>)> failed with TypeError
+
+[2026-09-05 20:55:14,952] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:14Z <Greenlet at 0x7fe980eb5440: run_user(<locustfile.IntegrationBot object at 0x7fe980eb9d9)> failed with TypeError
+
+[2026-09-05 20:55:18,963] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:18Z <Greenlet at 0x7fe980984d60: run_user(<locustfile.Worker object at 0x7fe98096e750>)> failed with TypeError
+
+[2026-09-05 20:55:19,899] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:20,497] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:21,006] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:21Z <Greenlet at 0x7fe9806e5f80: run_user(<locustfile.Glancer object at 0x7fe9806ee750>)> failed with TypeError
+
+[2026-09-05 20:55:22,028] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:22Z <Greenlet at 0x7fe980478720: run_user(<locustfile.Glancer object at 0x7fe98071b950>)> failed with TypeError
+
+[2026-09-05 20:55:22,033] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:22Z <Greenlet at 0x7fe980478860: run_user(<locustfile.Glancer object at 0x7fe98071bb90>)> failed with TypeError
+
+[2026-09-05 20:55:23,022] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:23Z <Greenlet at 0x7fe980520d60: run_user(<locustfile.Glancer object at 0x7fe9804df710>)> failed with TypeError
+
+[2026-09-05 20:55:24,948] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:26,065] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:26Z <Greenlet at 0x7fe980000220: run_user(<locustfile.Glancer object at 0x7fe9802abdd0>)> failed with TypeError
+
+[2026-09-05 20:55:26,940] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 1286, "IntegrationBot": 429, "Worker": 1285} (3000 total users)
+[2026-09-05 20:55:27,083] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:27Z <Greenlet at 0x7fe9800432e0: run_user(<locustfile.Worker object at 0x7fe980084050>)> failed with TypeError
+
+[2026-09-05 20:55:27,086] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:27Z <Greenlet at 0x7fe980043560: run_user(<locustfile.Worker object at 0x7fe9800844d0>)> failed with TypeError
+
+[2026-09-05 20:55:29,092] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:29Z <Greenlet at 0x7fe97fdbb2e0: run_user(<locustfile.Glancer object at 0x7fe97fdfa8d0>)> failed with TypeError
+
+[2026-09-05 20:55:29,095] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:29Z <Greenlet at 0x7fe97fdbb060: run_user(<locustfile.Glancer object at 0x7fe97fdfa450>)> failed with TypeError
+
+[2026-09-05 20:55:29,099] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:29Z <Greenlet at 0x7fe97fac42c0: run_user(<locustfile.Worker object at 0x7fe97fe30410>)> failed with TypeError
+
+[2026-09-05 20:55:30,108] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:30Z <Greenlet at 0x7fe97fb20ea0: run_user(<locustfile.Glancer object at 0x7fe97fb34dd0>)> failed with TypeError
+
+[2026-09-05 20:55:30,406] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:31,125] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:31Z <Greenlet at 0x7fe97f874220: run_user(<locustfile.Worker object at 0x7fe97fba37d0>)> failed with TypeError
+
+[2026-09-05 20:55:31,129] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:31Z <Greenlet at 0x7fe97fb73d80: run_user(<locustfile.IntegrationBot object at 0x7fe97fba311)> failed with TypeError
+
+[2026-09-05 20:55:32,133] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:32Z <Greenlet at 0x7fe97f8ecfe0: run_user(<locustfile.Glancer object at 0x7fe980bd53d0>)> failed with TypeError
+
+[2026-09-05 20:55:32,138] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:32Z <Greenlet at 0x7fe97f8eee80: run_user(<locustfile.Worker object at 0x7fe97f916390>)> failed with TypeError
+
+[2026-09-05 20:55:32,767] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:32,845] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:33,164] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:34,164] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:34Z <Greenlet at 0x7fe97f6b9260: run_user(<locustfile.Glancer object at 0x7fe97f663f50>)> failed with TypeError
+
+[2026-09-05 20:55:35,166] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:35Z <Greenlet at 0x7fe97f6fbb00: run_user(<locustfile.Glancer object at 0x7fe97f410a10>)> failed with TypeError
+
+[2026-09-05 20:55:35,170] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:35Z <Greenlet at 0x7fe97f6fb740: run_user(<locustfile.Glancer object at 0x7fe97f410350>)> failed with TypeError
+
+[2026-09-05 20:55:35,192] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:35Z <Greenlet at 0x7fe97f424d60: run_user(<locustfile.Worker object at 0x7fe97f412990>)> failed with TypeError
+
+[2026-09-05 20:55:37,065] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:38,232] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:38Z <Greenlet at 0x7fe97f25b560: run_user(<locustfile.Worker object at 0x7fe97f27c290>)> failed with TypeError
+
+[2026-09-05 20:55:39,238] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:39Z <Greenlet at 0x7fe97ef81620: run_user(<locustfile.Worker object at 0x7fe97ef89a90>)> failed with TypeError
+
+[2026-09-05 20:55:40,236] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:40Z <Greenlet at 0x7fe97efbaca0: run_user(<locustfile.Glancer object at 0x7fe97f001c10>)> failed with TypeError
+
+[2026-09-05 20:55:40,240] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:40Z <Greenlet at 0x7fe97efbbb00: run_user(<locustfile.Worker object at 0x7fe97f0034d0>)> failed with TypeError
+
+[2026-09-05 20:55:40,732] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:41,064] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:41,259] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:41Z <Greenlet at 0x7fe97ed4a2a0: run_user(<locustfile.Glancer object at 0x7fe97ed54e90>)> failed with TypeError
+
+[2026-09-05 20:55:41,261] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:41Z <Greenlet at 0x7fe97ed4a160: run_user(<locustfile.Glancer object at 0x7fe97ed54c50>)> failed with TypeError
+
+[2026-09-05 20:55:41,263] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:41Z <Greenlet at 0x7fe97ed49ee0: run_user(<locustfile.Glancer object at 0x7fe97ed547d0>)> failed with TypeError
+
+[2026-09-05 20:55:41,267] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:41Z <Greenlet at 0x7fe97ed4ade0: run_user(<locustfile.IntegrationBot object at 0x7fe97ed562d)> failed with TypeError
+
+[2026-09-05 20:55:41,268] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:41Z <Greenlet at 0x7fe97ed4bc40: run_user(<locustfile.Worker object at 0x7fe97ed57b90>)> failed with TypeError
+
+[2026-09-05 20:55:42,274] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:42Z <Greenlet at 0x7fe97ea24cc0: run_user(<locustfile.Worker object at 0x7fe97ed8fd10>)> failed with TypeError
+
+[2026-09-05 20:55:42,281] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:42Z <Greenlet at 0x7fe97ea24720: run_user(<locustfile.IntegrationBot object at 0x7fe97ed8f41)> failed with TypeError
+
+[2026-09-05 20:55:42,957] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:43,586] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:44,299] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:44Z <Greenlet at 0x7fe97e7fd940: run_user(<locustfile.Worker object at 0x7fe97eaffdd0>)> failed with TypeError
+
+[2026-09-05 20:55:45,331] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:45Z <Greenlet at 0x7fe97e8a80e0: run_user(<locustfile.IntegrationBot object at 0x7fe97e89985)> failed with TypeError
+
+[2026-09-05 20:55:45,336] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:45Z <Greenlet at 0x7fe97e83be20: run_user(<locustfile.Glancer object at 0x7fe97e8993d0>)> failed with TypeError
+
+[2026-09-05 20:55:45,337] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:45Z <Greenlet at 0x7fe97e8a8b80: run_user(<locustfile.Worker object at 0x7fe97e89aa50>)> failed with TypeError
+
+[2026-09-05 20:55:46,354] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:46Z <Greenlet at 0x7fe97e5c2f20: run_user(<locustfile.Worker object at 0x7fe97e5f0a10>)> failed with TypeError
+
+[2026-09-05 20:55:46,455] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:47,357] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:47Z <Greenlet at 0x7fe97e66dd00: run_user(<locustfile.Worker object at 0x7fe97e66b7d0>)> failed with TypeError
+
+[2026-09-05 20:55:47,621] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:48,371] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:48Z <Greenlet at 0x7fe97e317ec0: run_user(<locustfile.Glancer object at 0x7fe97e67be90>)> failed with TypeError
+
+[2026-09-05 20:55:48,883] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:49,408] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:49Z <Greenlet at 0x7fe97e3da660: run_user(<locustfile.Glancer object at 0x7fe97e3edb50>)> failed with TypeError
+
+[2026-09-05 20:55:49,415] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:49Z <Greenlet at 0x7fe97e3dbc40: run_user(<locustfile.Worker object at 0x7fe97e07c1d0>)> failed with TypeError
+
+[2026-09-05 20:55:50,399] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:50Z <Greenlet at 0x7fe97e105940: run_user(<locustfile.Worker object at 0x7fe97e10d790>)> failed with TypeError
+
+[2026-09-05 20:55:52,436] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:52Z <Greenlet at 0x7fe97deec040: run_user(<locustfile.Glancer object at 0x7fe97de4f890>)> failed with TypeError
+
+[2026-09-05 20:55:52,440] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:52Z <Greenlet at 0x7fe97deed760: run_user(<locustfile.Worker object at 0x7fe97def4dd0>)> failed with TypeError
+
+[2026-09-05 20:55:52,442] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:52Z <Greenlet at 0x7fe97deed260: run_user(<locustfile.Worker object at 0x7fe97def44d0>)> failed with TypeError
+
+[2026-09-05 20:55:53,283] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:54,473] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:54Z <Greenlet at 0x7fe97dc65da0: run_user(<locustfile.Glancer object at 0x7fe97dc4a5d0>)> failed with TypeError
+
+[2026-09-05 20:55:54,482] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:54Z <Greenlet at 0x7fe97dc66d40: run_user(<locustfile.Worker object at 0x7fe97dcb8110>)> failed with TypeError
+
+[2026-09-05 20:55:55,476] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:55Z <Greenlet at 0x7fe97da00720: run_user(<locustfile.Glancer object at 0x7fe97da04650>)> failed with TypeError
+
+[2026-09-05 20:55:56,517] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:56Z <Greenlet at 0x7fe97da462a0: run_user(<locustfile.Glancer object at 0x7fe97da5d610>)> failed with TypeError
+
+[2026-09-05 20:55:57,343] perf-loadgen/ERROR/locust.user.task: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/task.py", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File "/mnt/locust/locustfile.py", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+[2026-09-05 20:55:57,522] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:57Z <Greenlet at 0x7fe97d7d1940: run_user(<locustfile.Worker object at 0x7fe97d7da090>)> failed with TypeError
+
+[2026-09-05 20:55:57,525] perf-loadgen/ERROR/locust.user.users: the JSON object must be str, bytes or bytearray, not NoneType
+Traceback (most recent call last):
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 199, in run_user
+    user.run()
+    ~~~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/user/users.py", line 161, in run
+    self.on_start()
+    ~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 98, in on_start
+    super().on_start()
+    ~~~~~~~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 40, in on_start
+    self.login()
+    ~~~~~~~~~~^^
+  File "/mnt/locust/locustfile.py", line 64, in login
+    self.token = r.json()["token"]
+                 ~~~~~~^^
+  File "/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+2026-09-05T20:55:57Z <Greenlet at 0x7fe97d7d2200: run_user(<locustfile.Worker object at 0x7fe97d7db050>)> failed with TypeError
+
+[2026-09-05 21:03:26,243] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-05 21:03:46,497] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-05 21:03:46,560] perf-loadgen/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                             45558     7(0.02%) |    392       1   60003      4 |   74.12        0.01
+GET      /info                                                                           4499     0(0.00%) |      8       0     105      4 |    7.32        0.00
+GET      /labels                                                                         4499     3(0.07%) |   3529       5   60017    490 |    7.32        0.00
+POST     /login                                                                          6267    75(1.20%) |  11719     126   60035   5900 |   10.20        0.12
+GET      /projects                                                                       4499    10(0.22%) |   4224      10   60003    730 |    7.32        0.02
+GET      /projects [bot]                                                                15487     0(0.00%) |    209      10   46945     18 |   25.20        0.00
+POST     /projects [create]                                                               362     0(0.00%) |    639      39   34948     63 |    0.59        0.00
+GET      /projects/{id}                                                                 11812     4(0.03%) |    526       6   60001     12 |   19.22        0.01
+GET      /projects/{id}/tasks [bot]                                                     39204     2(0.01%) |    193      10   60002     20 |   63.78        0.00
+POST     /projects/{id}/tasks [create]                                                   1661     0(0.00%) |    693      22   45134     38 |    2.70        0.00
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                              3437     0(0.00%) |    479      17   50253     34 |    5.59        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                        470     0(0.00%) |    520       6   26683     31 |    0.76        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                        682     0(0.00%) |    555       6   44286     23 |    1.11        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       12485     0(0.00%) |    627       6   59965     28 |   20.31        0.00
+GET      /tasks [bot]                                                                    5111     0(0.00%) |    175      15   31131     27 |    8.32        0.00
+GET      /tasks [home]                                                                   9560     2(0.02%) |   1935      15   60002     40 |   15.55        0.00
+GET      /tasks/{id}                                                                     4028     0(0.00%) |    605      16   42834     30 |    6.55        0.00
+GET      /tasks/{id} [bot]                                                             111147     5(0.00%) |    203      11   60001     21 |  180.83        0.01
+PATCH    /tasks/{id} [patch]                                                             1924     2(0.10%) |    889      12   60003     38 |    3.13        0.00
+GET      /tasks/{id}/comments                                                            4028     1(0.02%) |    478       5   60003     11 |    6.55        0.00
+POST     /tasks/{id}/comments [create]                                                    351     0(0.00%) |    321       6   29709     11 |    0.57        0.00
+POST     /tasks/{id}/labels [add]                                                         651     1(0.15%) |    670      10   60003     25 |    1.06        0.00
+PUT      /tasks/{id}/position                                                             963     0(0.00%) |    562      10   46090     19 |    1.57        0.00
+PUT      /tasks/{id}/read                                                                4028     0(0.00%) |    413       1   41367      4 |    6.55        0.00
+GET      /user                                                                           4499     4(0.09%) |   4362       1   60005    580 |    7.32        0.01
+POST     /user/token/refresh                                                             2956     0(0.00%) |     11       4     153      9 |    4.81        0.00
+WS       connect+auth+subscribe                                                          4499     0(0.00%) |     12       1     120      5 |    7.32        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                    304667   116(0.04%) |    739       0   60035     20 |  495.69        0.19
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                      4      5      6      7     24   1100   5300  11000  38000  60000  60000  45558
+GET      /info                                                                                   4      9     11     14     21     31     43     55     97    110    110   4499
+GET      /labels                                                                               490   2200   3900   5500  11000  17000  26000  36000  55000  60000  60000   4499
+POST     /login                                                                               5900  13000  18000  22000  33000  43000  54000  60000  60000  60000  60000   6267
+GET      /projects                                                                             730   2800   4900   6800  13000  20000  31000  41000  60000  60000  60000   4499
+GET      /projects [bot]                                                                        18     22     26     30     46     78   1400   5400  29000  41000  47000  15487
+POST     /projects [create]                                                                     63     77     97    110    200   2500  11000  15000  35000  35000  35000    362
+GET      /projects/{id}                                                                         12     15     19     23     58   2000   8400  15000  39000  60000  60000  11812
+GET      /projects/{id}/tasks [bot]                                                             20     24     28     32     50     82   1200   4800  29000  53000  60000  39204
+POST     /projects/{id}/tasks [create]                                                          38     47     59     70    140   2400  14000  20000  39000  45000  45000   1661
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                     34     42     50     59    110   1700   6900  13000  34000  50000  50000   3437
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                              31     39     47     52    110   1800   8700  15000  27000  27000  27000    470
+GET      /projects/{id}/views/{view}/tasks [gantt]                                              23     29     37     44     87   3000   8200  13000  44000  44000  44000    682
+GET      /projects/{id}/views/{view}/tasks [list]                                               28     35     43     52    140   2700  10000  16000  37000  56000  60000  12485
+GET      /tasks [bot]                                                                           27     32     37     42     62     97    930   3800  24000  31000  31000   5111
+GET      /tasks [home]                                                                          40     94    970   1800   5700  11000  21000  27000  47000  60000  60000   9560
+GET      /tasks/{id}                                                                            30     38     46     55    110   2200  10000  17000  36000  43000  43000   4028
+GET      /tasks/{id} [bot]                                                                      21     25     29     33     52     84   1200   5200  28000  53000  60000 111147
+PATCH    /tasks/{id} [patch]                                                                    38     51     62     72    160   3300  13000  23000  60000  60000  60000   1924
+GET      /tasks/{id}/comments                                                                   11     14     17     20     47   1600   6700  14000  33000  60000  60000   4028
+POST     /tasks/{id}/comments [create]                                                          11     14     17     19     45    970   3000   6700  30000  30000  30000    351
+POST     /tasks/{id}/labels [add]                                                               25     32     40     45    100   2900   8400  20000  60000  60000  60000    651
+PUT      /tasks/{id}/position                                                                   19     23     28     33     75   2000   8000  15000  46000  46000  46000    963
+PUT      /tasks/{id}/read                                                                        4      5      6      7     23   1400   6700  13000  29000  41000  41000   4028
+GET      /user                                                                                 580   2800   5000   6900  13000  21000  33000  41000  57000  60000  60000   4499
+POST     /user/token/refresh                                                                     9     10     12     13     20     27     43     67    120    150    150   2956
+WS       connect+auth+subscribe                                                                  5      8     15     20     34     44     60     69    110    120    120   4499
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             20     26     32     39    120   3000  12000  20000  49000  60000  60000 304667
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+1                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf96', 0, original=timed out)
+10                 GET /projects: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects', 0, original=timed out)       
+75                 POST /login: RetriesExceeded('http://10.0.1.2:3456/api/v2/login', 0, original=timed out)            
+3                  GET /labels: RetriesExceeded('http://10.0.1.2:3456/api/v2/labels', 0, original=timed out)           
+1                  GET /projects/{id}: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/220', 0, original=timed out)
+4                  GET /user: RetriesExceeded('http://10.0.1.2:3456/api/v2/user', 0, original=timed out)               
+1                  GET /projects/{id}: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/512', 0, original=timed out)
+2                  GET /tasks [home]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks', 0, original=timed out)      
+1                  GET /tasks/{id}/comments: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/9010/comments', 0, original=timed out)
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/6047', 0, original=timed out)
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/5715', 0, original=timed out)
+1                  PATCH /tasks/{id} [patch]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/33668', 0, original=timed out)
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/15858', 0, original=timed out)
+1                  GET /projects/{id}: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/547', 0, original=timed out)
+1                  GET /projects/{id}/tasks [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/338/tasks', 0, original=timed out)
+1                  GET /projects/{id}/tasks [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/326/tasks', 0, original=timed out)
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/15820', 0, original=timed out)
+1                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf30', 0, original=timed out)
+1                  POST /tasks/{id}/labels [add]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/13775/labels', 0, original=timed out)
+1                  PATCH /tasks/{id} [patch]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/12987', 0, original=timed out)
+1                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf48', 0, original=timed out)
+2                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf27', 0, original=timed out)
+1                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf87', 0, original=timed out)
+1                  GET /tasks/{id} [bot]: RetriesExceeded('http://10.0.1.2:3456/api/v2/tasks/42067', 0, original=timed out)
+1                  GET /avatar/{username}: RetriesExceeded('http://10.0.1.2:3456/api/v2/avatar/perf77', 0, original=timed out)
+1                  GET /projects/{id}: RetriesExceeded('http://10.0.1.2:3456/api/v2/projects/503', 0, original=timed out)
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,23 @@
+Count,Message,Traceback,Nodes
+20,"the JSON object must be str, bytes or bytearray, not NoneType","  File ""/opt/venv/lib/python3.13/site-packages/locust/user/task.py"", line 363, in run
+    self.execute_next_task()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File ""/opt/venv/lib/python3.13/site-packages/locust/user/task.py"", line 396, in execute_next_task
+    self.execute_task(self._task_queue.popleft())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/opt/venv/lib/python3.13/site-packages/locust/user/task.py"", line 513, in execute_task
+    task(self.user)
+    ~~~~^^^^^^^^^^^
+  File ""/mnt/locust/locustfile.py"", line 208, in session
+    self.login()
+    ~~~~~~~~~~^^
+  File ""/mnt/locust/locustfile.py"", line 64, in login
+    self.token = r.json()[""token""]
+                 ~~~~~~^^
+  File ""/opt/venv/lib/python3.13/site-packages/locust/contrib/fasthttp.py"", line 570, in json
+    return json.loads(self.text)  # type: ignore
+           ~~~~~~~~~~^^^^^^^^^^^
+  File ""/usr/local/lib/python3.13/json/__init__.py"", line 345, in loads
+    raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+                    f'not {s.__class__.__name__}')
+",local
