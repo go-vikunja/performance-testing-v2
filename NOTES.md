@@ -26,6 +26,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `gogc400/2026-09-06_00-02-58` | v2.6.0-121 | + GOGC 400, GOMEMLIMIT 4GiB | 611 | 62 / 170 / 240 | 27 / 90 | 1 | 18.5 | 0.93 | 2.36 | 82 | 13.9 | 80 |
 | `token-cache/2026-09-06_00-17-31` | pr-3774 (= main@pgx + cache) | + pgx driver (#3721) + verified-token cache (#3774) | 634 | **13 / 25 / 110** | 17 / 53 | 1 | 18.7 | 0.67 | **0.82** | **48** | 3.1 | **53** |
 | `pg-generic-plan/2026-09-06_00-31-54` | pr-3774 | + plan_cache_mode force_generic_plan (reverted) | 628 | 13 / 23 / 100 | 16 / 50 | 0 | 18.8 | 0.66 | 0.60 | 45 | 3.8 | 53 |
+| `conn-lifetime/2026-09-06_00-45-48` | pr-3774 | + connection lifetime 10 s → 1 h | 629 | 13 / 20 / **26** | 16 / 41 | 0 | 18.8 | 0.62 | 0.50 | 44 | 2.0 | 52 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -189,3 +190,12 @@ Fix on the deployment: `VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000` (1 h). F
 Planning 0.82 → 0.60 ms/req, DB CPU 48 → 45 %, but the grants CTE's plan cost per call went 0.90 → 2.39 ms: a generic
 plan for a recursive CTE is expensive to build and it is still rebuilt every 10 s (see the lifetime finding). Not the
 right lever, and generic plans for the `project_id IN (...)` family are a risk on skewed data. Reverted to `auto`.
+
+### 9. Connection lifetime 10 s → 1 h — `runs/conn-lifetime/2026-09-06_00-45-48` (kept)
+
+`VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000`. p99 110 → 26 ms (the reconnect every 10 s was the tail),
+planning 0.82 → 0.50 ms/req, DB load1 3.1 → 2.0. PR for the default: go-vikunja/vikunja#TBD.
+Planning is still not near zero though: 0.22 ms per PK lookup, 0.53 ms per grants CTE, on nearly every call. So
+statements are still being re-prepared. Remaining suspect: pgx's per-connection statement cache holds 512 entries
+and Vikunja generates many distinct SQL texts (`IN ($1, …, $N)` with per-user N, per-view variants), so the LRU
+churns. Probing with `log_statement = all`.
