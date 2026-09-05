@@ -19,6 +19,9 @@ services:
       VIKUNJA_RATELIMIT_TOKENREFRESHLIMIT: 10000000
       # the 25 logins/s ramp is a bcrypt benchmark otherwise; production keeps the default 11
       VIKUNJA_SERVICE_BCRYPTROUNDS: 4
+      # ~2.3 GCs/s at GOGC 100 under load on a 16 GB box; trade heap for GC CPU
+      GOGC: 400
+      GOMEMLIMIT: 4GiB
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"
