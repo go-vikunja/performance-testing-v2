@@ -25,6 +25,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `baseline-v3/2026-09-05_23-41-00` | v2.6.0-119 | pool 32, bcrypt 4, jit off | 605 | 73 / 180 / 260 | 27 / 100 | 4 | 18.5 | 0.93 | 2.39 | 82 | 14.4 | 82 |
 | `gogc400/2026-09-06_00-02-58` | v2.6.0-121 | + GOGC 400, GOMEMLIMIT 4GiB | 611 | 62 / 170 / 240 | 27 / 90 | 1 | 18.5 | 0.93 | 2.36 | 82 | 13.9 | 80 |
 | `token-cache/2026-09-06_00-17-31` | pr-3774 (= main@pgx + cache) | + pgx driver (#3721) + verified-token cache (#3774) | 634 | **13 / 25 / 110** | 17 / 53 | 1 | 18.7 | 0.67 | **0.82** | **48** | 3.1 | **53** |
+| `pg-generic-plan/2026-09-06_00-31-54` | pr-3774 | + plan_cache_mode force_generic_plan (reverted) | 628 | 13 / 23 / 100 | 16 / 50 | 0 | 18.8 | 0.66 | 0.60 | 45 | 3.8 | 53 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -182,3 +183,9 @@ call. With prepared statements that means Postgres is still building custom plan
 
 Fix on the deployment: `VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME=3600000` (1 h). Fix in Vikunja: change the default
 (the value is documented in seconds in older docs, which is probably where the 10000 came from).
+
+### 8. `plan_cache_mode = force_generic_plan` — `runs/pg-generic-plan/2026-09-06_00-31-54` (reverted)
+
+Planning 0.82 → 0.60 ms/req, DB CPU 48 → 45 %, but the grants CTE's plan cost per call went 0.90 → 2.39 ms: a generic
+plan for a recursive CTE is expensive to build and it is still rebuilt every 10 s (see the lifetime finding). Not the
+right lever, and generic plans for the `project_id IN (...)` family are a risk on skewed data. Reverted to `auto`.
