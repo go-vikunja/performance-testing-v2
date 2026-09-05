@@ -86,7 +86,7 @@ done
 export DB_IP VIKUNJA_IP MONITORING_IP LOADGEN_IP DB_PIP VIKUNJA_PIP MONITORING_PIP LOADGEN_PIP
 export DB_PASSWORD JWT_SECRET GRAFANA_PASSWORD VIKUNJA_IMAGE POSTGRES_IMAGE
 # keep discovered IPs for locust/run.sh & friends
-grep -v '_IP=' "$ENV_FILE" > "$ENV_FILE.tmp"; mv "$ENV_FILE.tmp" "$ENV_FILE"
+grep -vE '_P?IP=' "$ENV_FILE" > "$ENV_FILE.tmp"; mv "$ENV_FILE.tmp" "$ENV_FILE"
 for v in DB_IP VIKUNJA_IP MONITORING_IP LOADGEN_IP DB_PIP VIKUNJA_PIP MONITORING_PIP LOADGEN_PIP; do echo "$v=${!v}" >> "$ENV_FILE"; done
 
 SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
@@ -109,7 +109,7 @@ deploy() { # role ip
   $SSH "root@$ip" 'mkdir -p /opt/perf'
   scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r "$tmp/." "root@$ip:/opt/perf/"
   [ "$role" = loadgen ] && scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ../locust "root@$ip:/opt/perf/"
-  $SSH "root@$ip" 'cd /opt/perf && [ -f post-deploy.sh ] && bash post-deploy.sh; docker compose up -d --remove-orphans --pull always'
+  $SSH "root@$ip" 'cd /opt/perf && [ -f post-deploy.sh ] && bash post-deploy.sh; docker compose up -d --remove-orphans --pull always --force-recreate'
   rm -rf "$tmp"
 }
 deploy db "$DB_IP"

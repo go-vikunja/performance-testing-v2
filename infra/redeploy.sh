@@ -6,7 +6,7 @@
 #   ./redeploy.sh db --restart postgres        # postgresql.conf changes need a restart, not just up -d
 set -euo pipefail
 cd "$(dirname "$0")"
-source ./config.sh; source "$ENV_FILE"
+set -a; source ./config.sh; source "$ENV_FILE"; set +a  # envsubst runs in a child
 SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
 role=${1:?role}; shift
 restart=""
