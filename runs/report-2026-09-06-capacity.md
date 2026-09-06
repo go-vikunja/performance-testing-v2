@@ -34,6 +34,7 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `partial-index` | pr-3774 | + partial index on `projects.parent_project_id` (#3777) | 636 | 13 / 19 / 24 | 0.52 + 0.48 | 42 % | 52 % |
 | `combined-v2` | pr-3779 (all PRs) | + access cache (#3780, #3783) | 633 | **11 / 17 / 22** | 0.48 + 0.15 | **37 %** | **50 %** |
 | `combined-cap6000` (6000 users) | pr-3779 | all PRs, capacity | **1,251** | 14 / 41 / 66 | 0.47 + 0.15 | 56 % | 77 % |
+| `combined-v3` | pr-3779 (+ #3786) | + per-request overhead from the first CPU profile | 640 | **10 / 16 / 22** | 0.53 + 0.17 | 39 % | **45 %** |
 
 Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 11 ms at 37 % / 50 %. At 6000 users
 (1,251 rps, 0 failures) the boxes sit at 56 % / 77 %, below what they needed for 3000 users at the start.
@@ -59,17 +60,23 @@ Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 11 ms at 37
 6. **The grants CTE ran once per request** (per-session memo only). #3780 keeps the resolved access map per user
    across requests (keyvalue-backed, invalidated by xorm after-commit hooks on projects / shares / teams), #3783
    stops the per-task-write project timestamp touch from invalidating it. 281k → 25k calls per run, DB load1 2.3 → 1.5.
-7. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
-8. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
-9. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
-10. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
+7. **API-side per-request overhead, from the first CPU profile** (#3785 adds the profiler endpoint): the
+   session-cache write hook ran two regexps on every statement (5 % of API CPU), the xorm logger formatted every
+   statement although database logging is off (2 %), and `GetAuthFromClaims` reloaded the API token's owner in a
+   fresh transaction twice per request (9 % cum). #3786: statements per request 18.0 → 14.6, API host 50 → 45 %.
+8. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
+9. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
+10. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
+11. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
 
 ## What is left (ordered)
 
-1. **Merge #3774, #3775, #3776, #3777, #3780, #3783** (measured together as #3779: p50 11 ms, DB 37 %, API 50 % at
-   3000 users; 1,251 rps at 6000). Close #3779 afterwards.
-2. **The API host is the wall now** (77 % at 6000 users, DB at 56 %). Nothing on the API side can be profiled from
-   outside (stripped binary, scratch image); a config-gated `net/http/pprof` endpoint is the enabling step.
+1. **Merge #3774, #3775, #3777, #3780, #3783, #3785, #3786** (#3776 is merged; measured together as #3779: p50 10 ms,
+   DB 39 %, API 45 % at 3000 users; 1,251 rps at 6000 before #3786). Close #3779 afterwards.
+2. **What the API host still spends its CPU on** (profile in `runs/combined-v3/…/cpu-profile-t240-30s.pb.gz`):
+   26 % network syscalls (≈ 14 statements + 2 transactions per request), 28 % cum in `tasksRead` →
+   `addMoreInfoToTasks` (one query per related entity; the task and its project are loaded twice per read),
+   4 % xorm's `?` → `$n` rewrite on every statement (xorm-level). Next: fewer queries per task read.
 3. **API-token path opens its own transaction** (`auth.ValidateAPITokenString`): BEGIN, token, user, COMMIT before
    the handler. A non-transactional read session in `pkg/db` would drop 2 round trips per bot request. Same for
    read-only handlers in general (`db.NewSession()` always `Begin()`s): 2.7 transactions per request today.
