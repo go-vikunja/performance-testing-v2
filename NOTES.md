@@ -37,6 +37,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-profile/2026-09-06_11-21-58` | pr-3779 (`f3bb05960` = + #3785 pprof) | same as v2, 30 s CPU profile at t=240 (`cpu-profile-t240-30s.pb.gz` in the run dir) | 627 | 11 / 17 / 23 | 14 / 38 | 0 | 18.0 | 0.49 | 0.15 | 37 | 1.3 | 50 |
 | `combined-v3/2026-09-06_11-43-28` | pr-3779 (`b089ac163` = + #3786) | + regexp/logger/auth per-request overhead | 640 | **10 / 16 / 22** | 13 / 37 | 0 | **14.6** | 0.53 | 0.17 | 39 | 1.4 | **45** |
 | `combined-v4/2026-09-06_12-01-18` | pr-3779 (`eee403ef8` = + WITH word scan) | + regexp-free write detection | 637 | **9** / 16 / 22 | 13 / 39 | 1 | 14.6 | 0.55 | 0.17 | 39 | 1.9 | **43** |
+| `combined-v5/2026-09-06_12-15-02` | pr-3779 (`cb03108cc` = + #3787) | + per-session memo for task/project/user lookups | 638 | 9 / 16 / 22 | 12 / 37 | 0 | **13.2** | 0.55 | 0.18 | 39 | 2.7 | **41** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -362,3 +363,17 @@ combined run; `combined-v4` (running) measures the WITH-scan fix on its own firs
 Samples per 30 s: 45.4 → 41.0 → **37.1 s** across the three profiles (−18 % API CPU at equal load).
 `isWriteStatement` 5.6 % → 0.5 %, regexp no longer in the profile. What is left: syscalls 31 % (round trips),
 `tasksRead` 22.6 % cum, xorm `?`→`$n` rewrite 3.8 %, allocation 6.7 %, JSON 2.7 %.
+
+### 18. Combined with #3787 — `runs/combined-v5/2026-09-06_12-15-02`
+
+Statements per request 14.6 → 13.2, API host 43 → 41 %, container 1.50 → 1.42 cores, profile samples per 30 s
+37.1 → 35.4 s, 0 failures. Latency unchanged at 9 / 16 / 22 ms: at 3000 users the request path is now dominated by
+the remaining ~13 round trips, not CPU.
+
+## Where things stand (end of session, second part)
+
+Same hardware and load shape as baseline-v3 (p50 73 / p95 180 / p99 260 ms at 82 % DB / 82 % API):
+**p50 9 / p95 16 / p99 22 ms at 39 % DB / 41 % API.** API-side CPU per request down 22 % across the three profiles.
+Open PRs: #3774, #3775, #3777, #3780 (+ #3783 stacked), #3785, #3786, #3787; #3776 merged; #3779 = all of them.
+Next levers, in order: fewer queries per task read (`addMoreInfoToTasks` fans out into one query per related
+entity even for a single task; ~11 selects), xorm's `?`→`$n` rewrite per statement (xorm-level), then JSON.
