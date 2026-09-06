@@ -38,6 +38,7 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `combined-v5` | pr-3779 (+ #3786 complete, #3787) | + regexp-free write detection, per-session row memo | 638 | **9 / 16 / 22** | 0.55 + 0.18 | 39 % | **41 %** |
 | `combined-v5-cap6000` (6000 users) | pr-3779 (all PRs) | capacity on the final image | **1,259** | **9 / 21 / 34** | 0.38 + 0.11 | 43 % | 65 % |
 | `cap9000` (9000 users) | pr-3779 (all PRs) | past the knee | 1,873 | 11 / 68 / 130 | 0.45 + 0.14 | 68 % | **83 %** |
+| `cap10000` (10,000 users, **ccx33 + ccx33**) | pr-3779 (all PRs) | 8 cores / 32 GB per box | **2,107** | **6 / 10 / 14** | 0.23 + 0.08 | 25 % | 60 % |
 
 Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 % / 41 %. At 6000 users
 (1,259 rps, p95 21 ms) the boxes sit at 43 % / 65 %, below what they needed for 3000 users at the start.
@@ -98,9 +99,11 @@ Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 
 - `database.maxopenconnections`: 2–3× DB cores (32 for 4 cores), not 100.
 - `database.maxconnectionlifetime`: ≥ 30 min until #3775 lands.
 - Postgres: `jit = off`, `max_parallel_workers_per_gather = 0` for this workload.
-- With all PRs, 6000 users / 1,259 rps run at 43 % DB / 65 % API. At 9000 users the API host is at 83 % and p99 is
-  130 ms: the wall. p99 < 50 ms holds to ~7,000–7,500 users on two ccx23s. For 10,000 users at p99 < 50 ms the API
-  host needs 8 dedicated cores (ccx33) and the DB should follow (it is at 68 % at 9000), plus the next code cuts.
+- Two ccx23s carry ~7,000–7,500 users at p99 < 50 ms with all PRs; at 9000 the API host is at 83 % and p99 130 ms.
+- **10,000 users at p99 < 50 ms** (the target): met on ccx33 + ccx33 with p99 14 ms, API 60 %, DB 25 %. The API
+  host is what needs the 8 cores; the DB would still be fine on a ccx23 (~50 %) at this load. Infra defaults are
+  now ccx33/ccx33; `TYPE_DB=ccx23` is the cheaper equivalent for the DB side.
+- Load generator: one cx33 with 4 locust processes is good to ~15k simulated users.
 
 ## Test-side notes
 

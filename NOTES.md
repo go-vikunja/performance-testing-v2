@@ -40,6 +40,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-v5/2026-09-06_12-15-02` | pr-3779 (`cb03108cc` = + #3787) | + per-session memo for task/project/user lookups | 638 | 9 / 16 / 22 | 12 / 37 | 0 | **13.2** | 0.55 | 0.18 | 39 | 2.7 | **41** |
 | `combined-v5-cap6000/2026-09-06_12-28-53` (**6000 users**, 50/s) | pr-3779 (`cb03108cc`, all PRs) | capacity, final image | **1259** | 9 / 21 / 34 | 22 / 68 | 4 | 13.2 | 0.38 | 0.11 | 43 | 2.3 | 65 |
 | `cap9000/2026-09-06_13-57-32` (**9000 users**, 75/s, 4 locust procs) | pr-3779 (`cb03108cc`) | capacity, past the knee | **1873** | 11 / **68 / 130** | 19 / 99 | 6 | 13.2 | 0.45 | 0.14 | 68 | 5.8 | **83** |
+| `cap10000/2026-09-06_14-41-42` (**10000 users**, 80/s, **ccx33 + ccx33**) | pr-3779 (`cb03108cc`) | bigger boxes: 8 cores / 32 GB each, pool 48, shared_buffers 8 GB | **2107** | **6 / 10 / 14** | 9 / 59 | 2 | 13.1 | 0.23 | 0.08 | 25 | 2.3 | 60 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -397,3 +398,13 @@ Target from the user: 10,000 users at p99 < 50 ms. Two ways, probably both: (a) 
 (ccx33; CPU per request is constant, 10k would sit at ~46 % of 8 cores) and DB to ccx33 as well since 70 %+ on the
 DB is where per-statement execution starts to stretch; (b) fewer round trips per request on the code side
 (task read fan-out, ~9 selects for one task; xorm `?` rewrite; JSON).
+
+### 21. 10,000 users on ccx33 + ccx33 — `runs/cap10000/2026-09-06_14-41-42`
+
+Infra recreated (`teardown.sh`, `setup.sh` with `TYPE_DB=ccx33 TYPE_VIKUNJA=ccx33`, now the defaults in
+`config.sh`; Postgres `shared_buffers` 8 GB, `effective_cache_size` 24 GB, 8 workers; pool 48; `GOMEMLIMIT` 8 GiB;
+image pr-3779). Seed took 55 s instead of 158 s. Result: 2,107 rps, **p50 6 / p95 10 / p99 14 ms**, API host
+60 % avg / 84 % max (4.45 cores), DB 25 % avg (1.66 cores), DB exec 0.23 ms/req (no contention at all). The
+user's target (10k users, p99 < 50 ms) is met with ~3× headroom on the tail. The DB upgrade was not needed for
+10k: at 25 % of 8 cores it would be ~50 % of a ccx23. Loadgen (cx33, 4 locust processes) at 42 %: fine to ~15k,
+then it needs a bigger box or a second one.
