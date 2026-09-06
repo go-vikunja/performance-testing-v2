@@ -41,6 +41,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-v5-cap6000/2026-09-06_12-28-53` (**6000 users**, 50/s) | pr-3779 (`cb03108cc`, all PRs) | capacity, final image | **1259** | 9 / 21 / 34 | 22 / 68 | 4 | 13.2 | 0.38 | 0.11 | 43 | 2.3 | 65 |
 | `cap9000/2026-09-06_13-57-32` (**9000 users**, 75/s, 4 locust procs) | pr-3779 (`cb03108cc`) | capacity, past the knee | **1873** | 11 / **68 / 130** | 19 / 99 | 6 | 13.2 | 0.45 | 0.14 | 68 | 5.8 | **83** |
 | `cap10000/2026-09-06_14-41-42` (**10000 users**, 80/s, **ccx33 + ccx33**) | pr-3779 (`cb03108cc`) | bigger boxes: 8 cores / 32 GB each, pool 48, shared_buffers 8 GB | **2107** | **6 / 10 / 14** | 9 / 59 | 2 | 13.1 | 0.23 | 0.08 | 25 | 2.3 | 60 |
+| `cap14000/2026-09-06_15-01-21` (**14000 users**, 100/s, ccx33 + ccx33, cx43 loadgen, 8 locust procs) | pr-3779 | ceiling for p99 < 50 ms | **2947** | 6 / 20 / **45** | 9 / 64 | 8 | 13.1 | 0.27 | 0.09 | 39 | 2.6 | **76** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
