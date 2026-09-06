@@ -481,3 +481,10 @@ One ccx43 with 16 locust processes went from 23 % at 20k to 91 % average / 99 % 
 cores), so the 340 ms p50 is locust queueing, not the server: API 43 %, DB 56 %, backends 2.4 active. 40k run
 cancelled. Beyond ~25k simulated users the test needs locust in distributed mode across several machines
 (master + workers on separate hosts), which `setup.sh`/`run.sh` do not do today.
+
+## End of session
+
+Infra torn down (no servers, network, firewall or key left in the project). Repo defaults reset to the
+measured sweet spot for the money: DB ccx23 (4 GB shared_buffers), API ccx33, loadgen cx43, pool 48 / idle 48,
+1 h lifetime, GOMEMLIMIT 8 GiB, image pr-3779 until the PRs are merged. `max_connections` stays 500 so the pool
+can be raised for big-box runs without a Postgres restart. Report: `runs/report-2026-09-06-capacity.md`.

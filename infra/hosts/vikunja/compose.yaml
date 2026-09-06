@@ -9,9 +9,9 @@ services:
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_PASSWORD: ${DB_PASSWORD}
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 400
+      VIKUNJA_DATABASE_MAXOPENCONNECTIONS: 48
       # default 50: every connection above it is closed when idle and re-prepared on the next burst
-      VIKUNJA_DATABASE_MAXIDLECONNECTIONS: 400
+      VIKUNJA_DATABASE_MAXIDLECONNECTIONS: 48
       # default is 10000 ms: every connection is recycled after 10 s, taking pgx's statement cache and the plan cache with it
       VIKUNJA_DATABASE_MAXCONNECTIONLIFETIME: 3600000
       VIKUNJA_SERVICE_PUBLICURL: http://${VIKUNJA_PIP}:3456/
@@ -27,7 +27,7 @@ services:
       VIKUNJA_SERVICE_BCRYPTROUNDS: 4
       # ~2.3 GCs/s at GOGC 100 under load on a 16 GB box; trade heap for GC CPU
       GOGC: 400
-      GOMEMLIMIT: 32GiB
+      GOMEMLIMIT: 8GiB
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"
