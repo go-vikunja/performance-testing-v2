@@ -32,9 +32,11 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `sub-params` | pr-3776 (pgx + params, no cache) | + subscription ids as parameters (#3776) | 627 | 20 / 49 / 73 | 0.84 + 0.15 | 42 % | 78 % |
 | `cap6000` (6000 users) | pr-3774 | capacity | **1,242** | 24 / 85 / 130 | 0.96 + 0.70 | 85 % | 79 % |
 | `partial-index` | pr-3774 | + partial index on `projects.parent_project_id` (#3777) | 636 | 13 / 19 / 24 | 0.52 + 0.48 | 42 % | 52 % |
+| `combined-v2` | pr-3779 (all PRs) | + access cache (#3780, #3783) | 633 | **11 / 17 / 22** | 0.48 + 0.15 | **37 %** | **50 %** |
+| `combined-cap6000` (6000 users) | pr-3779 | all PRs, capacity | **1,251** | 14 / 41 / 66 | 0.47 + 0.15 | 56 % | 77 % |
 
-Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 13 ms at 44 % / 52 %, and the boxes now
-carry 6000 users (1,242 rps) at the utilisation they had for 3000.
+Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 11 ms at 37 % / 50 %. At 6000 users
+(1,251 rps, 0 failures) the boxes sit at 56 % / 77 %, below what they needed for 3000 users at the start.
 
 ## Findings, by impact
 
@@ -54,18 +56,20 @@ carry 6000 users (1,242 rps) at the utilisation they had for 3000.
    without a partial index the planner hashes all 1,449 projects for the recursive join (120 of 197 buffers).
    #3777 adds `projects (parent_project_id) WHERE parent_project_id IS NOT NULL`: CTE 0.32 → 0.19 ms mean under
    load, DB exec 0.62 → 0.52 ms/req.
-6. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
-7. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
-8. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
-9. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
+6. **The grants CTE ran once per request** (per-session memo only). #3780 keeps the resolved access map per user
+   across requests (keyvalue-backed, invalidated by xorm after-commit hooks on projects / shares / teams), #3783
+   stops the per-task-write project timestamp touch from invalidating it. 281k → 25k calls per run, DB load1 2.3 → 1.5.
+7. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
+8. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
+9. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
+10. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
 
 ## What is left (ordered)
 
-1. **Merge #3774, #3775, #3776, #3777** and rerun `unstable` once to have all four in one image; expected at 3000
-   users: DB ~38 %, API ~50 %, p50 ~13 ms, planning ~0.15 ms/req.
-2. **Grants CTE** (`project_access.go`) is still 37 % of DB execution time after #3777 (0.19 ms × 0.8 per request). It is memoised
-   per session only; a cross-request cache per user (short TTL, invalidated by project/share/team writes) removes
-   most of it. Also answers the per-task `project_hierarchy` read.
+1. **Merge #3774, #3775, #3776, #3777, #3780, #3783** (measured together as #3779: p50 11 ms, DB 37 %, API 50 % at
+   3000 users; 1,251 rps at 6000). Close #3779 afterwards.
+2. **The API host is the wall now** (77 % at 6000 users, DB at 56 %). Nothing on the API side can be profiled from
+   outside (stripped binary, scratch image); a config-gated `net/http/pprof` endpoint is the enabling step.
 3. **API-token path opens its own transaction** (`auth.ValidateAPITokenString`): BEGIN, token, user, COMMIT before
    the handler. A non-transactional read session in `pkg/db` would drop 2 round trips per bot request. Same for
    read-only handlers in general (`db.NewSession()` always `Begin()`s): 2.7 transactions per request today.

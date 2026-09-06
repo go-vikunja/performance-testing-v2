@@ -33,6 +33,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `partial-index/2026-09-06_02-08-51` | pr-3774 | + partial index on projects.parent_project_id (#3777, applied live) | 636 | 13 / 19 / 24 | 16 / 41 | 0 | 18.6 | **0.52** | 0.48 | 42 | 2.0 | 52 |
 | `combined/2026-09-06_10-05-12` | pr-3779 (`ea603a21a` = main + #3774 #3775 #3776 #3777 #3780) | all five together | 636 | **11 / 17 / 22** | 15 / 39 | 2 | 18.2 | 0.53 | **0.14** | **37** | 2.3 | 50 |
 | `combined-cap6000/2026-09-06_10-18-07` (**6000 users**, 50/s) | pr-3779 (`ea603a21a`) | all five, capacity | **1251** | 14 / 41 / 66 | 23 / 72 | 0 | 18.2 | 0.47 | 0.15 | 56 | 4.0 | 77 |
+| `combined-v2/2026-09-06_10-48-59` | pr-3779 (`7a6414d20` = + #3780 keyvalue refactor + #3783) | + hook-less project touch | 633 | 11 / 17 / 22 | 14 / 38 | 0 | 18.1 | **0.48** | 0.15 | 37 | **1.5** | 50 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -295,3 +296,10 @@ so it is JSON, routing and the ~18 statements per request); the DB has headroom 
 
 Stacked PR #3783 (hook-less project timestamp touch) is merged into #3779 together with the user's keyvalue
 refactor of #3780 (`03f627fd4`); next combined run on head `7a6414d20` once its image is built.
+
+### 16. Combined with #3783 — `runs/combined-v2/2026-09-06_10-48-59`
+
+Grants CTE 281k → 25k calls (≈ 91 % cache hits; the rest are real invalidations from project creates and
+TTL expiry), now 7 % of DB execution. DB exec 0.53 → 0.48 ms/req, DB load1 2.3 → 1.5, 0 failures. Latency did not
+move (11 / 17 / 22 ms): at 3000 users the DB is no longer on the request path's critical side; the API host
+(50 %, 77 % at 6000 users) is. Next lever there needs a profile, i.e. a config-gated pprof endpoint.
