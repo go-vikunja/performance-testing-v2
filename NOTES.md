@@ -42,6 +42,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `cap9000/2026-09-06_13-57-32` (**9000 users**, 75/s, 4 locust procs) | pr-3779 (`cb03108cc`) | capacity, past the knee | **1873** | 11 / **68 / 130** | 19 / 99 | 6 | 13.2 | 0.45 | 0.14 | 68 | 5.8 | **83** |
 | `cap10000/2026-09-06_14-41-42` (**10000 users**, 80/s, **ccx33 + ccx33**) | pr-3779 (`cb03108cc`) | bigger boxes: 8 cores / 32 GB each, pool 48, shared_buffers 8 GB | **2107** | **6 / 10 / 14** | 9 / 59 | 2 | 13.1 | 0.23 | 0.08 | 25 | 2.3 | 60 |
 | `cap14000/2026-09-06_15-01-21` (**14000 users**, 100/s, ccx33 + ccx33, cx43 loadgen, 8 locust procs) | pr-3779 | ceiling for p99 < 50 ms | **2947** | 6 / 20 / **45** | 9 / 64 | 8 | 13.1 | 0.27 | 0.09 | 39 | 2.6 | **76** |
+| `db23-cap12000/2026-09-06_15-28-58` (**12000 users**, ccx33 API + **ccx23 DB**) | pr-3779 | ceiling with the small DB | **2518** | 9 / 28 / **47** | 19 / 110 | 5 | 13.1 | 0.67 | 0.18 | **87** | 13.0 | 50 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -409,3 +410,16 @@ image pr-3779). Seed took 55 s instead of 158 s. Result: 2,107 rps, **p50 6 / p9
 user's target (10k users, p99 < 50 ms) is met with ~3× headroom on the tail. The DB upgrade was not needed for
 10k: at 25 % of 8 cores it would be ~50 % of a ccx23. Loadgen (cx33, 4 locust processes) at 42 %: fine to ~15k,
 then it needs a bigger box or a second one.
+
+### 22. Ceilings at p99 < 50 ms — `runs/cap14000/…`, `runs/db23-cap12000/…`
+
+Load generator resized to cx43 (8 vCPU) with 8 locust processes; `hcloud server change-type` to a smaller type
+is refused with `--keep-disk`, so the ccx23-DB variant was a full recreate (`TYPE_DB=ccx23 ./setup.sh`).
+
+| setup | max users | rps | p50 / p95 / p99 | wall |
+|---|---|---|---|---|
+| ccx33 API + ccx33 DB | ~14,000 | 2,947 | 6 / 20 / 45 ms | API 76 % avg / 93 % max |
+| ccx33 API + ccx23 DB | ~12,000 | 2,518 | 9 / 28 / 47 ms | DB 87 % / 95 %, load1 13, exec/req 0.27 → 0.67 ms |
+
+Both numbers sit at the edge; plan with 13k and 11k. Infra defaults now: DB ccx23 (conf halved), API ccx33,
+loadgen cx43, matching the running stack.

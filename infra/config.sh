@@ -5,7 +5,7 @@ LOCATION="${LOCATION:-nbg1}"
 IMAGE="${IMAGE:-debian-13}"
 
 # ccx = dedicated vCPU, cx = shared
-TYPE_DB="${TYPE_DB:-ccx33}"
+TYPE_DB="${TYPE_DB:-ccx23}"
 TYPE_VIKUNJA="${TYPE_VIKUNJA:-ccx33}"
 TYPE_MONITORING="${TYPE_MONITORING:-cx23}"
 TYPE_LOADGEN="${TYPE_LOADGEN:-cx43}"

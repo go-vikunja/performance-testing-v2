@@ -39,6 +39,8 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `combined-v5-cap6000` (6000 users) | pr-3779 (all PRs) | capacity on the final image | **1,259** | **9 / 21 / 34** | 0.38 + 0.11 | 43 % | 65 % |
 | `cap9000` (9000 users) | pr-3779 (all PRs) | past the knee | 1,873 | 11 / 68 / 130 | 0.45 + 0.14 | 68 % | **83 %** |
 | `cap10000` (10,000 users, **ccx33 + ccx33**) | pr-3779 (all PRs) | 8 cores / 32 GB per box | **2,107** | **6 / 10 / 14** | 0.23 + 0.08 | 25 % | 60 % |
+| `cap14000` (14,000 users, ccx33 + ccx33) | pr-3779 (all PRs) | ceiling for p99 < 50 ms | 2,947 | 6 / 20 / 45 | 0.27 + 0.09 | 39 % | 76 % |
+| `db23-cap12000` (12,000 users, ccx33 API + ccx23 DB) | pr-3779 (all PRs) | ceiling with the small DB | 2,518 | 9 / 28 / 47 | 0.67 + 0.18 | **87 %** | 50 % |
 
 Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 % / 41 %. At 6000 users
 (1,259 rps, p95 21 ms) the boxes sit at 43 % / 65 %, below what they needed for 3000 users at the start.
@@ -103,7 +105,9 @@ Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 
 - **10,000 users at p99 < 50 ms** (the target): met on ccx33 + ccx33 with p99 14 ms, API 60 %, DB 25 %. The API
   host is what needs the 8 cores; the DB would still be fine on a ccx23 (~50 %) at this load. Infra defaults are
   now ccx33/ccx33; `TYPE_DB=ccx23` is the cheaper equivalent for the DB side.
-- Load generator: one cx33 with 4 locust processes is good to ~15k simulated users.
+- Ceilings at p99 < 50 ms: ~14,000 users (2,950 rps) on ccx33 + ccx33, ~12,000 (2,500 rps) with the DB on a ccx23.
+  Plan with 13k / 11k for margin.
+- Load generator: a cx43 with 8 locust processes was at 33 % for 12k users.
 
 ## Test-side notes
 

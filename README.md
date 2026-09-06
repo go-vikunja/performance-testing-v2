@@ -22,10 +22,10 @@ Servers (all Debian 13, everything in docker, private network `10.0.0.0/16`):
 
 | role       | default type | runs                                                    |
 |------------|--------------|---------------------------------------------------------|
-| db         | ccx33        | postgres:18 (+pg_stat_statements), postgres-exporter, node-exporter, cadvisor |
+| db         | ccx23        | postgres:18 (+pg_stat_statements), postgres-exporter, node-exporter, cadvisor |
 | vikunja    | ccx33        | vikunja image from `config.sh` (pr-3779 until the perf PRs are merged), node-exporter, cadvisor |
 | monitoring | cx23         | prometheus, grafana (+image renderer), node-exporter    |
-| loadgen    | cx33         | locust (on demand), locust-exporter, node-exporter      |
+| loadgen    | cx43         | locust (on demand, 4–8 processes), locust-exporter, node-exporter |
 
 Firewall: only Grafana `:3000` is public. SSH `:22` is allowed from `ADMIN_IP` (your current IP at setup time)
 only. Vikunja and Postgres are reachable on the private network only.
@@ -46,7 +46,7 @@ cd infra
 Interactive: `ssh -L 8089:localhost:8089 root@<loadgen ip>` then on the box
 `cd /opt/perf/locust && ./run.sh ui Worker Glancer` and open http://localhost:8089.
 
-Override sizes: `TYPE_DB=ccx23 TYPE_VIKUNJA=ccx23 ./setup.sh` (halve `shared_buffers`/`effective_cache_size` in `hosts/db/postgresql.conf` for 16 GB boxes). Secrets and discovered IPs live in `infra/.env`.
+Override sizes: `TYPE_DB=ccx33 ./setup.sh` (then double `shared_buffers`/`effective_cache_size` in `hosts/db/postgresql.conf`). Measured ceilings at p99 < 50 ms: ~12k users with a ccx23 DB, ~14k with a ccx33 DB (API on ccx33 either way). Secrets and discovered IPs live in `infra/.env`.
 
 Note: the pre-auth rate limiter (`/login`, `/register`, `/ws`; 10/min per IP, always on) is raised to
 effectively unlimited in `hosts/vikunja/compose.yaml`, since all load comes from one IP.
