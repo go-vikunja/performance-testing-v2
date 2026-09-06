@@ -48,6 +48,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `idle192-cap20000/2026-09-06_16-37-47` (20000 users, big boxes, pool 192, idle 192) | pr-3779 | pool still bursting full | 4145 | 32 / 71 / 94 | 15 / 68 | 34 | 13.1 | 0.43 | 0.15 | 41 | 6.1 | 41 |
 | `pool400-cap20000/2026-09-06_16-52-02` (20000 users, big boxes, pool 400) | pr-3779 | pool no longer the limit | 4141 | 35 / 72 / 93 | 13 / 71 | 36 | 13.1 | 0.43 | 0.17 | 41 | 8.7 | 41 |
 | `rs-cap20000/2026-09-06_17-06-59` (20000 users, big boxes, pool 400, **+ #3790 reads without tx**) | pr-3779 `c1ed33d39` | −4 round trips/request | 4181 | **16 / 41 / 56** | 12 / 59 | 31 | **10.5** | 0.44 | 0.17 | 39 | 6.6 | 41 |
+| `rs-cap30000/2026-09-06_17-19-54` (30000 users, big boxes, + #3790) | pr-3779 `c1ed33d39` | **load generator saturated** (91 % / 99 %) | 5134 | 340 / 740 / 1600 (loadgen-side) | 25 / 110 | 171 | 10.3 | 0.58 | 0.22 | 56 | 14.1 | 43 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -473,3 +474,10 @@ p50 35 → 16 ms, p95 72 → 41, p99 93 → 56. Statements per request 13.1 → 
 read pipeline and the token lookup), backends idle in transaction 37 → 1.9 average, 19 peak. CPU unchanged
 (41 % / 39 %). What remains is 10.5 round trips × 0.8 ms RTT plus queueing; the next cut is batching the
 task-read fan-out.
+
+### 25. 30k users — `runs/rs-cap30000/2026-09-06_17-19-54`: the load generator is the wall
+
+One ccx43 with 16 locust processes went from 23 % at 20k to 91 % average / 99 % peak at 30k (load1 15.5 on 16
+cores), so the 340 ms p50 is locust queueing, not the server: API 43 %, DB 56 %, backends 2.4 active. 40k run
+cancelled. Beyond ~25k simulated users the test needs locust in distributed mode across several machines
+(master + workers on separate hosts), which `setup.sh`/`run.sh` do not do today.
