@@ -11,5 +11,8 @@ ENV
 cat > /etc/sysctl.d/90-loadgen.conf <<SYSCTL
 net.ipv4.ip_local_port_range = 1024 65535
 net.ipv4.tcp_tw_reuse = 1
+net.core.somaxconn = 4096
+net.ipv4.tcp_max_syn_backlog = 8192
+fs.file-max = 2097152
 SYSCTL
 sysctl -q --system

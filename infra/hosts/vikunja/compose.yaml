@@ -25,7 +25,7 @@ services:
       VIKUNJA_SERVICE_BCRYPTROUNDS: 4
       # ~2.3 GCs/s at GOGC 100 under load on a 16 GB box; trade heap for GC CPU
       GOGC: 400
-      GOMEMLIMIT: 8GiB
+      GOMEMLIMIT: 32GiB
       VIKUNJA_LOG_HTTP: "off"
       VIKUNJA_LOG_LEVEL: WARNING
       VIKUNJA_MAILER_ENABLED: "false"
