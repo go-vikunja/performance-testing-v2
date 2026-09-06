@@ -1,0 +1,132 @@
+[2026-09-06 13:01:30,201] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-06 13:01:30,234] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-06 13:01:30,256] perf-loadgen/INFO/locust.runners: perf-loadgen_1d0fb820d28f45138edbe487a27f5c56 (index 0) reported as ready. 1 workers connected.
+[2026-09-06 13:01:30,256] perf-loadgen/INFO/locust.runners: perf-loadgen_d3da03ac441e43558f4c8ea6eb94fc01 (index 1) reported as ready. 2 workers connected.
+[2026-09-06 13:01:30,256] perf-loadgen/INFO/locust.runners: perf-loadgen_80572b8a49894f06b531f79f2c2ec720 (index 2) reported as ready. 3 workers connected.
+[2026-09-06 13:01:30,256] perf-loadgen/INFO/locust.runners: perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc (index 3) reported as ready. 4 workers connected.
+[2026-09-06 13:01:30,257] perf-loadgen/INFO/locust.runners: perf-loadgen_50e67f346e204ba1944ea6f2a5f56685 (index 4) reported as ready. 5 workers connected.
+[2026-09-06 13:01:30,257] perf-loadgen/INFO/locust.runners: perf-loadgen_43019de1b25c47888075e9270a79c274 (index 5) reported as ready. 6 workers connected.
+[2026-09-06 13:01:30,257] perf-loadgen/INFO/locust.runners: perf-loadgen_ef05fa8a206441cc93089ea215ae0975 (index 6) reported as ready. 7 workers connected.
+[2026-09-06 13:01:30,257] perf-loadgen/INFO/locust.runners: perf-loadgen_71683506aa0d43ae844903f3d270eba4 (index 7) reported as ready. 8 workers connected.
+[2026-09-06 13:01:31,257] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-06 13:01:31,257] perf-loadgen/INFO/locust.runners: Sending spawn jobs of 14000 users at 100.00 spawn rate to 8 ready workers
+[2026-09-06 13:03:50,881] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 6000, "IntegrationBot": 2000, "Worker": 6000} (14000 total users)
+[2026-09-06 13:11:31,257] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-06 13:11:45,305] perf-loadgen/INFO/locust.runners: perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc (index 3) reported that it has stopped
+[2026-09-06 13:11:45,655] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc
+[2026-09-06 13:11:46,786] perf-loadgen/INFO/locust.runners: perf-loadgen_71683506aa0d43ae844903f3d270eba4 (index 7) reported that it has stopped
+[2026-09-06 13:11:47,592] perf-loadgen/INFO/locust.runners: perf-loadgen_ef05fa8a206441cc93089ea215ae0975 (index 6) reported that it has stopped
+[2026-09-06 13:11:47,796] perf-loadgen/INFO/locust.runners: perf-loadgen_43019de1b25c47888075e9270a79c274 (index 5) reported that it has stopped
+[2026-09-06 13:11:47,921] perf-loadgen/INFO/locust.runners: perf-loadgen_80572b8a49894f06b531f79f2c2ec720 (index 2) reported that it has stopped
+[2026-09-06 13:11:48,657] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc
+[2026-09-06 13:11:48,667] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ef05fa8a206441cc93089ea215ae0975
+[2026-09-06 13:11:48,668] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_80572b8a49894f06b531f79f2c2ec720
+[2026-09-06 13:11:48,672] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_71683506aa0d43ae844903f3d270eba4
+[2026-09-06 13:11:48,673] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_43019de1b25c47888075e9270a79c274
+[2026-09-06 13:11:48,932] perf-loadgen/INFO/locust.runners: perf-loadgen_50e67f346e204ba1944ea6f2a5f56685 (index 4) reported that it has stopped
+[2026-09-06 13:11:49,899] perf-loadgen/INFO/locust.runners: perf-loadgen_1d0fb820d28f45138edbe487a27f5c56 (index 0) reported that it has stopped
+[2026-09-06 13:11:50,975] perf-loadgen/INFO/locust.runners: perf-loadgen_d3da03ac441e43558f4c8ea6eb94fc01 (index 1) reported that it has stopped
+[2026-09-06 13:11:51,658] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc
+[2026-09-06 13:11:51,667] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_50e67f346e204ba1944ea6f2a5f56685
+[2026-09-06 13:11:51,668] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ef05fa8a206441cc93089ea215ae0975
+[2026-09-06 13:11:51,669] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_d3da03ac441e43558f4c8ea6eb94fc01
+[2026-09-06 13:11:51,670] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_80572b8a49894f06b531f79f2c2ec720
+[2026-09-06 13:11:51,672] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_1d0fb820d28f45138edbe487a27f5c56
+[2026-09-06 13:11:51,673] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_71683506aa0d43ae844903f3d270eba4
+[2026-09-06 13:11:51,673] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_43019de1b25c47888075e9270a79c274
+[2026-09-06 13:11:54,659] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bf8ad6986b224227a4d056e66ed8dbdc
+[2026-09-06 13:11:54,668] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_50e67f346e204ba1944ea6f2a5f56685
+[2026-09-06 13:11:54,670] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ef05fa8a206441cc93089ea215ae0975
+[2026-09-06 13:11:54,670] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_d3da03ac441e43558f4c8ea6eb94fc01
+[2026-09-06 13:11:54,671] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_80572b8a49894f06b531f79f2c2ec720
+[2026-09-06 13:11:54,673] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_1d0fb820d28f45138edbe487a27f5c56
+[2026-09-06 13:11:54,674] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_71683506aa0d43ae844903f3d270eba4
+[2026-09-06 13:11:54,674] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_43019de1b25c47888075e9270a79c274
+[2026-09-06 13:11:56,272] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-06 13:11:57,358] perf-loadgen/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                            247601     0(0.00%) |      4       0    1195      2 |  400.23        0.00
+GET      /info                                                                          22680     0(0.00%) |      2       0     342      2 |   36.66        0.00
+GET      /labels                                                                        22680     0(0.00%) |     15       2     405      8 |   36.66        0.00
+POST     /login                                                                         13671     0(0.00%) |     59       3     494     51 |   22.10        0.00
+GET      /projects                                                                      22680     0(0.00%) |     21       4     452     16 |   36.66        0.00
+GET      /projects [bot]                                                                85734     0(0.00%) |     13       4     544      8 |  138.58        0.00
+POST     /projects [create]                                                              1878     0(0.00%) |     28      13     298     21 |    3.04        0.00
+GET      /projects/{id}                                                                 64381     0(0.00%) |      7       2    1204      4 |  104.07        0.00
+GET      /projects/{id}/tasks [bot]                                                    219327     0(0.00%) |     12       4    1188      7 |  354.53        0.00
+POST     /projects/{id}/tasks [create]                                                   9171     8(0.09%) |     16       6     294     11 |   14.82        0.01
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                             18404     0(0.00%) |     14       5     426     11 |   29.75        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                       2644     0(0.00%) |     11       2    1026      8 |    4.27        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                       3687     0(0.00%) |     14       3     225     11 |    5.96        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       68145     0(0.00%) |     12       2     416      9 |  110.15        0.00
+GET      /tasks [bot]                                                                   28660     0(0.00%) |     17       7     451     11 |   46.33        0.00
+GET      /tasks [home]                                                                  49909     0(0.00%) |     20       6    1228     14 |   80.68        0.00
+GET      /tasks/{id}                                                                    21981     0(0.00%) |     12       4     380      8 |   35.53        0.00
+GET      /tasks/{id} [bot]                                                             619914     0(0.00%) |     11       3    1206      6 | 1002.06        0.00
+PATCH    /tasks/{id} [patch]                                                            10981     0(0.00%) |     17       3     446     10 |   17.75        0.00
+GET      /tasks/{id}/comments                                                           21981     0(0.00%) |      6       1     383      3 |   35.53        0.00
+POST     /tasks/{id}/comments [create]                                                   1785     0(0.00%) |      7       2     342      4 |    2.89        0.00
+POST     /tasks/{id}/labels [add]                                                        3670     0(0.00%) |     12       4     209      9 |    5.93        0.00
+PUT      /tasks/{id}/position                                                            5446     0(0.00%) |      8       3     320      5 |    8.80        0.00
+PUT      /tasks/{id}/read                                                               21981     0(0.00%) |      4       0     326      2 |   35.53        0.00
+GET      /user                                                                          22680     0(0.00%) |     13       1     491      6 |   36.66        0.00
+POST     /user/token/refresh                                                            27071     0(0.00%) |     10       2    1016      4 |   43.76        0.00
+WS       connect+auth+subscribe                                                         22680     0(0.00%) |      4       1     141      3 |   36.66        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                   1661422     8(0.00%) |     11       0    1228      6 | 2685.60        0.01
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                      2      2      3      3      6     13     29     46    120    230   1200 247601
+GET      /info                                                                                   2      2      3      3      4      5      7     10     17    100    340  22680
+GET      /labels                                                                                 8     14     18     22     34     49     72     92    190    370    410  22680
+POST     /login                                                                                 51     66     77     84    110    140    170    210    320    460    490  13671
+GET      /projects                                                                              16     22     27     31     44     59     85    110    200    340    450  22680
+GET      /projects [bot]                                                                         8      9      9     10     21     44     81    110    230    410    540  85734
+POST     /projects [create]                                                                     21     22     25     27     56     70     88    110    250    300    300   1878
+GET      /projects/{id}                                                                          4      5      5      6     13     24     44     67    170    360   1200  64381
+GET      /projects/{id}/tasks [bot]                                                              7      8      9      9     21     42     78    110    230    390   1200 219327
+POST     /projects/{id}/tasks [create]                                                          11     12     13     16     34     46     65     84    150    290    290   9171
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                     11     12     13     14     26     37     56     74    170    380    430  18404
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                               8      9     10     11     23     38     58     78    220   1000   1000   2644
+GET      /projects/{id}/views/{view}/tasks [gantt]                                              11     12     13     14     25     36     56     70    200    230    230   3687
+GET      /projects/{id}/views/{view}/tasks [list]                                                9      9     10     11     23     35     54     76    160    280    420  68145
+GET      /tasks [bot]                                                                           11     12     13     14     30     52     86    120    240    370    450  28660
+GET      /tasks [home]                                                                          14     18     24     28     40     52     73     93    220    420   1200  49909
+GET      /tasks/{id}                                                                             8      9     10     11     24     36     56     78    170    270    380  21981
+GET      /tasks/{id} [bot]                                                                       6      7      7      8     19     41     77    110    230    400   1200 619914
+PATCH    /tasks/{id} [patch]                                                                    10     12     16     18     32     57     92    120    280    430    450  10981
+GET      /tasks/{id}/comments                                                                    3      4      4      5     11     19     38     56    140    260    380  21981
+POST     /tasks/{id}/comments [create]                                                           4      5      5      6     14     28     46     71    220    340    340   1785
+POST     /tasks/{id}/labels [add]                                                                9      9     10     11     21     34     49     62    120    210    210   3670
+PUT      /tasks/{id}/position                                                                    5      6      6      7     16     26     49     70    150    320    320   5446
+PUT      /tasks/{id}/read                                                                        2      2      3      3      6     14     30     49    120    190    330  21981
+GET      /user                                                                                   6     12     17     21     35     51     77     98    240    380    490  22680
+POST     /user/token/refresh                                                                     4      5      9     12     23     37     62     82    190    340   1000  27071
+WS       connect+auth+subscribe                                                                  3      4      5      5      6      8     11     13     30     87    140  22680
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              6      8      9     10     22     40     72     98    220    380   1200 1661422
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+8                  POST /projects/{id}/tasks [create]: LocustBadStatusCode(code=500)                                   
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
+2026-09-06T13:11:57Z <Greenlet at 0x7f98742ad940: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f98754792b0>>> failed with ValueError
+
+[2026-09-06 13:11:57,915] perf-loadgen/CRITICAL/locust.main: Unhandled exception in greenlet: <Greenlet at 0x7f98742ad940: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f98754792b0>>>
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ^^^^^^^
+ValueError: I/O operation on closed file.

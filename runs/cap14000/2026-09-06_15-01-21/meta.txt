@@ -1,0 +1,5 @@
+run=2026-09-06_15-01-21 name=cap14000 users=14000 spawn_rate=100 duration=10m classes="Worker Glancer IntegrationBot" env="LOCUST_PROCESSES=8"
+vikunja_image=ghcr.io/go-vikunja/vikunja:pr-3779 postgres_image=postgres:18 types=ccx33/ccx33
+from=1788699659000 to=1788700350000
+grafana_url=http://178.104.3.213:3000/d/perf-overview/perf-overview?from=1788699659000&to=1788700350000
+vikunja_version=v2.6.0-150-gd9af013b
