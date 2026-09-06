@@ -133,6 +133,42 @@ so the API host sizes linearly with users; the database is fine up to ~10k on 4 
 
 For reference, Vikunja Cloud averages ~3 requests per second; 3000 simulated users are ~600.
 
+## Sizing a box for N users
+
+The per-request constants held from 4 to 32 cores, so sizing is arithmetic. All numbers are for this
+load mix (65 % bot reads with API tokens, 3 % writes, ~15 s think time); for a real deployment replace the first
+line with the peak requests per second from the access logs.
+
+1. **Requests per second:** ~0.21 × concurrently active users (a "user" here is a session that is open and doing
+   things, not a registered account). Vikunja Cloud averages ~3 rps; size for the peak, not the average.
+2. **API cores** = rps × 2 ms ÷ 0.7. Two milliseconds of core time per request, and 70 % is the utilisation
+   where p99 is still flat; the knee is at ~80 %. One process per 8–16 cores; beyond that add replicas
+   (with `keyvalue.type: redis` so the access cache is shared).
+3. **DB cores** = rps × 1 ms ÷ 0.7 (0.8 ms on 8+ cores with `shared_buffers` ≥ 4 GB). Per-statement execution
+   starts to stretch above ~70 %, which shows up as p99 before it shows up as CPU.
+4. **Pool** (`maxopenconnections` = `maxidleconnections`): with #3790, 2–3× DB cores. Without it, requests hold a
+   connection for ~9 ms each and bursts need rps × 0.009 × 3 or more; that is what filled 48 and 192 at 20k.
+5. **Memory** is not the constraint at any size measured: Vikunja ~50 MB heap per 1,000 active users with
+   `GOGC=400`, Postgres `shared_buffers` at 25 % of RAM, which only matters once the dataset outgrows it.
+6. **Network:** keep API and DB in the same network zone. A request makes 10–15 round trips, so the RTT × 12 is
+   the latency floor: 0.3 ms RTT is a 4 ms floor, 0.8 ms is 10 ms. Past ~15k users this, not CPU, sets p99.
+7. **Load generator** (for testing): one locust process per ~1,500 users on one core; one 16-core box to ~25k
+   users, distributed locust beyond.
+
+| active users | rps | API cores (host) | DB cores (host) | measured |
+|---|---|---|---|---|
+| 1,000 | ~210 | 1 (2-core cx22 / ccx13) | 1 (2 cores) | — |
+| 3,000 | ~630 | 2 (4-core ccx23 at 41 %) | 1 (4-core ccx23 at 39 %) | p99 22 ms |
+| 6,000 | ~1,260 | 4 (ccx23 at 65 %) | 2 (ccx23 at 43 %) | p99 34 ms |
+| 10,000 | ~2,100 | 6 (8-core ccx33 at 60 %) | 3 (ccx23 at ~72 %, ccx33 for margin) | p99 14 ms on ccx33 + ccx33 |
+| 14,000 | ~2,950 | 8–9 (ccx33 at 76 %, the limit) | 4 (ccx33 at 39 %) | p99 45 ms |
+| 20,000 | ~4,200 | 12 (16-core ccx43; measured 13 cores busy on a ccx53) | 6 (8-core ccx33) | p99 56 ms on ccx53 + ccx43 |
+| 50,000 | ~10,500 | 30 (32-core ccx53, or 2 × ccx43 behind a proxy + Redis) | 15 (16-core ccx43) | extrapolated |
+
+Read the table as "cores busy at that load"; pick the host whose core count keeps the API side at or below
+70 % and the DB side at or below 60 %. For an existing deployment the cheaper check is the access log: peak rps ×
+2 ms is the API core time you need, and `pg_stat_statements` total time per second is the DB's.
+
 ## Hosting recommendations
 
 - `database.maxopenconnections`: 2–3× DB cores (32 for 4 cores, 48 for 8), not 100.
