@@ -1,0 +1,53 @@
+ statements | total_exec_ms | total_plan_ms | avg_ms_per_statement | avg_plan_ms_per_statement 
+------------+---------------+---------------+----------------------+---------------------------
+    5284906 |        199372 |         63011 |                0.038 |                     0.012
+(1 row)
+
+       relname        |               indexrelname                | idx_scan 
+----------------------+-------------------------------------------+----------
+ buckets              | UQE_buckets_id                            |     7285
+ buckets              | buckets_pkey                              |        0
+ label_tasks          | IDX_label_tasks_task_id                   |   600474
+ label_tasks          | IDX_label_tasks_label_id                  |     8392
+ label_tasks          | label_tasks_pkey                          |        0
+ label_tasks          | UQE_label_tasks_id                        |        0
+ labels               | UQE_labels_id                             |   268237
+ labels               | labels_pkey                               |        0
+ projects             | UQE_projects_id                           |  1175979
+ projects             | IDX_projects_owner_id                     |    23934
+ projects             | IDX_projects_parent_project_id_not_null   |    23934
+ projects             | IDX_projects_parent_project_id            |       22
+ projects             | projects_pkey                             |        0
+ projects             | idx_projects_parent_not_null              |        0
+ saved_filters        | IDX_saved_filters_owner_id                |    30202
+ saved_filters        | saved_filters_pkey                        |        0
+ saved_filters        | UQE_saved_filters_id                      |        0
+ subscriptions        | IDX_subscriptions_entity_id               |   338762
+ subscriptions        | IDX_subscriptions_entity_type             |    24467
+ subscriptions        | subscriptions_pkey                        |        0
+ subscriptions        | IDX_subscriptions_user_id                 |        0
+ subscriptions        | UQE_subscriptions_entity_user             |        0
+ subscriptions        | UQE_subscriptions_id                      |        0
+ task_unread_statuses | UQE_task_unread_statuses_task_user        |    32100
+ tasks                | UQE_tasks_id                              |  1410234
+ tasks                | IDX_tasks_project_id                      |   362859
+ tasks                | IDX_tasks_project_done_due_date           |    36587
+ tasks                | UQE_tasks_tasks_project_index             |     2133
+ tasks                | IDX_tasks_end_date                        |     1684
+ tasks                | IDX_tasks_start_date                      |     1632
+ tasks                | IDX_tasks_due_date                        |     1520
+ tasks                | IDX_tasks_deleted_at                      |       16
+ tasks                | tasks_pkey                                |        0
+ tasks                | IDX_tasks_repeat_after                    |        0
+ tasks                | IDX_tasks_done_at                         |        0
+ tasks                | IDX_tasks_done                            |        0
+ users                | UQE_users_id                              |   996005
+ users                | UQE_users_username                        |    62618
+ users                | IDX_users_bot_owner_id                    |     2350
+ users                | IDX_users_discoverable_by_name            |        0
+ users                | IDX_users_discoverable_by_email           |        0
+ users                | IDX_users_overdue_tasks_reminders_enabled |        0
+ users                | users_pkey                                |        0
+ users                | IDX_users_default_project_id              |        0
+(44 rows)
+

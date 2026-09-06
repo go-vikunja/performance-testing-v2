@@ -1,0 +1,24 @@
+       relname        | seq_scan | seq_tup_read | idx_scan | n_tup_ins | n_tup_upd | n_tup_del 
+----------------------+----------+--------------+----------+-----------+-----------+-----------
+ label_tasks          |     5359 |     65591223 |   608866 |       769 |         0 |         0
+ labels               |    44918 |     26950800 |   268237 |         0 |         0 |         0
+ buckets              |     3956 |     12002211 |     7285 |      1182 |      1182 |         0
+ projects             |     1041 |       938234 |  1223869 |       394 |     10003 |         0
+ users                |     7934 |       644347 |  1060973 |         0 |         0 |         0
+ subscriptions        |       13 |       640537 |   363229 |      2133 |         0 |         0
+ migration            |     3692 |       524122 |          |         1 |         0 |         0
+ tasks                |        6 |       300637 |  1816665 |      2133 |      3530 |         0
+ task_unread_statuses |     3549 |       256932 |    32100 |        76 |         0 |         0
+ saved_filters        |       13 |         1300 |    30202 |         0 |         0 |         0
+ team_members         |       13 |         1300 |    24341 |         0 |         0 |         0
+ teams                |       35 |          700 |        0 |         0 |         0 |         0
+ license_status       |       26 |           26 |        0 |         0 |         0 |         0
+ task_attachments     |   228226 |            0 |        0 |         0 |         0 |         0
+ task_assignees       |        0 |            0 |   238210 |         0 |         0 |         0
+ project_views        |        0 |            0 |   152566 |      1576 |      1970 |         0
+ task_relations       |   272732 |            0 |        0 |         0 |         0 |         0
+ task_buckets         |        0 |            0 |    60590 |      2133 |       709 |         0
+ team_projects        |        0 |            0 |    31750 |         0 |         0 |         0
+ time_entries         |        0 |            0 |        0 |         0 |         0 |         0
+(20 rows)
+
