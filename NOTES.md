@@ -43,6 +43,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `cap10000/2026-09-06_14-41-42` (**10000 users**, 80/s, **ccx33 + ccx33**) | pr-3779 (`cb03108cc`) | bigger boxes: 8 cores / 32 GB each, pool 48, shared_buffers 8 GB | **2107** | **6 / 10 / 14** | 9 / 59 | 2 | 13.1 | 0.23 | 0.08 | 25 | 2.3 | 60 |
 | `cap14000/2026-09-06_15-01-21` (**14000 users**, 100/s, ccx33 + ccx33, cx43 loadgen, 8 locust procs) | pr-3779 | ceiling for p99 < 50 ms | **2947** | 6 / 20 / **45** | 9 / 64 | 8 | 13.1 | 0.27 | 0.09 | 39 | 2.6 | **76** |
 | `db23-cap12000/2026-09-06_15-28-58` (**12000 users**, ccx33 API + **ccx23 DB**) | pr-3779 | ceiling with the small DB | **2518** | 9 / 28 / **47** | 19 / 110 | 5 | 13.1 | 0.67 | 0.18 | **87** | 13.0 | 50 |
+| `big-cap20000/2026-09-06_16-08-58` (**20000 users**, ccx53 API 32c + ccx43 DB 16c, pool 48) | pr-3779 | pool saturated | 3603 | 200 / 690 / 1000 | 17 / 100 | 22 | 12.8 | 0.45 | 0.13 | 37 | 5.6 | 40 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -423,3 +424,13 @@ is refused with `--keep-disk`, so the ccx23-DB variant was a full recreate (`TYP
 
 Both numbers sit at the edge; plan with 13k and 11k. Infra defaults now: DB ccx23 (conf halved), API ccx33,
 loadgen cx43, matching the running stack.
+
+### 23. Big boxes: API ccx53 (32 cores / 128 GB), DB ccx43 (16 / 64), loadgen ccx43 with 16 locust processes
+
+Sizing from the per-request constants (2 ms API core, 1 ms DB core): ~40k users expected before the API knee.
+First run, 20,000 users, pool 48 — `runs/big-cap20000/2026-09-06_16-08-58`: 3,603 rps (demand ~4,200), p50 200 / p95 690 / p99 1,000 ms with the
+API host at 40 % and the DB at 37 %. Not CPU: `pg_stat_activity` showed **44 backends idle in transaction at peak
+and 7 active**, i.e. the 48-connection pool full of requests holding their transaction across API work and ~13
+round trips (bot requests hold two: token auth, then the handler). The DB itself was idle. Pool raised to 192
+(max_connections 200) and the runs repeated as `pool192-cap*`. The structural fix is the old report's code rec 1:
+read-only handlers should not `BEGIN`; at this scale connection hold time, not CPU, is the limit.
