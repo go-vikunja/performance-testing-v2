@@ -447,3 +447,11 @@ at 41 %. Still 170 idle in transaction at peak vs 13 active: average connection 
 (one transaction per request across ~13 round trips and the API's own work), so bursts fill any pool near 200
 while the DB idles. Next: `max_connections` 500, pool 400 (`pool400-cap*`). The structural answer stays the
 same: stop holding a transaction per request.
+
+### Read paths without a transaction — go-vikunja/vikunja#3790
+
+`db.NewReadSession()`: session memo attached, no `Begin()`; `Commit`/`Rollback` are no-ops on it. Used by
+`DoReadOne`, `DoReadAll` and `ValidateAPITokenString`. A request no longer holds a pooled connection across its
+own work; each statement borrows one for its duration. This is the old report's code rec 1 and the direct answer
+to the pool saturation at 20k users. Merged into #3779 (`c1ed33d39`) together with the idle-connection default
+from #3775; measured next on the big boxes with pool 400.
