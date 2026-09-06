@@ -1,0 +1,3 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+POST,/user/token/refresh,LocustBadStatusCode(code=401),2,2026-09-06T12:04:07Z,2026-09-06T12:04:15Z
+POST,/projects/{id}/tasks [create],LocustBadStatusCode(code=500),4,2026-09-06T11:58:32Z,2026-09-06T12:07:00Z
