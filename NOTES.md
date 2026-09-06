@@ -241,3 +241,13 @@ steady, p50 24 / p95 85 / p99 130 ms. DB at 85 % (load1 16), Vikunja at 79 %: th
 with the current code. At the start of the session the same boxes were at 73–82 % with **half** the load
 (3000 users, 600 rps) and, with API-token bots, p50 73 ms. Capacity roughly doubled; #3776 (not in this image)
 takes another ~0.4 ms of planning per request off the DB.
+
+### Finding: the grants CTE seq-scans `projects` on every recursion level — go-vikunja/vikunja#3777
+
+`EXPLAIN (ANALYZE, BUFFERS)` of the grants CTE for the heaviest team user: 0.68 ms, 197 buffers, of which 120
+are a `Seq Scan on projects` (1,449 rows) hashed for the recursive join on `parent_project_id`. Roots store NULL
+(done in `fc78cd3ea`), but the partial index from the 08-30 report's rec 2a was never added, so the planner still
+prefers a seq scan over the full index. With `CREATE INDEX … ON projects (parent_project_id) WHERE
+parent_project_id IS NOT NULL` (100 rows) the recursive step becomes a bitmap index scan: 0.30 ms. The index is
+measured live (created in `vikunja` and in the `vikunja_snap` template) in run `partial-index`; PR #3777 adds it as
+a migration (Postgres + SQLite; MySQL has no partial indexes).
