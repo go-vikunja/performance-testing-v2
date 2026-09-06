@@ -332,3 +332,11 @@ the metrics middleware and again for the handler although `api_user` is in the c
 transaction with ~11 selects (task, project, task again, assignees, labels, attachments, users, reminders,
 favorites, project again, relations). #3786 drops the two user lookups; the remaining duplicates (task and
 project loaded twice) are the next candidates.
+
+### Second profile (pr-3779 `b089ac163` = + #3786, run `combined-v3`)
+
+Total samples 45.4 → 41.0 s per 30 s. `GetAuthFromClaims` (9.2 % cum) and the xorm logger formatting (2 %) are
+gone. `isWriteStatement` was still 5 %: the first fix only removed the regexp for the leading keyword, but every
+recursive CTE is a `WITH` statement of several kilobytes and the CTE regexp scanned all of it. Follow-up commit on
+#3786: whole-word scan, same boundary rules, no regexp at all. `postgresSeqFilterConvertQuestionMark` (xorm's
+`?` → `$n` rewrite, 4 %) is the last generic per-statement cost and lives in xorm.
