@@ -1,0 +1,331 @@
+-[ RECORD 1 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 111900
+calls            | 237604
+plans            | 171439
+mean_ms          | 0.47
+plan_ms          | 58612
+mean_plan_ms     | 0.34
+rows             | 5085950
+shared_blks_hit  | 52952582
+shared_blks_read | 0
+query            | WITH RECURSIVE grants (project_id, permission) AS ( SELECT project_id, MAX(permission) FROM ( SELECT id AS project_id, $4 AS permission FROM projects WHERE owner_id = $1 UNION ALL SELECT project_id, permission FROM users_projects WHERE user_id = $2 UNION ALL SELECT tp.project_id, tp.permission FROM team_projects tp INNER JOIN team_members tm ON tm.team_id = tp.team_id WHERE tm.user_id = $3 ) direc
+-[ RECORD 2 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 62249
+calls            | 910510
+plans            | 3764
+mean_ms          | 0.07
+plan_ms          | 3674
+mean_plan_ms     | 0.98
+rows             | 910510
+shared_blks_hit  | 19248988
+shared_blks_read | 0
+query            | WITH RECURSIVE project_hierarchy AS ( -- Base case: Start with the projects associated with the tasks SELECT p.id, p.parent_project_id, $10 AS level, t.id AS task_id FROM tasks t JOIN projects p ON t.project_id = p.id WHERE t.id IN ($1) AND t.deleted_at IS NULL UNION ALL -- Recursive case: Get parent projects SELECT p.id, p.parent_project_id, ph.level + $11, ph.task_id FROM projects p INNER JOIN p
+-[ RECORD 3 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 41993
+calls            | 532329
+plans            | 41831
+mean_ms          | 0.08
+plan_ms          | 10238
+mean_plan_ms     | 0.24
+rows             | 6041209
+shared_blks_hit  | 24851857
+shared_blks_read | 0
+query            | SELECT labels.*, label_tasks.task_id FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE label_tasks.task_id IN ($1 /*, ... */) AND label_tasks.label_id IS NOT NULL GROUP BY labels.id,label_tasks.task_id ORDER BY labels.id ASC
+-[ RECORD 4 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 25940
+calls            | 149163
+plans            | 59072
+mean_ms          | 0.17
+plan_ms          | 5298
+mean_plan_ms     | 0.09
+rows             | 12833744
+shared_blks_hit  | 6042207
+shared_blks_read | 0
+query            | SELECT "id", "title", "project_id", "view_kind", "filter", "position", "bucket_configuration_mode", "bucket_configuration", "default_bucket_id", "done_bucket_id", "updated", "created" FROM "public"."project_views" WHERE "project_id" IN ($1 /*, ... */) ORDER BY position asc
+-[ RECORD 5 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 24092
+calls            | 1775961
+plans            | 1152
+mean_ms          | 0.01
+plan_ms          | 155
+mean_plan_ms     | 0.13
+rows             | 1775961
+shared_blks_hit  | 3567708
+shared_blks_read | 0
+query            | SELECT "id", "name", "username", "password", "email", "pending_email", "status", "is_admin", "avatar_provider", "avatar_file_id", "issuer", "subject", "email_reminders_enabled", "discoverable_by_name", "discoverable_by_email", "overdue_tasks_reminders_enabled", "overdue_tasks_reminders_time", "default_project_id", "bot_owner_id", "week_start", "language", "timezone", "deletion_scheduled_at", "dele
+-[ RECORD 6 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 20731
+calls            | 149357
+plans            | 6483
+mean_ms          | 0.14
+plan_ms          | 922
+mean_plan_ms     | 0.14
+rows             | 5233690
+shared_blks_hit  | 4544746
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1)) AND ("deleted_at"=$2 OR "deleted_at" IS NULL) ORDER BY tasks."id" asc NULLS LAST LIMIT $3
+-[ RECORD 7 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 19362
+calls            | 149881
+plans            | 5163
+mean_ms          | 0.13
+plan_ms          | 827
+mean_plan_ms     | 0.16
+rows             | 5240178
+shared_blks_hit  | 6258129
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."id" asc NULLS LAST LIMIT $4
+-[ RECORD 8 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 18859
+calls            | 1448611
+plans            | 2946
+mean_ms          | 0.01
+plan_ms          | 353
+mean_plan_ms     | 0.12
+rows             | 1448611
+shared_blks_hit  | 4429942
+shared_blks_read | 0
+query            | SELECT "id", "title", "description", "identifier", "hex_color", "owner_id", "parent_project_id", "is_archived", "background_file_id", "background_blur_hash", "position", "created", "updated" FROM "public"."projects" WHERE "id" IN ($1)
+-[ RECORD 9 ]----+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 18200
+calls            | 1449544
+plans            | 1152
+mean_ms          | 0.01
+plan_ms          | 81
+mean_plan_ms     | 0.07
+rows             | 1419646
+shared_blks_hit  | 2869190
+shared_blks_read | 0
+query            | SELECT "id", "name", "username", "password", "email", "pending_email", "status", "is_admin", "avatar_provider", "avatar_file_id", "issuer", "subject", "email_reminders_enabled", "discoverable_by_name", "discoverable_by_email", "overdue_tasks_reminders_enabled", "overdue_tasks_reminders_time", "default_project_id", "bot_owner_id", "week_start", "language", "timezone", "deletion_scheduled_at", "dele
+-[ RECORD 10 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 17925
+calls            | 75600
+plans            | 3670
+mean_ms          | 0.24
+plan_ms          | 1770
+mean_plan_ms     | 0.48
+rows             | 1858532
+shared_blks_hit  | 6091466
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" LEFT JOIN "public"."task_positions" ON task_positions.task_id = tasks.id AND task_positions.project_view_id = $1 WHERE (tasks.project_id IN ($2)) AND tasks."done"=$3 AND tasks."done"=$4 AND NOT EXISTS (SELECT $10 FROM task_relations INNER JOIN tasks parent_tasks ON task_relations.other_task_id = parent_tasks.id WHERE (task_relations.task_id = tasks.id) AND task
+-[ RECORD 11 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 17375
+calls            | 77145
+plans            | 2509
+mean_ms          | 0.23
+plan_ms          | 1146
+mean_plan_ms     | 0.46
+rows             | 1246746
+shared_blks_hit  | 16879055
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" LEFT JOIN "public"."task_positions" ON task_positions.task_id = tasks.id AND task_positions.project_view_id = $1 LEFT JOIN "public"."task_buckets" ON task_buckets.task_id = tasks.id AND task_buckets.project_view_id = $2 WHERE (tasks.project_id IN ($3)) AND task_buckets."bucket_id"=$4 AND ("public"."tasks"."deleted_at"=$5 OR "public"."tasks"."deleted_at" IS NULL
+-[ RECORD 12 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 16641
+calls            | 977071
+plans            | 2104
+mean_ms          | 0.02
+plan_ms          | 420
+mean_plan_ms     | 0.20
+rows             | 977071
+shared_blks_hit  | 3022631
+shared_blks_read | 0
+query            | SELECT "id", "title", "description", "project_id", "done", "done_at", "due_date", "repeat_after", "repeat_mode", "priority", "start_date", "end_date", "hex_color", "percent_done", "index", "uid", "cover_image_attachment_id", "created", "updated", "deleted_at", "created_by_id" FROM "public"."tasks" WHERE "id"=$1 AND ("deleted_at"=$2 OR "deleted_at" IS NULL) LIMIT $3
+-[ RECORD 13 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 14934
+calls            | 1302329
+plans            | 1152
+mean_ms          | 0.01
+plan_ms          | 154
+mean_plan_ms     | 0.13
+rows             | 1302329
+shared_blks_hit  | 2620068
+shared_blks_read | 0
+query            | SELECT "id", "title", "token_salt", "token_hash", "token_last_eight", "permissions", "expires_at", "created", "owner_id" FROM "public"."api_tokens" WHERE (id = $1) LIMIT $2
+-[ RECORD 14 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 13267
+calls            | 25715
+plans            | 24177
+mean_ms          | 0.52
+plan_ms          | 1271
+mean_plan_ms     | 0.05
+rows             | 77145
+shared_blks_hit  | 2648214
+shared_blks_read | 0
+query            | SELECT "id", "title", "project_view_id", "limit", "position", "created", "updated", "created_by_id" FROM "public"."buckets" WHERE (project_view_id = $1) ORDER BY position
+-[ RECORD 15 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 13188
+calls            | 899490
+plans            | 1763
+mean_ms          | 0.01
+plan_ms          | 441
+mean_plan_ms     | 0.25
+rows             | 268681
+shared_blks_hit  | 2911944
+shared_blks_read | 0
+query            | SELECT labels.*, label_tasks.task_id FROM "public"."labels" LEFT JOIN "public"."label_tasks" ON label_tasks.label_id = labels.id WHERE label_tasks.task_id IN ($1) AND label_tasks.label_id IS NOT NULL GROUP BY labels.id,label_tasks.task_id ORDER BY labels.id ASC
+-[ RECORD 16 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 11906
+calls            | 911130
+plans            | 1152
+mean_ms          | 0.01
+plan_ms          | 83
+mean_plan_ms     | 0.07
+rows             | 0
+shared_blks_hit  | 1829255
+shared_blks_read | 0
+query            | SELECT "id", "task_id", "reminder", "created", "relative_period", "relative_to" FROM "public"."task_reminders" WHERE "task_id" IN ($1) ORDER BY reminder asc
+-[ RECORD 17 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 10701
+calls            | 5976
+plans            | 1569
+mean_ms          | 1.79
+plan_ms          | 760
+mean_plan_ms     | 0.48
+rows             | 68586
+shared_blks_hit  | 3875330
+shared_blks_read | 0
+query            | SELECT labels.* FROM "public"."labels" WHERE (labels.id IN (SELECT label_tasks.label_id FROM label_tasks INNER JOIN tasks ON tasks.id = label_tasks.task_id WHERE tasks.project_id IN ($1 /*, ... */) AND tasks.deleted_at IS NULL) OR labels.created_by_id IN (SELECT id FROM users WHERE id=$2 OR bot_owner_id=$3 OR id IN (SELECT bot_owner_id FROM users WHERE id=$4 AND bot_owner_id>$5) OR bot_owner_id IN
+-[ RECORD 18 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 10653
+calls            | 2742
+plans            | 2931
+mean_ms          | 3.89
+plan_ms          | 447
+mean_plan_ms     | 0.15
+rows             | 137100
+shared_blks_hit  | 15254765
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 19 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 10159
+calls            | 923799
+plans            | 1152
+mean_ms          | 0.01
+plan_ms          | 240
+mean_plan_ms     | 0.21
+rows             | 0
+shared_blks_hit  | 1856362
+shared_blks_read | 0
+query            | SELECT task_id, users.* FROM "public"."task_assignees" INNER JOIN "public"."users" ON task_assignees.user_id = users.id WHERE "task_id" IN ($1)
+-[ RECORD 20 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 9675
+calls            | 159585
+plans            | 3802
+mean_ms          | 0.06
+plan_ms          | 345
+mean_plan_ms     | 0.09
+rows             | 159585
+shared_blks_hit  | 4563832
+shared_blks_read | 0
+query            | SELECT count(tasks.id) FROM "public"."tasks" WHERE (tasks.project_id IN ($1)) AND ("deleted_at"=$2 OR "deleted_at" IS NULL)
+-[ RECORD 21 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 9041
+calls            | 3211
+plans            | 3548
+mean_ms          | 2.82
+plan_ms          | 536
+mean_plan_ms     | 0.15
+rows             | 160550
+shared_blks_hit  | 13025533
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 22 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8787
+calls            | 2555
+plans            | 2745
+mean_ms          | 3.44
+plan_ms          | 413
+mean_plan_ms     | 0.15
+rows             | 127750
+shared_blks_hit  | 12535072
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 23 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8662
+calls            | 149881
+plans            | 2743
+mean_ms          | 0.06
+plan_ms          | 297
+mean_plan_ms     | 0.11
+rows             | 149881
+shared_blks_hit  | 6248927
+shared_blks_read | 0
+query            | SELECT count(tasks.id) FROM "public"."tasks" WHERE (tasks.project_id IN ($1)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL)
+-[ RECORD 24 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8414
+calls            | 2199
+plans            | 2343
+mean_ms          | 3.83
+plan_ms          | 365
+mean_plan_ms     | 0.16
+rows             | 109950
+shared_blks_hit  | 11389699
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 25 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8371
+calls            | 681492
+plans            | 62739
+mean_ms          | 0.01
+plan_ms          | 3642
+mean_plan_ms     | 0.06
+rows             | 0
+shared_blks_hit  | 1425948
+shared_blks_read | 0
+query            | SELECT "entity_id", "user_id", "kind" FROM "public"."favorites" WHERE user_id=$1 AND kind=$2 AND entity_id IN ($3 /*, ... */)
+-[ RECORD 26 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8212
+calls            | 1963
+plans            | 2125
+mean_ms          | 4.18
+plan_ms          | 340
+mean_plan_ms     | 0.16
+rows             | 98150
+shared_blks_hit  | 11122589
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 27 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 8118
+calls            | 2072
+plans            | 2245
+mean_ms          | 3.92
+plan_ms          | 341
+mean_plan_ms     | 0.15
+rows             | 103600
+shared_blks_hit  | 11253552
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 28 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 7807
+calls            | 1814
+plans            | 1971
+mean_ms          | 4.30
+plan_ms          | 320
+mean_plan_ms     | 0.16
+rows             | 90700
+shared_blks_hit  | 10561602
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+-[ RECORD 29 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 7674
+calls            | 532329
+plans            | 27550
+mean_ms          | 0.01
+plan_ms          | 2185
+mean_plan_ms     | 0.08
+rows             | 0
+shared_blks_hit  | 1183589
+shared_blks_read | 0
+query            | SELECT "id", "task_id", "reminder", "created", "relative_period", "relative_to" FROM "public"."task_reminders" WHERE "task_id" IN ($1 /*, ... */) ORDER BY reminder asc
+-[ RECORD 30 ]---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+total_ms         | 7197
+calls            | 1740
+plans            | 1898
+mean_ms          | 4.14
+plan_ms          | 306
+mean_plan_ms     | 0.16
+rows             | 87000
+shared_blks_hit  | 9654036
+shared_blks_read | 0
+query            | SELECT tasks.* FROM "public"."tasks" WHERE (tasks.project_id IN ($1 /*, ... */)) AND tasks."done"=$2 AND ("deleted_at"=$3 OR "deleted_at" IS NULL) ORDER BY tasks."due_date" asc NULLS LAST, tasks."id" desc NULLS LAST LIMIT $4
+
