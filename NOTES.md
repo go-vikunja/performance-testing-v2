@@ -36,6 +36,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-v2/2026-09-06_10-48-59` | pr-3779 (`7a6414d20` = + #3780 keyvalue refactor + #3783) | + hook-less project touch | 633 | 11 / 17 / 22 | 14 / 38 | 0 | 18.1 | **0.48** | 0.15 | 37 | **1.5** | 50 |
 | `combined-profile/2026-09-06_11-21-58` | pr-3779 (`f3bb05960` = + #3785 pprof) | same as v2, 30 s CPU profile at t=240 (`cpu-profile-t240-30s.pb.gz` in the run dir) | 627 | 11 / 17 / 23 | 14 / 38 | 0 | 18.0 | 0.49 | 0.15 | 37 | 1.3 | 50 |
 | `combined-v3/2026-09-06_11-43-28` | pr-3779 (`b089ac163` = + #3786) | + regexp/logger/auth per-request overhead | 640 | **10 / 16 / 22** | 13 / 37 | 0 | **14.6** | 0.53 | 0.17 | 39 | 1.4 | **45** |
+| `combined-v4/2026-09-06_12-01-18` | pr-3779 (`eee403ef8` = + WITH word scan) | + regexp-free write detection | 637 | **9** / 16 / 22 | 13 / 39 | 1 | 14.6 | 0.55 | 0.17 | 39 | 1.9 | **43** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
