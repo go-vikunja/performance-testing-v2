@@ -16,6 +16,8 @@ services:
       VIKUNJA_SERVICE_SECRET: ${JWT_SECRET}
       VIKUNJA_SERVICE_ENABLEREGISTRATION: "true"
       VIKUNJA_METRICS_ENABLED: "true"
+      # go-vikunja/vikunja#3785: /debug/pprof on the private IP, for CPU profiles during a run
+      VIKUNJA_METRICS_PPROF: "true"
       # all load comes from one IP; pre-auth limiter is per-IP and always on
       VIKUNJA_RATELIMIT_NOAUTHLIMIT: 10000000
       VIKUNJA_RATELIMIT_TOKENREFRESHLIMIT: 10000000
