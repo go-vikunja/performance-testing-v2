@@ -46,6 +46,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `big-cap20000/2026-09-06_16-08-58` (**20000 users**, ccx53 API 32c + ccx43 DB 16c, pool 48) | pr-3779 | pool saturated | 3603 | 200 / 690 / 1000 | 17 / 100 | 22 | 12.8 | 0.45 | 0.13 | 37 | 5.6 | 40 |
 | `pool192-cap20000/2026-09-06_16-23-33` (20000 users, big boxes, pool 192, max idle 50) | pr-3779 | connection churn | 4056 | 57 / 130 / 180 | 27 / 140 | 39 | 13.1 | 0.58 | **0.75** | 60 | 19.9 | 41 |
 | `idle192-cap20000/2026-09-06_16-37-47` (20000 users, big boxes, pool 192, idle 192) | pr-3779 | pool still bursting full | 4145 | 32 / 71 / 94 | 15 / 68 | 34 | 13.1 | 0.43 | 0.15 | 41 | 6.1 | 41 |
+| `pool400-cap20000/2026-09-06_16-52-02` (20000 users, big boxes, pool 400) | pr-3779 | pool no longer the limit | 4141 | 35 / 72 / 93 | 13 / 71 | 36 | 13.1 | 0.43 | 0.17 | 41 | 8.7 | 41 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -455,3 +456,12 @@ same: stop holding a transaction per request.
 own work; each statement borrows one for its duration. This is the old report's code rec 1 and the direct answer
 to the pool saturation at 20k users. Merged into #3779 (`c1ed33d39`) together with the idle-connection default
 from #3775; measured next on the big boxes with pool 400.
+
+Pool 400 (`max_connections` 500) — `runs/pool400-cap20000/2026-09-06_16-52-02`: identical to pool 192 (p50 35 / p99 93, 143 idle connections), so the
+pool is out of the picture; both hosts at 41 %, no hot core (hottest of 32 at 67 %), softirq 5 %, GC 0.3/s, no
+packet drops at 63 MB/s. Postgres: 1.8 active backends vs 37 idle in transaction, i.e. connections wait on the
+API between statements. Per-endpoint p50 scales with statements per endpoint (avatar 8 ms, task read 36, home
+overview 55). **RTT API → DB is 0.78 ms average under load (0.33 min, 2.3 max) on the private network**; ~15
+round trips per request (BEGIN, ~13 statements, COMMIT) ≈ 12 ms of pure network wait, which with jitter and
+40k goroutines on the netpoller becomes the 36 ms p50. At this scale latency is round trips × RTT, not CPU.
+Levers: #3790 (no BEGIN/COMMIT on reads and token auth, −4 round trips), then batching the task-read fan-out.
