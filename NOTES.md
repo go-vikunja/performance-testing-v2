@@ -39,6 +39,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-v4/2026-09-06_12-01-18` | pr-3779 (`eee403ef8` = + WITH word scan) | + regexp-free write detection | 637 | **9** / 16 / 22 | 13 / 39 | 1 | 14.6 | 0.55 | 0.17 | 39 | 1.9 | **43** |
 | `combined-v5/2026-09-06_12-15-02` | pr-3779 (`cb03108cc` = + #3787) | + per-session memo for task/project/user lookups | 638 | 9 / 16 / 22 | 12 / 37 | 0 | **13.2** | 0.55 | 0.18 | 39 | 2.7 | **41** |
 | `combined-v5-cap6000/2026-09-06_12-28-53` (**6000 users**, 50/s) | pr-3779 (`cb03108cc`, all PRs) | capacity, final image | **1259** | 9 / 21 / 34 | 22 / 68 | 4 | 13.2 | 0.38 | 0.11 | 43 | 2.3 | 65 |
+| `cap9000/2026-09-06_13-57-32` (**9000 users**, 75/s, 4 locust procs) | pr-3779 (`cb03108cc`) | capacity, past the knee | **1873** | 11 / **68 / 130** | 19 / 99 | 6 | 13.2 | 0.45 | 0.14 | 68 | 5.8 | **83** |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -385,3 +386,14 @@ entity even for a single task; ~11 selects), xorm's `?`→`$n` rewrite per state
 Against the first 6000-user run today (pgx + token cache only): p95 85 → 21, p99 130 → 34, DB 85 → 43 %,
 API 79 → 65 %. Against the start of the session, where 3000 users already put both boxes at 73–82 %: twice the
 load at roughly half the utilisation, with a tenth of the p95.
+
+### 20. 9000 users — `runs/cap9000/2026-09-06_13-57-32`
+
+Locust now runs with `--processes 4` (one gevent process was at ~1 core for 6000 users). 1,873 rps, p50 11 /
+p95 68 / p99 130 ms, API host 83 % avg / 92 % max, DB 68 % / 82 %, DB exec per request 0.38 → 0.45 ms (contention).
+The API host is the wall; p99 < 50 ms holds to roughly 7,000–7,500 users on the current code and a ccx23.
+
+Target from the user: 10,000 users at p99 < 50 ms. Two ways, probably both: (a) API host to 8 dedicated cores
+(ccx33; CPU per request is constant, 10k would sit at ~46 % of 8 cores) and DB to ccx33 as well since 70 %+ on the
+DB is where per-statement execution starts to stretch; (b) fewer round trips per request on the code side
+(task read fan-out, ~9 selects for one task; xorm `?` rewrite; JSON).
