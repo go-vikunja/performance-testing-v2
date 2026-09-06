@@ -487,4 +487,4 @@ cancelled. Beyond ~25k simulated users the test needs locust in distributed mode
 Infra torn down (no servers, network, firewall or key left in the project). Repo defaults reset to the
 measured sweet spot for the money: DB ccx23 (4 GB shared_buffers), API ccx33, loadgen cx43, pool 48 / idle 48,
 1 h lifetime, GOMEMLIMIT 8 GiB, image pr-3779 until the PRs are merged. `max_connections` stays 500 so the pool
-can be raised for big-box runs without a Postgres restart. Report: `runs/report-2026-09-06-capacity.md`.
+can be raised for big-box runs without a Postgres restart. Report: `runs/report-2026-09-06-capacity.md`; the same as a page with charts: `runs/report-2026-09-06-capacity/index.html`.
