@@ -303,3 +303,11 @@ Grants CTE 281k → 25k calls (≈ 91 % cache hits; the rest are real invalidati
 TTL expiry), now 7 % of DB execution. DB exec 0.53 → 0.48 ms/req, DB load1 2.3 → 1.5, 0 failures. Latency did not
 move (11 / 17 / 22 ms): at 3000 users the DB is no longer on the request path's critical side; the API host
 (50 %, 77 % at 6000 users) is. Next lever there needs a profile, i.e. a config-gated pprof endpoint.
+
+### Enabling step for the API side — go-vikunja/vikunja#3785
+
+The API host is the first wall now and nothing can be profiled from outside (stripped binary, scratch image).
+#3785 adds `metrics.pprof` (default off, needs `metrics.enabled`, behind the metrics basic auth when set) mounting
+Go's pprof at `/debug/pprof/`. The test deployment sets `VIKUNJA_METRICS_PPROF=true`; the combined branch #3779
+(head `f3bb05960`) includes it, so the next combined run gets a 30 s CPU profile mid-run. #3776 has meanwhile
+been merged into main by the user.
