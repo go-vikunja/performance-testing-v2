@@ -5,8 +5,8 @@ LOCATION="${LOCATION:-nbg1}"
 IMAGE="${IMAGE:-debian-13}"
 
 # ccx = dedicated vCPU, cx = shared
-TYPE_DB="${TYPE_DB:-ccx23}"
-TYPE_VIKUNJA="${TYPE_VIKUNJA:-ccx23}"
+TYPE_DB="${TYPE_DB:-ccx33}"
+TYPE_VIKUNJA="${TYPE_VIKUNJA:-ccx33}"
 TYPE_MONITORING="${TYPE_MONITORING:-cx23}"
 TYPE_LOADGEN="${TYPE_LOADGEN:-cx33}"
 
@@ -14,7 +14,8 @@ NETWORK_CIDR="${NETWORK_CIDR:-10.0.0.0/16}"
 SUBNET_CIDR="${SUBNET_CIDR:-10.0.1.0/24}"
 NETWORK_ZONE="${NETWORK_ZONE:-eu-central}"
 
-VIKUNJA_IMAGE="${VIKUNJA_IMAGE:-vikunja/vikunja:unstable}"
+# pr-3779 = main + the open perf PRs; back to unstable once they are merged
+VIKUNJA_IMAGE="${VIKUNJA_IMAGE:-ghcr.io/go-vikunja/vikunja:pr-3779}"
 POSTGRES_IMAGE="${POSTGRES_IMAGE:-postgres:18}"
 
 SSH_PUBKEY="${SSH_PUBKEY:-$HOME/.ssh/id_rsa.pub}"
