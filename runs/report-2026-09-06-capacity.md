@@ -16,10 +16,12 @@ Same two 4-core boxes, same load shape, before and after:
 
 The target of 10,000 users at p99 < 50 ms is met with an 8-core API host: p99 14 ms at 2,107 rps. Measured
 ceilings for p99 < 50 ms are ~14,000 users with both boxes on 8 cores and ~12,000 with the database on 4 cores.
+On a 32-core API host with a 16-core database, 20,000 users run at p99 56 ms with both hosts at ~40 %; beyond
+that the single load generator saturates before the servers do.
 
-Nine Vikunja changes came out of it, one merged (#3721 pgx, #3776), the rest as draft PRs measured individually
+Ten Vikunja changes came out of it, two merged (#3721 pgx, #3776), the rest as draft PRs measured individually
 and together (#3779). Two of the biggest costs were invisible to the earlier reports because the load model did
-not exercise them: API-token authentication and the connection lifetime default.
+not exercise them: API-token authentication and the connection pool defaults.
 
 ## Setup and method
 
@@ -57,6 +59,9 @@ All runs on the pr-3779 image contain every PR listed below at the time of the r
 | `cap10000` | 10,000 | ccx33 / ccx33 | 2,107 | 6 / 10 / 14 | 0.23 + 0.08 | 25 % | 60 % |
 | `cap14000` | 14,000 | ccx33 / ccx33 | 2,947 | 6 / 20 / 45 | 0.27 + 0.09 | 39 % | 76 % |
 | `db23-cap12000` | 12,000 | ccx23 / ccx33 | 2,518 | 9 / 28 / 47 | 0.67 + 0.18 | 87 % | 50 % |
+| `big-cap20000` — pool 48 | 20,000 | ccx43 / ccx53 | 3,603 | 200 / 690 / 1,000 | 0.45 + 0.13 | 37 % | 40 % |
+| `pool400-cap20000` — pool 400, idle 400 | 20,000 | ccx43 / ccx53 | 4,141 | 35 / 72 / 93 | 0.43 + 0.17 | 41 % | 41 % |
+| `rs-cap20000` — + reads without a transaction (#3790) | 20,000 | ccx43 / ccx53 | 4,181 | 16 / 41 / 56 | 0.44 + 0.17 | 39 % | 41 % |
 
 Configuration steps measured on the way (kept unless noted): pool 100 → 32 (same throughput, p99 halved, DB
 load1 14.6 → 8.1); `jit = off` and no parallel workers (within noise, kept); `GOGC=400` (−3 % API CPU for
@@ -98,7 +103,15 @@ expensive to build).
 8. **Duplicate single-row lookups.** A task read loaded the task and its project twice; 1.9 `users` lookups per
    request. #3787 memoizes the id lookups per session (the memo drops itself on writes). 14.6 → 13.2 statements.
 
-9. Task index race (`UQE_tasks_tasks_project_index` on concurrent creates, 1–8 per run): fixed by #3697.
+9. **Every request held a pooled connection inside a transaction for its whole life.** Visible only past ~15k
+   users: at 20,000 users on the big boxes the 48-connection pool was full of backends idle in transaction (44 of
+   48, 7 active) with the database at 37 % CPU, p99 1 s. Two pool defaults made it worse (`maxidleconnections` 50
+   below `maxopenconnections` 100 closes and re-prepares every connection above the 50th; both now in #3775).
+   #3790 gives read handlers and token auth a session without `BEGIN` (`db.NewReadSession()`), so a connection
+   is borrowed per statement: at 20k users p50 35 → 16 ms, p99 93 → 56, statements per request 13.1 → 10.5,
+   backends idle in transaction 37 → 1.9.
+
+10. Task index race (`UQE_tasks_tasks_project_index` on concurrent creates, 1–8 per run): fixed by #3697.
 
 Checked and rejected: a closure table for the project tree. Measured on the live database, the recursive step is
 per-iteration overhead, not depth (a 10-deep chain added nothing measurable); with the cache the CTE is ~1.5 %
@@ -112,6 +125,7 @@ worse failure mode.
 | ccx23 db + ccx23 api | ~7,500 (9,000 gives p99 130 ms) | ~1,550 | API at ~80 % |
 | ccx23 db + ccx33 api | ~12,000 (p99 47 ms) | 2,518 | DB at 87 % / 95 % peaks |
 | ccx33 db + ccx33 api | ~14,000 (p99 45 ms) | 2,947 | API at 76 % / 93 % peaks |
+| ccx43 db (16 cores) + ccx53 api (32 cores), pool 400, #3790 | > 20,000 (p99 56 ms at 20k, both hosts ~40 %) | 4,181 | not reached; one 16-core load generator saturates at 30k |
 
 Plan with 10–15 % below those numbers. API CPU per request is constant across sizes (about 0.45 ms of a core),
 so the API host sizes linearly with users; the database is fine up to ~10k on 4 cores and needs 8 cores beyond
@@ -122,7 +136,10 @@ For reference, Vikunja Cloud averages ~3 requests per second; 3000 simulated use
 ## Hosting recommendations
 
 - `database.maxopenconnections`: 2–3× DB cores (32 for 4 cores, 48 for 8), not 100.
-- `database.maxconnectionlifetime`: ≥ 30 min until #3775 lands (the default is 10 s).
+- `database.maxconnectionlifetime`: ≥ 30 min, and `database.maxidleconnections` = `maxopenconnections`, until
+  #3775 lands (the defaults are 10 s and 50).
+- Above ~15k users: pool 2–3× DB cores is no longer enough while requests hold transactions; 25× cores (400 on
+  16) with `max_connections` 500 worked, and #3790 makes the pool a non-issue for reads.
 - Postgres: `jit = off`, `max_parallel_workers_per_gather = 0`; `shared_buffers` 25 % of RAM. Everything is in
   cache at this size; IO never showed up.
 - `GOGC=400` with a `GOMEMLIMIT` is a few percent of API CPU for RAM you have anyway.
@@ -131,17 +148,20 @@ For reference, Vikunja Cloud averages ~3 requests per second; 3000 simulated use
 ## Pull requests
 
 Merged: #3721 (pgx), #3776 (subscription parameters). Open, in merge order: #3774, #3775, #3777, #3780 then #3783
-(stacked), #3785, #3786, #3787. #3779 is the combined test build of all of them; close it after merging. The test
-deployment pins `ghcr.io/go-vikunja/vikunja:pr-3779` in `infra/config.sh`; switch back to `unstable` afterwards.
+(stacked), #3785, #3786, #3787, #3790. #3779 is the combined test build of all of them; close it after merging.
+The test deployment pins `ghcr.io/go-vikunja/vikunja:pr-3779` in `infra/config.sh`; switch back to `unstable`
+afterwards.
 
 ## What is left
 
 1. **Fewer queries per task read.** `addMoreInfoToTasks` fans out into one query per related entity (assignees,
-   labels, attachments, reminders, favorites, relations, users) even for a single task; ~9 selects plus the
-   auth transaction. Round trips are now the largest share of API CPU (31 % in syscalls).
-2. **xorm's `?` → `$n` rewrite** on every statement (4 % of API CPU), an xorm-level cache by statement text.
-3. JSON and allocation (~10 % together); the next profile after 1 will say which.
-4. A `/health` HTTP probe instead of the `healthcheck` subcommand, which boots a full engine incl. schema
+   labels, attachments, reminders, favorites, relations, users) even for a single task; ~9 selects. Round trips
+   are the largest share of API CPU (31 % in syscalls) and, past 15k users, the latency floor itself.
+2. **Multi-host load generation** (locust master + workers on separate machines) before any measurement above
+   ~25k users.
+3. **xorm's `?` → `$n` rewrite** on every statement (4 % of API CPU), an xorm-level cache by statement text.
+4. JSON and allocation (~10 % together); the next profile after 1 will say which.
+5. A `/health` HTTP probe instead of the `healthcheck` subcommand, which boots a full engine incl. schema
    introspection on every probe.
 
 ## Test-side notes
@@ -152,6 +172,8 @@ deployment pins `ghcr.io/go-vikunja/vikunja:pr-3779` in `infra/config.sh`; switc
 - `pg_stat_statements.mean_plan_time` is per plan, not per call; the archive now includes `plans` next to `calls`.
 - Preview images report a wrong version string; check the image label `org.opencontainers.image.revision`.
 - `hcloud server change-type` to a smaller type is refused with `--keep-disk`; recreate instead.
+- One locust process handles ~1,500 simulated users on one core; `LOCUST_PROCESSES` forks workers on the same
+  box (`--processes`). Watch the load generator's CPU in every capacity run; above ~80 % its latencies are its own.
 - Fixed on the way: the Prometheus locust target rendered with an empty IP, the Vikunja healthcheck used `wget`
   (not in the image), the load generator ran out of ephemeral ports, a locust run that never exits is now killed
   90 s after it stops, and editing `run-test.sh` while a run is in progress corrupts it (bash reads scripts
