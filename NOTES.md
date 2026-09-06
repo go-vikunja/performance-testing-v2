@@ -29,6 +29,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `conn-lifetime/2026-09-06_00-45-48` | pr-3774 | + connection lifetime 10 s → 1 h | 629 | 13 / 20 / **26** | 16 / 41 | 0 | 18.8 | 0.62 | 0.50 | 44 | 2.0 | 52 |
 | `unstable-pgx/2026-09-06_01-08-54` | v2.6.0-141 (unstable, pgx, no token cache) | same config, main without #3774 | 626 | 21 / 55 / 84 | 19 / 55 | 1 | 18.7 | 0.72 | 0.53 | 46 | 2.5 | **79** |
 | `sub-params/2026-09-06_01-23-01` | pr-3776 (= unstable + #3776, no token cache) | + subscription ids as parameters | 627 | 20 / 49 / 73 | 18 / 50 | 1 | 18.7 | 0.84 | **0.15** | 42 | 2.6 | 78 |
+| `cap6000/2026-09-06_01-51-04` (**6000 users**, 50/s) | pr-3774 | capacity run, pgx + token cache | **1242** | 24 / 85 / 130 | 24 / 77 | 3 | 18.6 | 0.96 | 0.70 | 85 | 15.9 | 79 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -232,3 +233,11 @@ Image `pr-3776` = unstable + #3776, no token cache, so compare with unstable-pgx
 plan instead of one tailored to a literal id, which is a little slower per call. Net DB CPU still down. (The local
 wrapper was OOM-killed mid-run by the workstation; the remote run completed and was archived by hand, hence the
 run id equals the locust start time.)
+
+### 12. Capacity: 6000 users — `runs/cap6000/2026-09-06_01-51-04`
+
+pgx + token cache (pr-3774), pool 32, 1 h lifetime, GOGC 400, jit off. 711k requests, 3 failures, 1,242 rps
+steady, p50 24 / p95 85 / p99 130 ms. DB at 85 % (load1 16), Vikunja at 79 %: this is the ceiling of two ccx23s
+with the current code. At the start of the session the same boxes were at 73–82 % with **half** the load
+(3000 users, 600 rps) and, with API-token bots, p50 73 ms. Capacity roughly doubled; #3776 (not in this image)
+takes another ~0.4 ms of planning per request off the DB.
