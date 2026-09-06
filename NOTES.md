@@ -32,6 +32,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `cap6000/2026-09-06_01-51-04` (**6000 users**, 50/s) | pr-3774 | capacity run, pgx + token cache | **1242** | 24 / 85 / 130 | 24 / 77 | 3 | 18.6 | 0.96 | 0.70 | 85 | 15.9 | 79 |
 | `partial-index/2026-09-06_02-08-51` | pr-3774 | + partial index on projects.parent_project_id (#3777, applied live) | 636 | 13 / 19 / 24 | 16 / 41 | 0 | 18.6 | **0.52** | 0.48 | 42 | 2.0 | 52 |
 | `combined/2026-09-06_10-05-12` | pr-3779 (`ea603a21a` = main + #3774 #3775 #3776 #3777 #3780) | all five together | 636 | **11 / 17 / 22** | 15 / 39 | 2 | 18.2 | 0.53 | **0.14** | **37** | 2.3 | 50 |
+| `combined-cap6000/2026-09-06_10-18-07` (**6000 users**, 50/s) | pr-3779 (`ea603a21a`) | all five, capacity | **1251** | 14 / 41 / 66 | 23 / 72 | 0 | 18.2 | 0.47 | 0.15 | 56 | 4.0 | 77 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -285,3 +286,12 @@ Access cache hit rate only ~63 % (grants CTE 281k → 104k calls): `updateProjec
 that carries the loaded `ParentProjectID`, so the `AfterUpdate` hook takes it for a re-parent and starts a new
 generation. Fix (for #3780, branch owned by the user now): touch `updated` through a hook-less bean, e.g. a
 `projectTouch{Updated time.Time}` with `TableName() = "projects"`. Expected hit rate then > 95 %.
+
+### 15. All five PRs, 6000 users — `runs/combined-cap6000/2026-09-06_10-18-07`
+
+1,251 rps, p50 14 / p95 41 / p99 66 ms, **0 failures**, DB 56 % (load1 4.0), Vikunja 77 %. Same load as `cap6000`
+(pgx + token cache only): p95 85 → 41, p99 130 → 66, DB 85 → 56 %. The API host is now the first wall (PBKDF2 gone,
+so it is JSON, routing and the ~18 statements per request); the DB has headroom again.
+
+Stacked PR #3783 (hook-less project timestamp touch) is merged into #3779 together with the user's keyvalue
+refactor of #3780 (`03f627fd4`); next combined run on head `7a6414d20` once its image is built.
