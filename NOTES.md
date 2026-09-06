@@ -311,3 +311,23 @@ The API host is the first wall now and nothing can be profiled from outside (str
 Go's pprof at `/debug/pprof/`. The test deployment sets `VIKUNJA_METRICS_PPROF=true`; the combined branch #3779
 (head `f3bb05960`) includes it, so the next combined run gets a 30 s CPU profile mid-run. #3776 has meanwhile
 been merged into main by the user.
+
+### First API-side CPU profile (pr-3779 `f3bb05960`, 30 s at t=240 s of `combined-profile`) — go-vikunja/vikunja#3786
+
+45 s of samples on 4 cores (151 %). Where it goes:
+
+| share | what | lever |
+|---|---|---|
+| 28 % | `Syscall6` — network I/O, mostly DB round trips (~14 statements + 4 transactions per bot request) | fewer statements per request |
+| 26 % cum | `v2.tasksRead` → `models.addMoreInfoToTasks` 21 % | the task read fans out into assignees, labels, attachments, reminders, favorites, relations, users, project… one query each |
+| 5.3 % | `db.isWriteStatement`: two regexps on every SQL statement (session-cache write hook) | #3786 byte scan |
+| 4.2 % | xorm `postgresSeqFilterConvertQuestionMark`: rewriting `?` → `$n` on every statement | xorm-level; a per-statement text cache in xorm would remove it |
+| 2 % | `log.XormLogger.Infof` → `fmt.Sprintf` of every statement although database logging is off | #3786 level check first |
+| 2.7 % cum | `encoding/json` marshalling | expected |
+
+Statement sequence of one `GET /tasks/{id}` with an API token (from `log_statement = all`): `begin; api_tokens;
+users; rollback` (token middleware), `begin; users; rollback` **twice** (`GetAuthFromClaims` reloads the owner for
+the metrics middleware and again for the handler although `api_user` is in the context), then the handler's
+transaction with ~11 selects (task, project, task again, assignees, labels, attachments, users, reminders,
+favorites, project again, relations). #3786 drops the two user lookups; the remaining duplicates (task and
+project loaded twice) are the next candidates.
