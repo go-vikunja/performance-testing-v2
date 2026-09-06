@@ -31,6 +31,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `sub-params/2026-09-06_01-23-01` | pr-3776 (= unstable + #3776, no token cache) | + subscription ids as parameters | 627 | 20 / 49 / 73 | 18 / 50 | 1 | 18.7 | 0.84 | **0.15** | 42 | 2.6 | 78 |
 | `cap6000/2026-09-06_01-51-04` (**6000 users**, 50/s) | pr-3774 | capacity run, pgx + token cache | **1242** | 24 / 85 / 130 | 24 / 77 | 3 | 18.6 | 0.96 | 0.70 | 85 | 15.9 | 79 |
 | `partial-index/2026-09-06_02-08-51` | pr-3774 | + partial index on projects.parent_project_id (#3777, applied live) | 636 | 13 / 19 / 24 | 16 / 41 | 0 | 18.6 | **0.52** | 0.48 | 42 | 2.0 | 52 |
+| `combined/2026-09-06_10-05-12` | pr-3779 (`ea603a21a` = main + #3774 #3775 #3776 #3777 #3780) | all five together | 636 | **11 / 17 / 22** | 15 / 39 | 2 | 18.2 | 0.53 | **0.14** | **37** | 2.3 | 50 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -275,3 +276,12 @@ data can be re-filled under the new generation); per-user invalidation where the
 a new generation for structural changes; sessions that wrote bypass the memo (they may see their own
 uncommitted grants); generation published via keyvalue and pulled ≤ 1/s for replicas, 30 s TTL as the bound.
 `pkg/models` and the project/team/task web tests pass. Combined test build with all five PRs: #3779.
+
+### 14. All five PRs together — `runs/combined/2026-09-06_10-05-12` (image pr-3779, `ea603a21a`)
+
+p50 11 / p95 17 / p99 22 ms, DB 37 %, Vikunja 50 %, planning 0.14 ms/req, 2 failures (the #3697 index race).
+Access cache hit rate only ~63 % (grants CTE 281k → 104k calls): `updateProjectLastUpdated`
+(`pkg/models/project.go:1302`, 14 call sites, every task write) does `Cols("updated").Update(project)` with a bean
+that carries the loaded `ParentProjectID`, so the `AfterUpdate` hook takes it for a re-parent and starts a new
+generation. Fix (for #3780, branch owned by the user now): touch `updated` through a hook-less bean, e.g. a
+`projectTouch{Updated time.Time}` with `TableName() = "projects"`. Expected hit rate then > 95 %.
