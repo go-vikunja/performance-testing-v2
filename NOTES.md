@@ -355,3 +355,9 @@ lookups by id per request. #3787 routes `GetTaskByIDSimple`, `GetProjectSimpleBy
 `user.GetUserByID`, `user.GetUsersByIDs` through the per-session memo (drops itself on any write in that session;
 callers get copies). Expected: 2–3 statements fewer per request. Merged into #3779 (`cb03108cc`) for the next
 combined run; `combined-v4` (running) measures the WITH-scan fix on its own first.
+
+### Third profile (pr-3779 `eee403ef8` = + WITH word scan, run `combined-v4`)
+
+Samples per 30 s: 45.4 → 41.0 → **37.1 s** across the three profiles (−18 % API CPU at equal load).
+`isWriteStatement` 5.6 % → 0.5 %, regexp no longer in the profile. What is left: syscalls 31 % (round trips),
+`tasksRead` 22.6 % cum, xorm `?`→`$n` rewrite 3.8 %, allocation 6.7 %, JSON 2.7 %.
