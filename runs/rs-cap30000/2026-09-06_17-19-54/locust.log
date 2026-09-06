@@ -1,0 +1,220 @@
+[2026-09-06 15:20:02,381] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-06 15:20:02,424] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-06 15:20:02,437] perf-loadgen/INFO/locust.runners: perf-loadgen_1bbab4334a76489f8d4a37f6b464219c (index 0) reported as ready. 1 workers connected.
+[2026-09-06 15:20:02,437] perf-loadgen/INFO/locust.runners: perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12 (index 1) reported as ready. 2 workers connected.
+[2026-09-06 15:20:02,437] perf-loadgen/INFO/locust.runners: perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd (index 2) reported as ready. 3 workers connected.
+[2026-09-06 15:20:02,437] perf-loadgen/INFO/locust.runners: perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a (index 3) reported as ready. 4 workers connected.
+[2026-09-06 15:20:02,437] perf-loadgen/INFO/locust.runners: perf-loadgen_dddbce9b83ed42d9b40abd8987d5950c (index 4) reported as ready. 5 workers connected.
+[2026-09-06 15:20:02,438] perf-loadgen/INFO/locust.runners: perf-loadgen_b73868f4993247ef95617518c54b0c65 (index 5) reported as ready. 6 workers connected.
+[2026-09-06 15:20:02,438] perf-loadgen/INFO/locust.runners: perf-loadgen_341ef40363bf4116970ab8e438a4ea11 (index 6) reported as ready. 7 workers connected.
+[2026-09-06 15:20:02,438] perf-loadgen/INFO/locust.runners: perf-loadgen_4e38cedc99ee4f73ac4fc6f264fe6b6d (index 7) reported as ready. 8 workers connected.
+[2026-09-06 15:20:02,597] perf-loadgen/INFO/locust.runners: perf-loadgen_0530682add604959b1a3c26708608519 (index 8) reported as ready. 9 workers connected.
+[2026-09-06 15:20:02,599] perf-loadgen/INFO/locust.runners: perf-loadgen_bb13b7c128154a11956f49310fef4725 (index 9) reported as ready. 10 workers connected.
+[2026-09-06 15:20:02,599] perf-loadgen/INFO/locust.runners: perf-loadgen_c55783b2436443a5abe83e50a7649d41 (index 10) reported as ready. 11 workers connected.
+[2026-09-06 15:20:02,600] perf-loadgen/INFO/locust.runners: perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed (index 11) reported as ready. 12 workers connected.
+[2026-09-06 15:20:02,600] perf-loadgen/INFO/locust.runners: perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9 (index 12) reported as ready. 13 workers connected.
+[2026-09-06 15:20:02,601] perf-loadgen/INFO/locust.runners: perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36 (index 13) reported as ready. 14 workers connected.
+[2026-09-06 15:20:02,604] perf-loadgen/INFO/locust.runners: perf-loadgen_cb02515ea26948929404e85d625c3bd4 (index 14) reported as ready. 15 workers connected.
+[2026-09-06 15:20:02,606] perf-loadgen/INFO/locust.runners: perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590 (index 15) reported as ready. 16 workers connected.
+[2026-09-06 15:20:03,439] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-06 15:20:03,439] perf-loadgen/INFO/locust.runners: Sending spawn jobs of 30000 users at 187.00 spawn rate to 16 ready workers
+[2026-09-06 15:22:22,463] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,499] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,518] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,519] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,525] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,530] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,536] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,543] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,544] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,545] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,557] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,560] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,562] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,563] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd (index 2) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,574] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,577] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,600] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_bb13b7c128154a11956f49310fef4725 (index 9) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,608] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed (index 11) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,616] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9 (index 12) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,621] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_341ef40363bf4116970ab8e438a4ea11 (index 6) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,629] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590 (index 15) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,630] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_4e38cedc99ee4f73ac4fc6f264fe6b6d (index 7) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,648] perf-loadgen/WARNING/root: CPU usage above 90%! This may constrain your throughput and may even give inconsistent response time measurements! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:22:22,653] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_c55783b2436443a5abe83e50a7649d41 (index 10) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,659] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a (index 3) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,672] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_0530682add604959b1a3c26708608519 (index 8) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,715] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36 (index 13) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,744] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_cb02515ea26948929404e85d625c3bd4 (index 14) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,750] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_b73868f4993247ef95617518c54b0c65 (index 5) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:22,767] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12 (index 1) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:23,556] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_1bbab4334a76489f8d4a37f6b464219c (index 0) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:23,646] perf-loadgen/WARNING/locust.runners: Worker perf-loadgen_dddbce9b83ed42d9b40abd8987d5950c (index 4) exceeded cpu threshold (will only log this once per worker)
+[2026-09-06 15:22:45,320] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 12857, "IntegrationBot": 4286, "Worker": 12857} (30000 total users)
+[2026-09-06 15:30:03,439] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-06 15:30:20,181] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:20,182] perf-loadgen/INFO/locust.runners: perf-loadgen_b73868f4993247ef95617518c54b0c65 (index 5) reported that it has stopped
+[2026-09-06 15:30:20,861] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_b73868f4993247ef95617518c54b0c65
+[2026-09-06 15:30:22,151] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,151] perf-loadgen/INFO/locust.runners: perf-loadgen_bb13b7c128154a11956f49310fef4725 (index 9) reported that it has stopped
+[2026-09-06 15:30:22,183] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,183] perf-loadgen/INFO/locust.runners: perf-loadgen_1bbab4334a76489f8d4a37f6b464219c (index 0) reported that it has stopped
+[2026-09-06 15:30:22,333] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,334] perf-loadgen/INFO/locust.runners: perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a (index 3) reported that it has stopped
+[2026-09-06 15:30:22,347] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,348] perf-loadgen/INFO/locust.runners: perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12 (index 1) reported that it has stopped
+[2026-09-06 15:30:22,448] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,448] perf-loadgen/INFO/locust.runners: perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9 (index 12) reported that it has stopped
+[2026-09-06 15:30:22,629] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,630] perf-loadgen/INFO/locust.runners: perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36 (index 13) reported that it has stopped
+[2026-09-06 15:30:22,787] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:22,788] perf-loadgen/INFO/locust.runners: perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590 (index 15) reported that it has stopped
+[2026-09-06 15:30:22,886] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12
+[2026-09-06 15:30:22,906] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_1bbab4334a76489f8d4a37f6b464219c
+[2026-09-06 15:30:22,963] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a
+[2026-09-06 15:30:23,267] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:23,267] perf-loadgen/INFO/locust.runners: perf-loadgen_cb02515ea26948929404e85d625c3bd4 (index 14) reported that it has stopped
+[2026-09-06 15:30:23,328] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:23,329] perf-loadgen/INFO/locust.runners: perf-loadgen_4e38cedc99ee4f73ac4fc6f264fe6b6d (index 7) reported that it has stopped
+[2026-09-06 15:30:23,344] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:23,345] perf-loadgen/INFO/locust.runners: perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd (index 2) reported that it has stopped
+[2026-09-06 15:30:23,610] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:23,611] perf-loadgen/INFO/locust.runners: perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed (index 11) reported that it has stopped
+[2026-09-06 15:30:23,796] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:23,797] perf-loadgen/INFO/locust.runners: perf-loadgen_c55783b2436443a5abe83e50a7649d41 (index 10) reported that it has stopped
+[2026-09-06 15:30:23,810] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd
+[2026-09-06 15:30:23,863] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_b73868f4993247ef95617518c54b0c65
+[2026-09-06 15:30:23,907] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36
+[2026-09-06 15:30:23,918] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bb13b7c128154a11956f49310fef4725
+[2026-09-06 15:30:23,927] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_c55783b2436443a5abe83e50a7649d41
+[2026-09-06 15:30:23,928] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed
+[2026-09-06 15:30:23,937] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_cb02515ea26948929404e85d625c3bd4
+[2026-09-06 15:30:23,957] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590
+[2026-09-06 15:30:24,022] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9
+[2026-09-06 15:30:24,290] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:24,290] perf-loadgen/INFO/locust.runners: perf-loadgen_dddbce9b83ed42d9b40abd8987d5950c (index 4) reported that it has stopped
+[2026-09-06 15:30:24,416] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:24,416] perf-loadgen/INFO/locust.runners: perf-loadgen_341ef40363bf4116970ab8e438a4ea11 (index 6) reported that it has stopped
+[2026-09-06 15:30:24,850] perf-loadgen/WARNING/locust.runners: CPU usage was too high at some point during the test! See https://docs.locust.io/en/stable/running-distributed.html for how to distribute the load over multiple CPU cores or machines
+[2026-09-06 15:30:24,851] perf-loadgen/INFO/locust.runners: perf-loadgen_0530682add604959b1a3c26708608519 (index 8) reported that it has stopped
+[2026-09-06 15:30:25,887] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12
+[2026-09-06 15:30:25,907] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_1bbab4334a76489f8d4a37f6b464219c
+[2026-09-06 15:30:25,921] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_4e38cedc99ee4f73ac4fc6f264fe6b6d
+[2026-09-06 15:30:25,964] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a
+[2026-09-06 15:30:26,003] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_341ef40363bf4116970ab8e438a4ea11
+[2026-09-06 15:30:26,813] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd
+[2026-09-06 15:30:26,852] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_dddbce9b83ed42d9b40abd8987d5950c
+[2026-09-06 15:30:26,865] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_b73868f4993247ef95617518c54b0c65
+[2026-09-06 15:30:26,909] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36
+[2026-09-06 15:30:26,919] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bb13b7c128154a11956f49310fef4725
+[2026-09-06 15:30:26,928] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_c55783b2436443a5abe83e50a7649d41
+[2026-09-06 15:30:26,930] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed
+[2026-09-06 15:30:26,938] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_cb02515ea26948929404e85d625c3bd4
+[2026-09-06 15:30:26,941] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_0530682add604959b1a3c26708608519
+[2026-09-06 15:30:26,959] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590
+[2026-09-06 15:30:27,024] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9
+[2026-09-06 15:30:28,889] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_0d7a54e6d4804c9fb470127fdc6b3e12
+[2026-09-06 15:30:28,909] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_1bbab4334a76489f8d4a37f6b464219c
+[2026-09-06 15:30:28,923] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_4e38cedc99ee4f73ac4fc6f264fe6b6d
+[2026-09-06 15:30:28,966] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e1c158d5b7ea4ec29a2f94c9025ed32a
+[2026-09-06 15:30:29,004] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_341ef40363bf4116970ab8e438a4ea11
+[2026-09-06 15:30:29,815] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_77c90f09236e4c97b4db642d9c1a1dfd
+[2026-09-06 15:30:29,855] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_dddbce9b83ed42d9b40abd8987d5950c
+[2026-09-06 15:30:29,868] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_b73868f4993247ef95617518c54b0c65
+[2026-09-06 15:30:29,910] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_81aa78f85b494e3b8b218c9ebc9d1f36
+[2026-09-06 15:30:29,920] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_bb13b7c128154a11956f49310fef4725
+[2026-09-06 15:30:29,929] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_c55783b2436443a5abe83e50a7649d41
+[2026-09-06 15:30:29,932] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f32798e3c3474f0a8de4aac226fd8aed
+[2026-09-06 15:30:29,939] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_cb02515ea26948929404e85d625c3bd4
+[2026-09-06 15:30:29,942] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_0530682add604959b1a3c26708608519
+[2026-09-06 15:30:29,960] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e6e965bcf2b64d1280f0ab6e1261b590
+[2026-09-06 15:30:30,025] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_65281bb3010d4209a27d06c68d6ec6b9
+[2026-09-06 15:30:30,457] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-06 15:30:31,512] perf-loadgen/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                            489968     0(0.00%) |    287       1   16620    140 |  788.48        0.00
+GET      /info                                                                          47768     0(0.00%) |    258       0   16292     21 |   76.87        0.00
+GET      /labels                                                                        47768     0(0.00%) |    315       2   15799    120 |   76.87        0.00
+POST     /login                                                                         29202     0(0.00%) |    380       7   17810     70 |   46.99        0.00
+GET      /projects                                                                      47768     0(0.00%) |    418       6   15934    250 |   76.87        0.00
+GET      /projects [bot]                                                               135010     0(0.00%) |    373       5   16052    350 |  217.26        0.00
+POST     /projects [create]                                                              3623     0(0.00%) |    452      22    7112    420 |    5.83        0.00
+GET      /projects/{id}                                                                126970     0(0.00%) |    254       2   16844    210 |  204.33        0.00
+GET      /projects/{id}/tasks [bot]                                                    345815     0(0.00%) |    360       4   16929    330 |  556.50        0.00
+POST     /projects/{id}/tasks [create]                                                  18241   143(0.78%) |    354       9   14571    290 |   29.35        0.23
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                             36128     0(0.00%) |    577       8   16570    470 |   58.14        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                       5333     0(0.00%) |    272       3    5888    220 |    8.58        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                       7264     0(0.00%) |    396       5    7800    350 |   11.69        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                      135449     0(0.00%) |    520       3   16646    410 |  217.97        0.00
+GET      /tasks [bot]                                                                   44969     0(0.00%) |    445       9   15878    420 |   72.37        0.00
+GET      /tasks [home]                                                                 102297     0(0.00%) |    476       8   16271    380 |  164.62        0.00
+GET      /tasks/{id}                                                                    43877     0(0.00%) |    447       6   15858    410 |   70.61        0.00
+GET      /tasks/{id} [bot]                                                             976635     0(0.00%) |    354       4   17955    320 | 1571.64        0.00
+PATCH    /tasks/{id} [patch]                                                            21580     0(0.00%) |    426       4   13765    380 |   34.73        0.00
+GET      /tasks/{id}/comments                                                           43877     0(0.00%) |    373       2   16321    220 |   70.61        0.00
+POST     /tasks/{id}/comments [create]                                                   3735     0(0.00%) |    217       3   11927    170 |    6.01        0.00
+POST     /tasks/{id}/labels [add]                                                        7047     0(0.00%) |    257       6    5833    220 |   11.34        0.00
+PUT      /tasks/{id}/position                                                           10727     0(0.00%) |    272       4   14666    180 |   17.26        0.00
+PUT      /tasks/{id}/read                                                               43877     0(0.00%) |    279       1   16621    140 |   70.61        0.00
+GET      /user                                                                          47768     0(0.00%) |    261       1   16509     51 |   76.87        0.00
+POST     /user/token/refresh                                                            57194    28(0.05%) |    255       3   15810    160 |   92.04        0.05
+WS       connect+auth+subscribe                                                         47768     0(0.00%) |    375       1   16369    140 |   76.87        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                   2927658   171(0.01%) |    352       0   17955    280 | 4711.32        0.28
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                    140    190    240    280    560   1200   2200   3000   5900  15000  17000 489968
+GET      /info                                                                                  21    120    170    210    520   1300   2800   3600  11000  16000  16000  47768
+GET      /labels                                                                               120    190    250    290    660   1600   2900   3800   6900  15000  16000  47768
+POST     /login                                                                                 70     91    160    240    850   1800   3100   4900  15000  18000  18000  29202
+GET      /projects                                                                             250    350    410    450    730   1700   3100   4000   7100  16000  16000  47768
+GET      /projects [bot]                                                                       350    410    450    480    570    670    970   1500   3500  11000  16000 135010
+POST     /projects [create]                                                                    420    470    510    540    660    760   1300   1700   4000   7100   7100   3623
+GET      /projects/{id}                                                                        210    250    280    300    360    470   1200   1700   4000  11000  17000 126970
+GET      /projects/{id}/tasks [bot]                                                            330    390    430    460    550    650    950   1500   3400   6800  17000 345815
+POST     /projects/{id}/tasks [create]                                                         290    340    380    410    540    690   1300   2100   4500  12000  15000  18241
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                    470    560    630    690    960   1600   2500   3200   6000  15000  17000  36128
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                             220    270    300    330    410    530   1200   1900   4100   5900   5900   5333
+GET      /projects/{id}/views/{view}/tasks [gantt]                                             350    420    460    490    590    720   1400   2000   4900   7800   7800   7264
+GET      /projects/{id}/views/{view}/tasks [list]                                              410    500    570    630    880   1500   2400   3100   6100  15000  17000 135449
+GET      /tasks [bot]                                                                          420    500    550    580    690    800   1100   1600   3300   5700  16000  44969
+GET      /tasks [home]                                                                         380    480    550    590    780   1200   2300   3200   6200  14000  16000 102297
+GET      /tasks/{id}                                                                           410    490    550    580    700    820   1500   1900   4200   8700  16000  43877
+GET      /tasks/{id} [bot]                                                                     320    380    420    450    540    640    960   1500   3400   8100  18000 976635
+PATCH    /tasks/{id} [patch]                                                                   380    460    510    550    660    780   1400   1900   4500   6700  14000  21580
+GET      /tasks/{id}/comments                                                                  220    280    340    400    680   1400   2300   2900   6500  16000  16000  43877
+POST     /tasks/{id}/comments [create]                                                         170    210    230    250    310    420   1100   1600   3900  12000  12000   3735
+POST     /tasks/{id}/labels [add]                                                              220    260    290    310    380    500   1100   1400   3800   5800   5800   7047
+PUT      /tasks/{id}/position                                                                  180    230    260    290    400    710   1600   2700   5800  11000  15000  10727
+PUT      /tasks/{id}/read                                                                      140    190    230    270    460   1100   2100   2900   5900  14000  17000  43877
+GET      /user                                                                                  51    110    160    200    480   1200   2900   3500   7000  16000  17000  47768
+POST     /user/token/refresh                                                                   160    200    240    270    380    850   1500   2200   5800  15000  16000  57194
+WS       connect+auth+subscribe                                                                140    290    350    410    890   1800   2900   3800   7000  16000  16000  47768
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                            280    360    410    450    590    820   1700   2500   5200  14000  18000 2927658
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+143                POST /projects/{id}/tasks [create]: LocustBadStatusCode(code=500)                                   
+28                 POST /user/token/refresh: LocustBadStatusCode(code=401)                                             
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
+2026-09-06T15:30:32Z <Greenlet at 0x7f480171d940: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f48028e92b0>>> failed with ValueError
+
+[2026-09-06 15:30:32,113] perf-loadgen/CRITICAL/locust.main: Unhandled exception in greenlet: <Greenlet at 0x7f480171d940: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x7f48028e92b0>>>
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "/opt/venv/lib/python3.13/site-packages/locust/stats.py", line 1177, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ^^^^^^^
+ValueError: I/O operation on closed file.
