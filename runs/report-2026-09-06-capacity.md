@@ -31,6 +31,7 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `unstable-pgx` | v2.6.0-141 (pgx, no cache) | reference: main without #3774 | 626 | 21 / 55 / 84 | 0.72 + 0.53 | 46 % | 79 % |
 | `sub-params` | pr-3776 (pgx + params, no cache) | + subscription ids as parameters (#3776) | 627 | 20 / 49 / 73 | 0.84 + 0.15 | 42 % | 78 % |
 | `cap6000` (6000 users) | pr-3774 | capacity | **1,242** | 24 / 85 / 130 | 0.96 + 0.70 | 85 % | 79 % |
+| `partial-index` | pr-3774 | + partial index on `projects.parent_project_id` (#3777) | 636 | 13 / 19 / 24 | 0.52 + 0.48 | 42 % | 52 % |
 
 Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 13 ms at 44 % / 52 %, and the boxes now
 carry 6000 users (1,242 rps) at the utilisation they had for 3000.
@@ -49,16 +50,20 @@ carry 6000 users (1,242 rps) at the utilisation they had for 3000.
 4. **The subscription lookup interpolates ids into SQL** (`pkg/models/subscription.go`), so every `GET /tasks/{id}`
    is a never-seen statement: planned every call, 1.3 ms planning for 0.08 ms execution, half of all remaining
    planning. #3776 binds them as parameters. Planning 0.53 → 0.15 ms/req.
-5. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
-6. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
-7. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
-8. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
+5. **The grants CTE seq-scans `projects` at every recursion level.** Top-level projects store NULL as parent, but
+   without a partial index the planner hashes all 1,449 projects for the recursive join (120 of 197 buffers).
+   #3777 adds `projects (parent_project_id) WHERE parent_project_id IS NOT NULL`: CTE 0.32 → 0.19 ms mean under
+   load, DB exec 0.62 → 0.52 ms/req.
+6. **Pool 100 → 32** on a 4-core DB: same throughput, p99 halved, DB load1 14.6 → 8.1. Hosting-side only.
+7. `jit = off`, no parallel workers, `GOGC=400`: each a few percent, kept as deployment config.
+8. `plan_cache_mode = force_generic_plan`: tried, reverted (makes the recursive CTE's plan 2.7× more expensive).
+9. Task index race (`UQE_tasks_tasks_project_index` 500s on concurrent creates): 1–4 per run, fixed by #3697.
 
 ## What is left (ordered)
 
-1. **Merge #3774, #3775, #3776** and rerun `unstable` once to have all three in one image; expected at 3000 users:
-   DB ~40 %, API ~50 %, p50 ~13 ms.
-2. **Grants CTE** (`project_access.go`) is now half of DB execution time (0.4 ms × 0.8 per request). It is memoised
+1. **Merge #3774, #3775, #3776, #3777** and rerun `unstable` once to have all four in one image; expected at 3000
+   users: DB ~38 %, API ~50 %, p50 ~13 ms, planning ~0.15 ms/req.
+2. **Grants CTE** (`project_access.go`) is still 37 % of DB execution time after #3777 (0.19 ms × 0.8 per request). It is memoised
    per session only; a cross-request cache per user (short TTL, invalidated by project/share/team writes) removes
    most of it. Also answers the per-task `project_hierarchy` read.
 3. **API-token path opens its own transaction** (`auth.ValidateAPITokenString`): BEGIN, token, user, COMMIT before

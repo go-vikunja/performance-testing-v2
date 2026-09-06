@@ -30,6 +30,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `unstable-pgx/2026-09-06_01-08-54` | v2.6.0-141 (unstable, pgx, no token cache) | same config, main without #3774 | 626 | 21 / 55 / 84 | 19 / 55 | 1 | 18.7 | 0.72 | 0.53 | 46 | 2.5 | **79** |
 | `sub-params/2026-09-06_01-23-01` | pr-3776 (= unstable + #3776, no token cache) | + subscription ids as parameters | 627 | 20 / 49 / 73 | 18 / 50 | 1 | 18.7 | 0.84 | **0.15** | 42 | 2.6 | 78 |
 | `cap6000/2026-09-06_01-51-04` (**6000 users**, 50/s) | pr-3774 | capacity run, pgx + token cache | **1242** | 24 / 85 / 130 | 24 / 77 | 3 | 18.6 | 0.96 | 0.70 | 85 | 15.9 | 79 |
+| `partial-index/2026-09-06_02-08-51` | pr-3774 | + partial index on projects.parent_project_id (#3777, applied live) | 636 | 13 / 19 / 24 | 16 / 41 | 0 | 18.6 | **0.52** | 0.48 | 42 | 2.0 | 52 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -251,3 +252,17 @@ prefers a seq scan over the full index. With `CREATE INDEX … ON projects (pare
 parent_project_id IS NOT NULL` (100 rows) the recursive step becomes a bitmap index scan: 0.30 ms. The index is
 measured live (created in `vikunja` and in the `vikunja_snap` template) in run `partial-index`; PR #3777 adds it as
 a migration (Postgres + SQLite; MySQL has no partial indexes).
+
+### 13. Partial parent index (#3777) — `runs/partial-index/2026-09-06_02-08-51` (kept)
+
+Compare with conn-lifetime (same image and config). Grants CTE mean 0.32 → 0.19 ms (89 → 55 s total over the
+run), DB exec 0.62 → 0.52 ms/req, DB CPU 44 → 42 %, p99 26 → 24 ms, 0 failures. The CTE is still 37 % of DB
+execution time at 0.77 calls per request; the next step for it is a cross-request cache (see report).
+
+## Where things stand (end of session)
+
+At 3000 users, same hardware, same load shape: from p50 73 / p95 180 / p99 260 ms at 82 % DB / 82 % API
+(baseline-v3) to p50 13 / p95 19 / p99 24 ms at 42 % / 52 % (partial-index, = pr-3774 + lifetime + index), and
+#3776 not yet in that image. Capacity ~2× (6000 users at the old utilisation). Open PRs: #3774, #3775, #3776,
+#3777. Next levers, in order: cross-request project-access cache; non-transactional read sessions (2.7 `BEGIN`
+per request); a config-gated pprof endpoint to see what the remaining API-side CPU is.
