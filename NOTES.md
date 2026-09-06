@@ -266,3 +266,12 @@ At 3000 users, same hardware, same load shape: from p50 73 / p95 180 / p99 260 m
 #3776 not yet in that image. Capacity ~2× (6000 users at the old utilisation). Open PRs: #3774, #3775, #3776,
 #3777. Next levers, in order: cross-request project-access cache; non-transactional read sessions (2.7 `BEGIN`
 per request); a config-gated pprof endpoint to see what the remaining API-side CPU is.
+
+### Cross-request project access cache — go-vikunja/vikunja#3780
+
+Per the user: option (b), invalidation on every project/share/team write. Implementation: xorm `After*` hooks on
+`Project`, `ProjectUser`, `TeamProject`, `TeamMember`, `Team` (xorm runs them after commit, so no pre-commit
+data can be re-filled under the new generation); per-user invalidation where the write only concerns one user,
+a new generation for structural changes; sessions that wrote bypass the memo (they may see their own
+uncommitted grants); generation published via keyvalue and pulled ≤ 1/s for replicas, 30 s TTL as the bound.
+`pkg/models` and the project/team/task web tests pass. Combined test build with all five PRs: #3779.
