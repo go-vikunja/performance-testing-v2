@@ -1,0 +1,5 @@
+run=2026-09-06_10-18-07 name=combined-cap6000 users=6000 spawn_rate=50 duration=10m classes="Worker Glancer IntegrationBot" env=""
+vikunja_image=vikunja/vikunja:unstable postgres_image=postgres:18 types=ccx23/ccx23
+from=1788682664000 to=1788683356000
+grafana_url=http://178.104.3.213:3000/d/perf-overview/perf-overview?from=1788682664000&to=1788683356000
+vikunja_version=v2.6.0-144-ge8da5b74
