@@ -29,7 +29,8 @@ case "${1:-}" in
     mkdir -p "results/$name"
     date +%s > "results/$name/start"
     # keep the web UI up so locust-exporter can scrape it during the run
-    $RUN $IMG -f locustfile.py --host "$HOST" --autostart --autoquit 5 --stop-timeout 30 --web-host 127.0.0.1 --only-summary \
+    # one gevent process saturates a core at ~6000 users; workers fork from the master, which keeps the UI and csv
+    $RUN $IMG -f locustfile.py --host "$HOST" --processes "${LOCUST_PROCESSES:-4}" --autostart --autoquit 5 --stop-timeout 30 --web-host 127.0.0.1 --only-summary \
       --csv "results/$name/locust" --csv-full-history --html "results/$name/locust-report.html" "$@" \
       > "results/$name/locust.log" 2>&1 &
     pid=$!
