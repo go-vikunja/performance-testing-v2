@@ -1,0 +1,154 @@
+[2026-09-06 14:23:41,088] perf-loadgen/INFO/locust.main: Starting Locust 2.46.4
+[2026-09-06 14:23:41,130] perf-loadgen/INFO/locust.main: Starting web interface at http://127.0.0.1:8089, press enter to open your default browser.
+[2026-09-06 14:23:41,142] perf-loadgen/INFO/locust.runners: perf-loadgen_277eeb079c5448c6a9a748f42ef28950 (index 0) reported as ready. 1 workers connected.
+[2026-09-06 14:23:41,142] perf-loadgen/INFO/locust.runners: perf-loadgen_09082804fb9f49898999bf26aad02e04 (index 1) reported as ready. 2 workers connected.
+[2026-09-06 14:23:41,142] perf-loadgen/INFO/locust.runners: perf-loadgen_ea2291a0b5454d8284cf30a7cbe89ab4 (index 2) reported as ready. 3 workers connected.
+[2026-09-06 14:23:41,143] perf-loadgen/INFO/locust.runners: perf-loadgen_f605dafbf4f14e4a981426853436860f (index 3) reported as ready. 4 workers connected.
+[2026-09-06 14:23:41,143] perf-loadgen/INFO/locust.runners: perf-loadgen_f39fa3419d504925a0562a28f3702970 (index 4) reported as ready. 5 workers connected.
+[2026-09-06 14:23:41,143] perf-loadgen/INFO/locust.runners: perf-loadgen_edbf25e551ee4a869e98ba35b4d0afeb (index 5) reported as ready. 6 workers connected.
+[2026-09-06 14:23:41,143] perf-loadgen/INFO/locust.runners: perf-loadgen_9b73f4502a834389a06dabf91666d0e0 (index 6) reported as ready. 7 workers connected.
+[2026-09-06 14:23:41,301] perf-loadgen/INFO/locust.runners: perf-loadgen_370eed5d434f4fd4b757c915d3e17b78 (index 7) reported as ready. 8 workers connected.
+[2026-09-06 14:23:41,303] perf-loadgen/INFO/locust.runners: perf-loadgen_f6c358bdd3c64ac0831bcea483eb89e0 (index 8) reported as ready. 9 workers connected.
+[2026-09-06 14:23:41,304] perf-loadgen/INFO/locust.runners: perf-loadgen_707b683eccd64e62a25d918df2b034ff (index 9) reported as ready. 10 workers connected.
+[2026-09-06 14:23:41,305] perf-loadgen/INFO/locust.runners: perf-loadgen_e318125dedc04071bb1c0b86afa72800 (index 10) reported as ready. 11 workers connected.
+[2026-09-06 14:23:41,305] perf-loadgen/INFO/locust.runners: perf-loadgen_971ee7ece92a45368896c5841dc00c56 (index 11) reported as ready. 12 workers connected.
+[2026-09-06 14:23:41,306] perf-loadgen/INFO/locust.runners: perf-loadgen_ae7e833a9c87447fbf65bec27e6755ce (index 12) reported as ready. 13 workers connected.
+[2026-09-06 14:23:41,308] perf-loadgen/INFO/locust.runners: perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88 (index 13) reported as ready. 14 workers connected.
+[2026-09-06 14:23:41,310] perf-loadgen/INFO/locust.runners: perf-loadgen_7e30d44177394973ae45977547b65b35 (index 14) reported as ready. 15 workers connected.
+[2026-09-06 14:23:41,312] perf-loadgen/INFO/locust.runners: perf-loadgen_942e5b24a34c44e496bad3e76df8c65f (index 15) reported as ready. 16 workers connected.
+[2026-09-06 14:23:42,143] perf-loadgen/INFO/locust.main: Run time limit set to 600 seconds
+[2026-09-06 14:23:42,144] perf-loadgen/INFO/locust.runners: Sending spawn jobs of 20000 users at 125.00 spawn rate to 16 ready workers
+[2026-09-06 14:26:22,654] perf-loadgen/INFO/locust.runners: All users spawned: {"Glancer": 8572, "IntegrationBot": 2857, "Worker": 8571} (20000 total users)
+[2026-09-06 14:33:42,143] perf-loadgen/INFO/locust.main: --run-time limit reached, stopping test
+[2026-09-06 14:33:56,212] perf-loadgen/INFO/locust.runners: perf-loadgen_277eeb079c5448c6a9a748f42ef28950 (index 0) reported that it has stopped
+[2026-09-06 14:33:56,787] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_277eeb079c5448c6a9a748f42ef28950
+[2026-09-06 14:33:57,467] perf-loadgen/INFO/locust.runners: perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88 (index 13) reported that it has stopped
+[2026-09-06 14:33:57,791] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88
+[2026-09-06 14:33:58,401] perf-loadgen/INFO/locust.runners: perf-loadgen_370eed5d434f4fd4b757c915d3e17b78 (index 7) reported that it has stopped
+[2026-09-06 14:33:59,187] perf-loadgen/INFO/locust.runners: perf-loadgen_942e5b24a34c44e496bad3e76df8c65f (index 15) reported that it has stopped
+[2026-09-06 14:33:59,218] perf-loadgen/INFO/locust.runners: perf-loadgen_09082804fb9f49898999bf26aad02e04 (index 1) reported that it has stopped
+[2026-09-06 14:33:59,336] perf-loadgen/INFO/locust.runners: perf-loadgen_f6c358bdd3c64ac0831bcea483eb89e0 (index 8) reported that it has stopped
+[2026-09-06 14:33:59,718] perf-loadgen/INFO/locust.runners: perf-loadgen_7e30d44177394973ae45977547b65b35 (index 14) reported that it has stopped
+[2026-09-06 14:33:59,789] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_277eeb079c5448c6a9a748f42ef28950
+[2026-09-06 14:33:59,792] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_09082804fb9f49898999bf26aad02e04
+[2026-09-06 14:33:59,800] perf-loadgen/INFO/locust.runners: perf-loadgen_971ee7ece92a45368896c5841dc00c56 (index 11) reported that it has stopped
+[2026-09-06 14:33:59,818] perf-loadgen/INFO/locust.runners: perf-loadgen_f39fa3419d504925a0562a28f3702970 (index 4) reported that it has stopped
+[2026-09-06 14:33:59,819] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_971ee7ece92a45368896c5841dc00c56
+[2026-09-06 14:33:59,983] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_7e30d44177394973ae45977547b65b35
+[2026-09-06 14:34:00,791] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_942e5b24a34c44e496bad3e76df8c65f
+[2026-09-06 14:34:00,791] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f6c358bdd3c64ac0831bcea483eb89e0
+[2026-09-06 14:34:00,792] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88
+[2026-09-06 14:34:00,809] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_370eed5d434f4fd4b757c915d3e17b78
+[2026-09-06 14:34:00,811] perf-loadgen/INFO/locust.runners: perf-loadgen_707b683eccd64e62a25d918df2b034ff (index 9) reported that it has stopped
+[2026-09-06 14:34:00,908] perf-loadgen/INFO/locust.runners: perf-loadgen_ae7e833a9c87447fbf65bec27e6755ce (index 12) reported that it has stopped
+[2026-09-06 14:34:01,561] perf-loadgen/INFO/locust.runners: perf-loadgen_ea2291a0b5454d8284cf30a7cbe89ab4 (index 2) reported that it has stopped
+[2026-09-06 14:34:01,603] perf-loadgen/INFO/locust.runners: perf-loadgen_9b73f4502a834389a06dabf91666d0e0 (index 6) reported that it has stopped
+[2026-09-06 14:34:01,937] perf-loadgen/INFO/locust.runners: perf-loadgen_e318125dedc04071bb1c0b86afa72800 (index 10) reported that it has stopped
+[2026-09-06 14:34:02,028] perf-loadgen/INFO/locust.runners: perf-loadgen_edbf25e551ee4a869e98ba35b4d0afeb (index 5) reported that it has stopped
+[2026-09-06 14:34:02,388] perf-loadgen/INFO/locust.runners: perf-loadgen_f605dafbf4f14e4a981426853436860f (index 3) reported that it has stopped
+[2026-09-06 14:34:02,771] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ea2291a0b5454d8284cf30a7cbe89ab4
+[2026-09-06 14:34:02,781] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_9b73f4502a834389a06dabf91666d0e0
+[2026-09-06 14:34:02,790] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f605dafbf4f14e4a981426853436860f
+[2026-09-06 14:34:02,790] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_277eeb079c5448c6a9a748f42ef28950
+[2026-09-06 14:34:02,793] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_edbf25e551ee4a869e98ba35b4d0afeb
+[2026-09-06 14:34:02,794] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_09082804fb9f49898999bf26aad02e04
+[2026-09-06 14:34:02,809] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f39fa3419d504925a0562a28f3702970
+[2026-09-06 14:34:02,821] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_971ee7ece92a45368896c5841dc00c56
+[2026-09-06 14:34:02,986] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_7e30d44177394973ae45977547b65b35
+[2026-09-06 14:34:03,331] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e318125dedc04071bb1c0b86afa72800
+[2026-09-06 14:34:03,551] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_707b683eccd64e62a25d918df2b034ff
+[2026-09-06 14:34:03,793] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_942e5b24a34c44e496bad3e76df8c65f
+[2026-09-06 14:34:03,793] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f6c358bdd3c64ac0831bcea483eb89e0
+[2026-09-06 14:34:03,794] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88
+[2026-09-06 14:34:03,794] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ae7e833a9c87447fbf65bec27e6755ce
+[2026-09-06 14:34:03,811] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_370eed5d434f4fd4b757c915d3e17b78
+[2026-09-06 14:34:05,774] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ea2291a0b5454d8284cf30a7cbe89ab4
+[2026-09-06 14:34:05,782] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_9b73f4502a834389a06dabf91666d0e0
+[2026-09-06 14:34:05,790] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f605dafbf4f14e4a981426853436860f
+[2026-09-06 14:34:05,792] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_277eeb079c5448c6a9a748f42ef28950
+[2026-09-06 14:34:05,795] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_edbf25e551ee4a869e98ba35b4d0afeb
+[2026-09-06 14:34:05,796] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_09082804fb9f49898999bf26aad02e04
+[2026-09-06 14:34:05,811] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f39fa3419d504925a0562a28f3702970
+[2026-09-06 14:34:05,822] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_971ee7ece92a45368896c5841dc00c56
+[2026-09-06 14:34:05,986] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_7e30d44177394973ae45977547b65b35
+[2026-09-06 14:34:06,332] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_e318125dedc04071bb1c0b86afa72800
+[2026-09-06 14:34:06,553] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_707b683eccd64e62a25d918df2b034ff
+[2026-09-06 14:34:06,794] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_942e5b24a34c44e496bad3e76df8c65f
+[2026-09-06 14:34:06,795] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_de5b5f6e0d09427b8335ec9d5ca5be88
+[2026-09-06 14:34:06,795] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_f6c358bdd3c64ac0831bcea483eb89e0
+[2026-09-06 14:34:06,796] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_ae7e833a9c87447fbf65bec27e6755ce
+[2026-09-06 14:34:06,813] perf-loadgen/INFO/locust.runners: Discarded report from unrecognized worker perf-loadgen_370eed5d434f4fd4b757c915d3e17b78
+[2026-09-06 14:34:08,169] perf-loadgen/INFO/locust.main: --autoquit time reached, shutting down
+[2026-09-06 14:34:09,220] perf-loadgen/INFO/locust.main: Shutting down (exit code 1)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /avatar/{username}                                                            343242     0(0.00%) |     23       1    1328     15 |  554.10        0.00
+GET      /info                                                                          31953     0(0.00%) |      3       0    1085      3 |   51.58        0.00
+GET      /labels                                                                        31953     0(0.00%) |     41       4    1096     28 |   51.58        0.00
+POST     /login                                                                         19391     0(0.00%) |    107       6    1120     90 |   31.30        0.00
+GET      /projects                                                                      31953     0(0.00%) |     76       8     822     67 |   51.58        0.00
+GET      /projects [bot]                                                               113968     0(0.00%) |     91       7    1150     82 |  183.98        0.00
+POST     /projects [create]                                                              2600     0(0.00%) |    188      24     732    190 |    4.20        0.00
+GET      /projects/{id}                                                                 89056     0(0.00%) |     40       3     621     32 |  143.76        0.00
+GET      /projects/{id}/tasks [bot]                                                    290870     0(0.00%) |     81       6    1202     70 |  469.56        0.00
+POST     /projects/{id}/tasks [create]                                                  12815    36(0.28%) |    119      12    1144    120 |   20.69        0.06
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                             25359     0(0.00%) |     96      10    1131     93 |   40.94        0.00
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                       3883     0(0.00%) |     76       4     556     75 |    6.27        0.00
+GET      /projects/{id}/views/{view}/tasks [gantt]                                       5038     0(0.00%) |     79       5     481     76 |    8.13        0.00
+GET      /projects/{id}/views/{view}/tasks [list]                                       94372     0(0.00%) |     79       5    1128     72 |  152.35        0.00
+GET      /tasks [bot]                                                                   37571     0(0.00%) |    112      11    1010    100 |   60.65        0.00
+GET      /tasks [home]                                                                  69990     0(0.00%) |     96       9    1135     90 |  112.99        0.00
+GET      /tasks/{id}                                                                    30263     0(0.00%) |     82       7     544     76 |   48.85        0.00
+GET      /tasks/{id} [bot]                                                             819057     0(0.00%) |     74       5    1209     62 | 1322.22        0.00
+PATCH    /tasks/{id} [patch]                                                            15404     0(0.00%) |    111       5     911     97 |   24.87        0.00
+GET      /tasks/{id}/comments                                                           30263     0(0.00%) |     39       2    1124     32 |   48.85        0.00
+POST     /tasks/{id}/comments [create]                                                   2655     0(0.00%) |     41       4     397     34 |    4.29        0.00
+POST     /tasks/{id}/labels [add]                                                        5055     0(0.00%) |     72       8     461     68 |    8.16        0.00
+PUT      /tasks/{id}/position                                                            7842     0(0.00%) |     53       5     701     47 |   12.66        0.00
+PUT      /tasks/{id}/read                                                               30263     0(0.00%) |     24       1    1078     17 |   48.85        0.00
+GET      /user                                                                          31953     0(0.00%) |     31       1     801     17 |   51.58        0.00
+POST     /user/token/refresh                                                            38300     3(0.01%) |     39       3    1136     31 |   61.83        0.00
+WS       connect+auth+subscribe                                                         31953     0(0.00%) |      8       1    1082      8 |   51.58        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                   2247022    39(0.00%) |     65       0    1328     57 | 3627.40        0.06
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /avatar/{username}                                                                     15     21     26     31     48     72    110    140    290    480   1300 343242
+GET      /info                                                                                   3      4      4      5      7      8      9     10     14    150   1100  31953
+GET      /labels                                                                                28     37     46     54     82    120    170    210    380    590   1100  31953
+POST     /login                                                                                 90    130    150    170    210    250    310    370    550   1100   1100  19391
+GET      /projects                                                                              67     79     89     97    120    160    210    260    410    590    820  31953
+GET      /projects [bot]                                                                        82     96    110    120    150    180    240    290    490    830   1200 113968
+POST     /projects [create]                                                                    190    210    220    230    250    270    320    350    470    730    730   2600
+GET      /projects/{id}                                                                         32     40     46     51     71     96    140    180    340    520    620  89056
+GET      /projects/{id}/tasks [bot]                                                             70     85     96    110    140    180    240    290    490    790   1200 290870
+POST     /projects/{id}/tasks [create]                                                         120    130    140    150    170    200    250    280    470   1100   1100  12815
+GET      /projects/{id}/views/{view}/buckets/tasks [kanban]                                     93    100    110    120    140    160    190    240    420    980   1100  25359
+PUT      /projects/{id}/views/{view}/buckets/{bucket}/tasks [move]                              75     93    100    110    130    150    180    210    360    560    560   3883
+GET      /projects/{id}/views/{view}/tasks [gantt]                                              76     85     92     97    110    140    180    220    360    480    480   5038
+GET      /projects/{id}/views/{view}/tasks [list]                                               72     86     97    110    130    150    190    230    390    560   1100  94372
+GET      /tasks [bot]                                                                          100    120    130    140    170    210    270    320    520    690   1000  37571
+GET      /tasks [home]                                                                          90    100    110    120    140    170    220    260    440    680   1100  69990
+GET      /tasks/{id}                                                                            76     88     96    100    120    150    190    230    370    500    540  30263
+GET      /tasks/{id} [bot]                                                                      62     76     88     97    130    170    230    280    480    790   1200 819057
+PATCH    /tasks/{id} [patch]                                                                    97    120    140    160    210    250    300    360    550    810    910  15404
+GET      /tasks/{id}/comments                                                                   32     39     45     50     69     94    130    170    320    550   1100  30263
+POST     /tasks/{id}/comments [create]                                                          34     40     47     52     70    100    140    190    390    400    400   2655
+POST     /tasks/{id}/labels [add]                                                               68     77     84     89    110    130    170    220    350    460    460   5055
+PUT      /tasks/{id}/position                                                                   47     55     61     66     86    110    150    190    350    700    700   7842
+PUT      /tasks/{id}/read                                                                       17     22     28     32     49     73    110    150    300    490   1100  30263
+GET      /user                                                                                  17     26     35     43     73    110    160    200    420    610    800  31953
+POST     /user/token/refresh                                                                    31     39     45     51     70     95    140    170    310    650   1100  38300
+WS       connect+auth+subscribe                                                                  8     10     11     12     13     14     16     19     58    170   1100  31953
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             57     73     86     95    120    160    210    260    450    730   1300 2247022
+
+Error report
+# occurrences      Error                                                                                               
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+36                 POST /projects/{id}/tasks [create]: LocustBadStatusCode(code=500)                                   
+3                  POST /user/token/refresh: LocustBadStatusCode(code=401)                                             
+------------------|---------------------------------------------------------------------------------------------------------------------------------------------
+

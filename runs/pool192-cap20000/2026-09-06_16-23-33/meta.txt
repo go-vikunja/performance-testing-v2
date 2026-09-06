@@ -1,0 +1,5 @@
+run=2026-09-06_16-23-33 name=pool192-cap20000 users=20000 spawn_rate=125 duration=10m classes="Worker Glancer IntegrationBot" env="LOCUST_PROCESSES=16"
+vikunja_image=ghcr.io/go-vikunja/vikunja:pr-3779 postgres_image=postgres:18 types=ccx33/ccx23
+from=1788704590000 to=1788705281000
+grafana_url=http://178.104.3.213:3000/d/perf-overview/perf-overview?from=1788704590000&to=1788705281000
+vikunja_version=v2.6.0-150-gd9af013b
