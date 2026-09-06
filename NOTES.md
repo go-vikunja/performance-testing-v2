@@ -47,6 +47,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `pool192-cap20000/2026-09-06_16-23-33` (20000 users, big boxes, pool 192, max idle 50) | pr-3779 | connection churn | 4056 | 57 / 130 / 180 | 27 / 140 | 39 | 13.1 | 0.58 | **0.75** | 60 | 19.9 | 41 |
 | `idle192-cap20000/2026-09-06_16-37-47` (20000 users, big boxes, pool 192, idle 192) | pr-3779 | pool still bursting full | 4145 | 32 / 71 / 94 | 15 / 68 | 34 | 13.1 | 0.43 | 0.15 | 41 | 6.1 | 41 |
 | `pool400-cap20000/2026-09-06_16-52-02` (20000 users, big boxes, pool 400) | pr-3779 | pool no longer the limit | 4141 | 35 / 72 / 93 | 13 / 71 | 36 | 13.1 | 0.43 | 0.17 | 41 | 8.7 | 41 |
+| `rs-cap20000/2026-09-06_17-06-59` (20000 users, big boxes, pool 400, **+ #3790 reads without tx**) | pr-3779 `c1ed33d39` | −4 round trips/request | 4181 | **16 / 41 / 56** | 12 / 59 | 31 | **10.5** | 0.44 | 0.17 | 39 | 6.6 | 41 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -465,3 +466,10 @@ overview 55). **RTT API → DB is 0.78 ms average under load (0.33 min, 2.3 max)
 round trips per request (BEGIN, ~13 statements, COMMIT) ≈ 12 ms of pure network wait, which with jitter and
 40k goroutines on the netpoller becomes the 36 ms p50. At this scale latency is round trips × RTT, not CPU.
 Levers: #3790 (no BEGIN/COMMIT on reads and token auth, −4 round trips), then batching the task-read fan-out.
+
+### 24. Reads without a transaction (#3790) at 20k — `runs/rs-cap20000/2026-09-06_17-06-59`
+
+p50 35 → 16 ms, p95 72 → 41, p99 93 → 56. Statements per request 13.1 → 10.5 (the BEGIN/COMMIT pairs of the
+read pipeline and the token lookup), backends idle in transaction 37 → 1.9 average, 19 peak. CPU unchanged
+(41 % / 39 %). What remains is 10.5 round trips × 0.8 ms RTT plus queueing; the next cut is batching the
+task-read fan-out.
