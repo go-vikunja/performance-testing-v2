@@ -346,3 +346,12 @@ recursive CTE is a `WITH` statement of several kilobytes and the CTE regexp scan
 
 Statements per request 18.0 → 14.6 (the two `users` lookups and their transactions per bot request are gone),
 API host 50 → 45 %, container 1.75 → 1.55 cores, p50 11 → 10 ms, 0 failures. Second profile in the run dir.
+
+### Duplicate single-row lookups — go-vikunja/vikunja#3787
+
+From the statement log: a task read loads the task twice (`Task.CanRead`, then `ReadOne`) and its project twice
+(permission check, then `addMoreInfoToTasks`); across all requests 1.9 `users`, 1.2 `projects`, 0.8 `tasks`
+lookups by id per request. #3787 routes `GetTaskByIDSimple`, `GetProjectSimpleByID`, `GetProjectsMapByIDs`,
+`user.GetUserByID`, `user.GetUsersByIDs` through the per-session memo (drops itself on any write in that session;
+callers get copies). Expected: 2–3 statements fewer per request. Merged into #3779 (`cb03108cc`) for the next
+combined run; `combined-v4` (running) measures the WITH-scan fix on its own first.
