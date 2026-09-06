@@ -45,6 +45,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `db23-cap12000/2026-09-06_15-28-58` (**12000 users**, ccx33 API + **ccx23 DB**) | pr-3779 | ceiling with the small DB | **2518** | 9 / 28 / **47** | 19 / 110 | 5 | 13.1 | 0.67 | 0.18 | **87** | 13.0 | 50 |
 | `big-cap20000/2026-09-06_16-08-58` (**20000 users**, ccx53 API 32c + ccx43 DB 16c, pool 48) | pr-3779 | pool saturated | 3603 | 200 / 690 / 1000 | 17 / 100 | 22 | 12.8 | 0.45 | 0.13 | 37 | 5.6 | 40 |
 | `pool192-cap20000/2026-09-06_16-23-33` (20000 users, big boxes, pool 192, max idle 50) | pr-3779 | connection churn | 4056 | 57 / 130 / 180 | 27 / 140 | 39 | 13.1 | 0.58 | **0.75** | 60 | 19.9 | 41 |
+| `idle192-cap20000/2026-09-06_16-37-47` (20000 users, big boxes, pool 192, idle 192) | pr-3779 | pool still bursting full | 4145 | 32 / 71 / 94 | 15 / 68 | 34 | 13.1 | 0.43 | 0.15 | 41 | 6.1 | 41 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -440,3 +441,9 @@ Pool 192 with the default `maxidleconnections` 50 — `runs/pool192-cap20000/202
 planning 0.13 → 0.75 ms per request, DB load1 20 on 16 cores, idle backends capped at 47 and 171 idle in
 transaction at peak. Connections above the 50th are closed when idle and reopened (and re-prepared) on the next
 burst. `VIKUNJA_DATABASE_MAXIDLECONNECTIONS=192` for the next runs; default changed to 100 (= max open) in #3775.
+
+Pool 192, idle 192 — `runs/idle192-cap20000/2026-09-06_16-37-47`: 4,145 rps, p50 32 / p95 71 / p99 94 ms, planning back to 0.15 ms/req, both hosts
+at 41 %. Still 170 idle in transaction at peak vs 13 active: average connection hold time ≈ 9 ms per request
+(one transaction per request across ~13 round trips and the API's own work), so bursts fill any pool near 200
+while the DB idles. Next: `max_connections` 500, pool 400 (`pool400-cap*`). The structural answer stays the
+same: stop holding a transaction per request.
