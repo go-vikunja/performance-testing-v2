@@ -36,9 +36,10 @@ Steady state = second half of the full-load window. CPU = host average over that
 | `combined-cap6000` (6000 users) | pr-3779 | all PRs, capacity | **1,251** | 14 / 41 / 66 | 0.47 + 0.15 | 56 % | 77 % |
 | `combined-v3` | pr-3779 (+ #3786) | + per-request overhead from the first CPU profile | 640 | 10 / 16 / 22 | 0.53 + 0.17 | 39 % | 45 % |
 | `combined-v5` | pr-3779 (+ #3786 complete, #3787) | + regexp-free write detection, per-session row memo | 638 | **9 / 16 / 22** | 0.55 + 0.18 | 39 % | **41 %** |
+| `combined-v5-cap6000` (6000 users) | pr-3779 (all PRs) | capacity on the final image | **1,259** | **9 / 21 / 34** | 0.38 + 0.11 | 43 % | 65 % |
 
 Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 % / 41 %. At 6000 users
-(1,251 rps, 0 failures) the boxes sit at 56 % / 77 %, below what they needed for 3000 users at the start.
+(1,259 rps, p95 21 ms) the boxes sit at 43 % / 65 %, below what they needed for 3000 users at the start.
 
 ## Findings, by impact
 
@@ -78,7 +79,7 @@ Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 
 ## What is left (ordered)
 
 1. **Merge #3774, #3775, #3777, #3780, #3783, #3785, #3786, #3787** (#3776 is merged; measured together as #3779:
-   p50 9 ms, DB 39 %, API 41 % at 3000 users; 1,251 rps at 6000 before #3786/#3787). Close #3779 afterwards.
+   p50 9 ms, DB 39 %, API 41 % at 3000 users; 1,259 rps at p95 21 ms at 6000). Close #3779 afterwards.
 2. **What the API host still spends its CPU on** (profile in `runs/combined-v3/…/cpu-profile-t240-30s.pb.gz`):
    26 % network syscalls (≈ 14 statements + 2 transactions per request), 28 % cum in `tasksRead` →
    `addMoreInfoToTasks` (one query per related entity; the task and its project are loaded twice per read),
@@ -96,7 +97,8 @@ Same hardware, same load shape: from p50 73 ms at 82 % / 82 % to p50 9 ms at 39 
 - `database.maxopenconnections`: 2–3× DB cores (32 for 4 cores), not 100.
 - `database.maxconnectionlifetime`: ≥ 30 min until #3775 lands.
 - Postgres: `jit = off`, `max_parallel_workers_per_gather = 0` for this workload.
-- Both boxes reach 80–85 % at 6000 users / 1,250 rps with pgx + token cache; the DB is the first wall again.
+- With all PRs, 6000 users / 1,259 rps run at 43 % DB / 65 % API; the API host is the first wall, at roughly 9,000
+  simulated users on two ccx23s by extrapolation.
 
 ## Test-side notes
 

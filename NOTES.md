@@ -38,6 +38,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `combined-v3/2026-09-06_11-43-28` | pr-3779 (`b089ac163` = + #3786) | + regexp/logger/auth per-request overhead | 640 | **10 / 16 / 22** | 13 / 37 | 0 | **14.6** | 0.53 | 0.17 | 39 | 1.4 | **45** |
 | `combined-v4/2026-09-06_12-01-18` | pr-3779 (`eee403ef8` = + WITH word scan) | + regexp-free write detection | 637 | **9** / 16 / 22 | 13 / 39 | 1 | 14.6 | 0.55 | 0.17 | 39 | 1.9 | **43** |
 | `combined-v5/2026-09-06_12-15-02` | pr-3779 (`cb03108cc` = + #3787) | + per-session memo for task/project/user lookups | 638 | 9 / 16 / 22 | 12 / 37 | 0 | **13.2** | 0.55 | 0.18 | 39 | 2.7 | **41** |
+| `combined-v5-cap6000/2026-09-06_12-28-53` (**6000 users**, 50/s) | pr-3779 (`cb03108cc`, all PRs) | capacity, final image | **1259** | 9 / 21 / 34 | 22 / 68 | 4 | 13.2 | 0.38 | 0.11 | 43 | 2.3 | 65 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -377,3 +378,10 @@ Same hardware and load shape as baseline-v3 (p50 73 / p95 180 / p99 260 ms at 82
 Open PRs: #3774, #3775, #3777, #3780 (+ #3783 stacked), #3785, #3786, #3787; #3776 merged; #3779 = all of them.
 Next levers, in order: fewer queries per task read (`addMoreInfoToTasks` fans out into one query per related
 entity even for a single task; ~11 selects), xorm's `?`→`$n` rewrite per statement (xorm-level), then JSON.
+
+### 19. Capacity on the final image, 6000 users — `runs/combined-v5-cap6000/2026-09-06_12-28-53`
+
+1,259 rps, p50 9 / p95 21 / p99 34 ms, 4 failures (all the #3697 index race), DB 43 % (load1 2.3), API 65 %.
+Against the first 6000-user run today (pgx + token cache only): p95 85 → 21, p99 130 → 34, DB 85 → 43 %,
+API 79 → 65 %. Against the start of the session, where 3000 users already put both boxes at 73–82 %: twice the
+load at roughly half the utilisation, with a tenth of the p95.
