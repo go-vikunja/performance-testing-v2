@@ -44,6 +44,7 @@ session); they are not comparable on ramp numbers or Vikunja CPU with the runs a
 | `cap14000/2026-09-06_15-01-21` (**14000 users**, 100/s, ccx33 + ccx33, cx43 loadgen, 8 locust procs) | pr-3779 | ceiling for p99 < 50 ms | **2947** | 6 / 20 / **45** | 9 / 64 | 8 | 13.1 | 0.27 | 0.09 | 39 | 2.6 | **76** |
 | `db23-cap12000/2026-09-06_15-28-58` (**12000 users**, ccx33 API + **ccx23 DB**) | pr-3779 | ceiling with the small DB | **2518** | 9 / 28 / **47** | 19 / 110 | 5 | 13.1 | 0.67 | 0.18 | **87** | 13.0 | 50 |
 | `big-cap20000/2026-09-06_16-08-58` (**20000 users**, ccx53 API 32c + ccx43 DB 16c, pool 48) | pr-3779 | pool saturated | 3603 | 200 / 690 / 1000 | 17 / 100 | 22 | 12.8 | 0.45 | 0.13 | 37 | 5.6 | 40 |
+| `pool192-cap20000/2026-09-06_16-23-33` (20000 users, big boxes, pool 192, max idle 50) | pr-3779 | connection churn | 4056 | 57 / 130 / 180 | 27 / 140 | 39 | 13.1 | 0.58 | **0.75** | 60 | 19.9 | 41 |
 
 ## State of the recommendations from runs/report-2026-08-30-capacity.md
 
@@ -434,3 +435,8 @@ and 7 active**, i.e. the 48-connection pool full of requests holding their trans
 round trips (bot requests hold two: token auth, then the handler). The DB itself was idle. Pool raised to 192
 (max_connections 200) and the runs repeated as `pool192-cap*`. The structural fix is the old report's code rec 1:
 read-only handlers should not `BEGIN`; at this scale connection hold time, not CPU, is the limit.
+
+Pool 192 with the default `maxidleconnections` 50 — `runs/pool192-cap20000/2026-09-06_16-23-33`: demand met (4,056 rps) but p50 57 / p99 180 ms, DB
+planning 0.13 → 0.75 ms per request, DB load1 20 on 16 cores, idle backends capped at 47 and 171 idle in
+transaction at peak. Connections above the 50th are closed when idle and reopened (and re-prepared) on the next
+burst. `VIKUNJA_DATABASE_MAXIDLECONNECTIONS=192` for the next runs; default changed to 100 (= max open) in #3775.
