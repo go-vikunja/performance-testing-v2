@@ -11,7 +11,7 @@ locust csv + pg dumps in `runs/` work offline.
 ## 0. Inputs
 
 - IPs + secrets: `infra/.env` (`DB_IP`, `VIKUNJA_IP`, `MONITORING_IP`, `LOADGEN_IP` public; `*_PIP` private 10.0.1.x).
-- Per run `runs/<name>/<ts>/`: `meta.txt` (users, spawn rate, `from`/`to` in ms, vikunja version), `findings.md`
+- Per run `runs/<ts>-<name>/`: `meta.txt` (users, spawn rate, `from`/`to` in ms, vikunja version), `findings.md`
   (pre-filled summary + failures list), `locust_stats.csv` (per endpoint), `locust_stats_history.csv` (per ~1 s),
   `pg-top-statements.txt` (psql -x), `pg-totals.txt`, `pg-seq-scans.txt`, `grafana/*.png`.
 - Previous report for comparison: `runs/report-<date>-capacity.md`. Compare against the last one, same user counts.
@@ -22,7 +22,7 @@ locust csv + pg dumps in `runs/` work offline.
 ## 1. Locust numbers (offline)
 
 ```bash
-python3 .claude/skills/analyze-runs/scripts/locust_summary.py runs/baseline/<ts1> runs/baseline/<ts2> ...
+python3 .claude/skills/analyze-runs/scripts/locust_summary.py runs/<ts1>-baseline runs/<ts2>-baseline ...
 ```
 
 Prints per-endpoint table across runs, steady-state vs ramp p50/p95/p99, the unix window of the steady state
@@ -38,9 +38,9 @@ Prints per-endpoint table across runs, steady-state vs ramp p50/p95/p99, the uni
 ## 2. Postgres statements (offline)
 
 ```bash
-python3 .claude/skills/analyze-runs/scripts/pgsum.py runs/baseline/*/pg-top-statements.txt
-cat runs/baseline/<ts>/pg-totals.txt      # statements, exec ms, plan ms, index usage of top seq-scan tables
-cat runs/baseline/<ts>/pg-seq-scans.txt
+python3 .claude/skills/analyze-runs/scripts/pgsum.py runs/*-baseline/pg-top-statements.txt
+cat runs/<ts>-baseline/pg-totals.txt      # statements, exec ms, plan ms, index usage of top seq-scan tables
+cat runs/<ts>-baseline/pg-seq-scans.txt
 ```
 
 Look for: share of total time per statement, mean ms growth between user counts (contention: same query,

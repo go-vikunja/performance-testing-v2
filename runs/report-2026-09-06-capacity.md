@@ -1,6 +1,6 @@
 # Vikunja API performance: tuning session 2026-09-05/06
 
-Run-by-run log with every number: `NOTES.md` (repo root). Raw data per run: `runs/<name>/<timestamp>/`
+Run-by-run log with every number: `NOTES.md` (repo root). Raw data per run: `runs/<timestamp>-<name>/`
 (locust csv/html, Grafana panels, `pg_stat_statements` dumps, CPU profiles where taken).
 
 ## Summary

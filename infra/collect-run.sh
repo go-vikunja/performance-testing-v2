@@ -9,7 +9,7 @@ source ./config.sh; source "$ENV_FILE"
 SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
 name=${1:?name}; run_id=${2:-$(date +%Y-%m-%d_%H-%M-%S)}
 users=${3:-?}; rate=${4:-?}; duration=${5:-?}; classes=${6:-?}; envs=${7:-}
-out="../runs/$name/$run_id"; mkdir -p "$out/grafana"
+out="../runs/$run_id-$name"; mkdir -p "$out/grafana"
 
 echo "==> collecting locust results"
 scp -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r "root@$LOADGEN_IP:/opt/perf/locust/results/$name/." "$out/"
@@ -56,7 +56,7 @@ where relname in (select relname from pg_stat_user_tables order by seq_tup_read 
 order by relname, idx_scan desc;
 SQL
 
-python3 - "$out" <<'PY'
+python3 - "$out" "$name" "$run_id" <<'PY'
 import csv, sys, os
 out = sys.argv[1]
 def rows(f):
@@ -67,7 +67,7 @@ slow = sorted((r for r in stats if r["Name"] != "Aggregated"), key=lambda r: -fl
 fails = rows("locust_failures.csv"); excs = rows("locust_exceptions.csv")
 meta = open(os.path.join(out, "meta.txt")).read()
 with open(os.path.join(out, "findings.md"), "w") as f:
-    f.write(f"# Findings: {os.path.basename(os.path.dirname(out))} / {os.path.basename(out)}\n\n```\n{meta}```\n\n")
+    f.write(f"# Findings: {sys.argv[2]} / {sys.argv[3]}\n\n```\n{meta}```\n\n")
     f.write(f"## Locust summary\n\n- requests: {agg.get('Request Count')}  failures: {agg.get('Failure Count')}  rps: {agg.get('Requests/s')}\n")
     f.write(f"- response time ms: p50 {agg.get('50%')}  p95 {agg.get('95%')}  p99 {agg.get('99%')}  max {agg.get('Max Response Time')}\n")
     try:
@@ -88,7 +88,7 @@ with open(os.path.join(out, "findings.md"), "w") as f:
 PY
 
 echo "==> committing run"
-git -C .. add "runs/$name/$run_id"
-git -C .. commit -qm "run: $name $run_id ($users users, $duration, $classes)" -- "runs/$name/$run_id"
+git -C .. add "runs/$run_id-$name"
+git -C .. commit -qm "run: $name $run_id ($users users, $duration, $classes)" -- "runs/$run_id-$name"
 
 echo "==> done: $out"; cat "$out/meta.txt"

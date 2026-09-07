@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Per-endpoint comparison across runs + steady-state vs ramp numbers + timeline of the last run.
-Usage: locust_summary.py runs/baseline/<ts> [runs/baseline/<ts> ...]"""
+Usage: locust_summary.py runs/<ts>-baseline [runs/<ts>-baseline ...]"""
 import csv, sys
 
 runs = sys.argv[1:]

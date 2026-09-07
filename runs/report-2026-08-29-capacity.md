@@ -1,6 +1,6 @@
 # Capacity report: 500 / 1500 / 3000 concurrent users (2026-08-29)
 
-Runs: `baseline/2026-08-29_14-39-29` (500), `baseline/2026-08-29_15-03-40` (1500), `baseline/2026-08-29_15-17-00` (3000).
+Runs: `2026-08-29_14-39-29-baseline` (500), `2026-08-29_15-03-40-baseline` (1500), `2026-08-29_15-17-00-baseline` (3000).
 Same seed (100 accounts, 700 projects, 48k tasks), classes `Worker Glancer IntegrationBot`, 10 min each,
 Vikunja `v2.5.0-249-gc0ebf473` on ccx23 (4 dedicated vCPU / 16 GB), Postgres 18 on ccx23, pool `maxopenconnections=100`.
 

@@ -15,7 +15,7 @@ infra/            hcloud provisioning + per-host docker compose files
   run-test.sh     restore db from vikunja_snap, one headless locust run + archive locust html/csv + grafana pngs
   hosts/<role>/   compose.yaml + configs copied to /opt/perf on each host
 locust/           seed script, locust user classes, run helper (runs on loadgen VM)
-runs/             one folder per run: runs/<name>/<timestamp>/ with locust csv/html, grafana pngs, pg stats, findings.md
+runs/             one folder per run: runs/<timestamp>-<name>/ with locust csv/html, grafana pngs, pg stats, findings.md
 ```
 
 Servers (all Debian 13, everything in docker, private network `10.0.0.0/16`):
@@ -92,6 +92,6 @@ Request shapes (filters, sort, expand, per_page) are copied from what the fronte
 - Community dashboards (node exporter full, postgres, cadvisor) are provisioned alongside.
 
 `run-test.sh` archives `locust-report.html` (locust's own charts), the csv history, the full dashboard render
-and one png per panel into `runs/<name>/<timestamp>/`, plus `meta.txt` with a Grafana deep link for the time range,
+and one png per panel into `runs/<timestamp>-<name>/`, plus `meta.txt` with a Grafana deep link for the time range,
 `pg-top-statements.txt` / `pg-seq-scans.txt` / `pg-totals.txt` from `pg_stat_statements` (reset at run start), and a `findings.md` pre-filled with the locust
 summary, slowest endpoints and failures — the run folder is committed automatically; add observations to `findings.md` afterwards and commit again.
