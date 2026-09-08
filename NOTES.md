@@ -381,6 +381,33 @@ Statements per request 14.6 → 13.2, API host 43 → 41 %, container 1.50 → 1
 37.1 → 35.4 s, 0 failures. Latency unchanged at 9 / 16 / 22 ms: at 3000 users the request path is now dominated by
 the remaining ~13 round trips, not CPU.
 
+### Request serving vs. async processing (profile analysis, 2026-09-07)
+
+HTTP request serving accounts for 76–81 % of sampled API CPU in the four saved profiles; async processing
+accounts for 2–4 %. Each profile covers 30 s at t=240 s with 3000 users.
+
+| run | HTTP serving | async processing | runtime / other | total CPU-seconds |
+|---|---|---|---|---|
+| `2026-09-06_11-21-58-combined-profile` | 80.3 % | 2.0 % | 17.7 % | 45.36 |
+| `2026-09-06_11-43-28-combined-v3` | 79.3 % | 2.8 % | 17.9 % | 40.96 |
+| `2026-09-06_12-01-18-combined-v4` | 75.9 % | 4.1 % | 20.0 % | 37.07 |
+| `2026-09-06_12-15-02-combined-v5` | 81.4 % | 2.1 % | 16.4 % | 35.38 |
+
+Source: `runs/<run>/cpu-profile-t240-30s.pb.gz`, decoded with `go tool pprof -raw`. Each sample's CPU time is
+counted once, using its stack to classify HTTP serving (including accepting connections and HTTP read helpers),
+Watermill workers, cron jobs or WebSocket loops. Event dispatch on an HTTP stack stays in HTTP serving.
+Runtime / other includes Go scheduling, background GC, database helper goroutines and unattributed samples;
+those costs cannot be cleanly assigned to requests or async work. Percentages are rounded independently.
+
+In `combined-v5`, the 35.38 CPU-seconds split into **28.81 s HTTP**, **0.64 s events**, **0.12 s WebSocket loops**
+and **5.81 s runtime / other**. CPU-seconds sum across cores, so they can exceed the 30 s capture window.
+The higher async share in v3/v4 includes the overdue-reminder cron job (0.65 / 0.71 CPU-seconds); no cron CPU
+samples appeared in the other two windows.
+
+This measures CPU in the Vikunja process. It excludes Postgres execution, database and queue waiting, and idle
+time, so it cannot establish an elapsed-time split. The workload was read-heavy with email disabled; short
+captures also miss periodic jobs outside their window. The later capacity runs have no saved CPU profiles.
+
 ## Where things stand (end of session, second part)
 
 Same hardware and load shape as baseline-v3 (p50 73 / p95 180 / p99 260 ms at 82 % DB / 82 % API):
