@@ -14,6 +14,16 @@ Same two 4-core boxes, same load shape, before and after:
 | statements per request | 18.5 | 13.2 |
 | DB planning per request | 2.39 ms | 0.18 ms |
 
+Scaling the end-of-session build on the same boxes:
+
+| users | rps | p50 / p95 / p99 | DB host CPU / API host CPU |
+|---|---|---|---|
+| 3000 | 638 | 9 / 16 / 22 ms | 39 % / 41 % |
+| 6000 | 1,259 | 9 / 21 / 34 ms | 43 % / 65 % |
+| 9000 | 1,873 | 11 / 68 / 130 ms | 68 % / 83 % |
+
+The API host is the limit there: p99 < 50 ms holds to ~7,500 users.
+
 The target of 10,000 users at p99 < 50 ms is met with an 8-core API host: p99 14 ms at 2,107 rps. Measured
 ceilings for p99 < 50 ms are ~14,000 users with both boxes on 8 cores and ~12,000 with the database on 4 cores.
 On a 32-core API host with a 16-core database, 20,000 users run at p99 56 ms with both hosts at ~40 %; beyond
