@@ -41,6 +41,8 @@ services:
       test: ["CMD", "/app/vikunja/vikunja", "healthcheck"]
       # the subcommand boots a full engine incl. schema introspection; 5 s showed up in pg_stat_statements
       interval: 30s
+      start_period: 15s
+      start_interval: 5s
 
   node-exporter:
     image: prom/node-exporter:latest
